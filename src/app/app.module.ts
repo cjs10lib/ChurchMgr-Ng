@@ -55,6 +55,7 @@ import { PeopleRegistrationComponent } from './admin/people/people-registration/
 import { PeopleProfileComponent } from './admin/people/people-profile/people-profile.component';
 import { FormsModule } from '../../node_modules/@angular/forms';
 import { PeopleBasicFormComponent } from './admin/people/people-registration/people-basic-form/people-basic-form.component';
+import { DropZoneDirective } from './directives/drop-zone.directive';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { PeopleBasicFormComponent } from './admin/people/people-registration/peo
     PeopleRegistryComponent,
     PeopleRegistrationComponent,
     PeopleProfileComponent,
-    PeopleBasicFormComponent
+    PeopleBasicFormComponent,
+    DropZoneDirective
   ],
   imports: [
     BrowserModule,

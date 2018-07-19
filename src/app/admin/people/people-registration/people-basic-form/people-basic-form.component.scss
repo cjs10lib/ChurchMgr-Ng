@@ -30,8 +30,13 @@
 }
 
 .profile-image {   
-    border: 2px solid white;
-    border-radius: 120px;   
+    // border: 2px solid white;
+    // border-radius: 120px;   
+
+    border: 1px solid white; /* Gray border */     
+    border-radius: 130px;  /* Rounded border */     
+    padding: 5px; /* Some padding */     
+    width: 100px; /* Set a small width */ 
 }
 
 .dropzone {
