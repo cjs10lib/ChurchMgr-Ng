@@ -1,0 +1,13 @@
+
+.card-wrapper {
+    display: 100%;
+    margin: 20px 20px;
+}
+
+progress::-webkit-progress-value {
+    transition: width 0.1s ease;
+}
+
+mat-tab-group {
+    width: 100%;
+}

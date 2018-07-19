@@ -1,0 +1,122 @@
+<mat-card class="card-wrapper">
+  <!-- <div fxLayout="row" fxLayout.lt-sm="column" fxFlexAlign.lt-sm="center center"> -->
+  <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
+
+    <div fxFlex="24" fxFlexOrder.xs="1">
+      <div class="flex-details">
+        <h3>Filter by Name</h3>
+        <mat-form-field fxFlex.sm="style='font-size:10px;'">
+          <span matPrefix>
+            <mat-icon>search</mat-icon> &nbsp;
+          </span>
+          <input matInput #query (keyup)="search(query.value)" [(ngModel)]="searchQuery" name="searchQry"placeholder="Search People...">
+          <button mat-button *ngIf="searchQuery" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchField()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </div>
+    
+    <div fxFlex fxFlexOrder.xs="2">
+      <div class="flex-details margin-20">
+
+        <section>
+          <div class="add-new">
+            <a mat-raised-button color="primary" routerLink="/people-registration">
+              <mat-icon>group_add</mat-icon> &nbsp;
+              Add New Record
+            </a>
+          </div>
+        </section>
+
+        <mat-nav-list>
+          <mat-list-item>
+            <mat-divider></mat-divider>
+            <h3 matLine>  
+              <strong>                  
+                {{ filteredDetails?.length }} record(s) found.
+              </strong>
+            </h3>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-divider></mat-divider>
+            <img matListAvatar src="../../../../assets/avatars/avatar1.png" alt="...">
+            <h3 matLine> 
+              <strong>                  
+               Onwe Ada Chinenye
+              </strong>
+            </h3>
+            <button mat-icon-button>
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button>
+              <mat-icon>folder</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-nav-list>
+
+        <!-- <div *ngIf="filteredDetails?.length >= 1">
+          <mat-nav-list dense>
+            <mat-list-item>
+              <mat-divider></mat-divider>
+              <h3 matLine>  
+                <strong>                  
+                  {{ filteredDetails?.length }} record(s) found.
+                </strong>
+              </h3>
+            </mat-list-item>
+            <mat-list-item *ngFor="let detail of filteredDetails" routerLink="/profile/{{ detail.id }}">
+              <mat-divider></mat-divider>
+              <img *ngIf="detail.imageURL; else noImageAvatar" matListAvatar [src]="detail.imageURL" [alt]="detail.person.surname">
+              <h3 matLine> 
+                <strong>                  
+                  {{ detail.person.title }}
+                  {{ detail.person.surname }},
+                  {{ detail.person.firstname }} 
+                </strong>
+              </h3>
+              <p matLine>
+                <span> Gender: </span>
+                <span class="demo-2"> {{ detail.person.gender }}  </span>
+              </p>
+            </mat-list-item>            
+          </mat-nav-list>
+
+          <div *ngIf="filteredDetails?.length < 1"> 
+            <p>
+              No people record found :(
+            </p>
+          </div>
+        </div> -->
+
+        <ng-template #noImageAvatar>
+          <img matListAvatar src="../../../assets/avatar/avatar1.png" alt="...">
+        </ng-template>
+
+      </div>
+    </div>
+    
+    <div fxShow.lt-lg="false" fxShow="true" fxFlex="20">
+    <!-- <div fxFlex="20" fxFlexOrder.xs="3"> -->
+      <div class="flex-details">
+
+        <div style="background-color: #e6e6e6e6">
+          <mat-list dense>
+            <mat-list-item>
+              <mat-icon matListIcon>mail_outline</mat-icon>             
+              <h3 matLine> Email People </h3>
+            </mat-list-item>         
+            <mat-list-item>
+              <mat-icon matListIcon>import_export</mat-icon>
+              <h3 matLine> Export </h3>
+            </mat-list-item>         
+          </mat-list>
+        </div>
+
+      </div>  
+    </div>
+
+  </div> 
+  
+</mat-card>
+  

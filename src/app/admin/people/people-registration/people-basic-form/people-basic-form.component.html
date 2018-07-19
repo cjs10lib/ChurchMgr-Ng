@@ -1,0 +1,322 @@
+
+<form #f="ngForm" (ngSubmit)="onSubmit(f.value)"> 
+
+  <div class="submit-button">
+    <button mat-raised-button color="primary" (click)="nextStep()" [disabled]="!f.valid"> <mat-icon>save</mat-icon> Save Record</button>    
+  </div>
+
+  <mat-accordion class="example-headers-align">
+
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Image Upload
+        </mat-panel-title>
+        <mat-panel-description>
+          Upload Image
+          <mat-icon>cloud_upload</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="image_upload">
+        <img class="profile-image" [src]="imageUrl" style="width:250px;height:250px;" alt="">
+        <br>
+        
+        <div class="dropzone" 
+          dropZone
+          (hovered)="toggleHover($event)"
+          (dropped)="handleFileInput($event)"
+          [class.hovering]="isHovering">
+
+          <!-- <h3>Drop Zone</h3> -->
+          <mat-icon>cloud_upload</mat-icon>
+          <input type="file" (change)="handleFileInput($event.target.files)">
+
+        </div>
+    
+      </div>
+
+      <mat-action-row>
+        <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
+      </mat-action-row>
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Bio Info
+        </mat-panel-title>
+        <mat-panel-description>
+          Primary Details
+          <mat-icon>account_circle</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="form-field-container">
+
+        <mat-form-field>
+          <input matInput [(ngModel)]="person.title" name="title" #title placeholder="Title">
+          <mat-hint>Eg. Dr., Engr., Mr., Mrs</mat-hint>         
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [(ngModel)]="person.surname" name="surname" #surname placeholder="Surname" required>
+          <mat-error>
+            Surname is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>       
+
+        <mat-form-field>
+          <input matInput [(ngModel)]="person.firstname" name="firstname" #firstname placeholder="First name" required>
+          <mat-error>
+              Firstname is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [(ngModel)]="person.otherNames" name="otherNames" #otherNames placeholder="Other names">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select [(ngModel)]="person.gender" name="gender" #gender placeholder="Gender" required>
+            <mat-option value=""></mat-option>
+            <mat-option value="Male">Male</mat-option>
+            <mat-option value="Female">Female</mat-option>
+          </mat-select>
+          <mat-error>
+            Gender is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <span matPrefix> <mat-icon>date_range</mat-icon> &nbsp; </span>
+          <input matInput [matDatepicker]="DOB" [(ngModel)]="person.dob" name="dob" #dob placeholder="Date Of Birth" required>
+          <mat-datepicker-toggle matSuffix [for]="DOB"></mat-datepicker-toggle>
+          <mat-datepicker #DOB touchUi="true"></mat-datepicker>
+          <mat-hint>Birth Date Format: mm/dd/yyyy</mat-hint>
+          <mat-hint align="end">Click toggle button to select date!</mat-hint>
+
+          <mat-error>
+            A valid <strong>Date of Birth</strong> is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput [(ngModel)]="person.ethnicity" name="ethnicity" #ethnicity placeholder="Ethnicity/Race">
+            <mat-hint>Eg. White/Caucasian, British</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select [(ngModel)]="person.maritalStatus" name="maritalStatus" #maritalStatus placeholder="Marital Status" required>
+            <mat-option value=""></mat-option>
+            <mat-option value="Single">Single</mat-option>
+            <mat-option value="Married">Married</mat-option>
+          </mat-select>
+
+          <mat-error>
+            Marrital status is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [(ngModel)]="person.city" name="city" #city placeholder="Home City">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [(ngModel)]="person.state" name="state" #state placeholder="Home State">
+        </mat-form-field>       
+
+      </div>            
+      <mat-action-row>
+        <button mat-raised-button type="button" (click)="prevStep()">Previous</button>
+        <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Education
+        </mat-panel-title>
+        <mat-panel-description>
+          Qualifications
+          <mat-icon>school</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="form-field-container">
+
+        <mat-form-field>
+          <span matPrefix> <mat-icon>school</mat-icon> &nbsp; </span>
+          <mat-select [(ngModel)]="person.education.highestEducationLevel" name="highestEducationLevel" #highestEducationLevel placeholder="Highest level of education">
+            <mat-option value=""></mat-option>
+            <mat-option value="TY">Tetiarry</mat-option>
+            <mat-option value="HS">High School</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [(ngModel)]="person.education.certification" name="certification" #certification placeholder="Certification">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [(ngModel)]="person.education.school" name="school" #school placeholder="School">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select [(ngModel)]="person.education.grade" name="grade" #grade placeholder="Grade">
+            <mat-option value=""></mat-option>
+            <mat-option value="Graduated">Graduated</mat-option>
+            <mat-option value="Undergraduate">Undergraduate</mat-option>
+          </mat-select>
+        </mat-form-field>
+       
+      </div>
+
+      <mat-action-row>
+        <button mat-raised-button type="button" (click)="prevStep()">Previous</button>
+        <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
+      </mat-action-row>
+
+    </mat-expansion-panel>
+  
+    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Profession/Work
+        </mat-panel-title>
+        <mat-panel-description>
+          Profession
+          <mat-icon>school</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="form-field-container">               
+
+        <mat-form-field>
+          <input matInput [(ngModel)]="person.occupation.occupation" name="occupation" #occupation placeholder="Occupation" required>
+          <mat-error>
+            Occupation status is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [(ngModel)]="person.occupation.employer" name="employer" #employer placeholder="Employer">
+          <mat-hint>
+            Name of current <strong>employer</strong>
+          </mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [(ngModel)]="person.occupation.officeDepartment" name="officeDepartment" #officeDepartment placeholder="Office Department">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select [(ngModel)]="person.occupation.officePost" name="officePost" #officePost placeholder="Official Position">
+            <mat-option value=""></mat-option>
+            <mat-option value="Ceo">CEO</mat-option>
+            <mat-option value="Manager">Manager</mat-option>
+          </mat-select>
+        </mat-form-field>   
+
+        <mat-form-field>
+          <span matPrefix> <mat-icon>phone_iphone</mat-icon> &nbsp; </span>
+          <input matInput type="tel" [(ngModel)]="person.occupation.officePhone" name="officePhone" #officePhone placeholder="Office Phone">
+        </mat-form-field>
+
+        <mat-form-field>
+          <span matPrefix> <mat-icon>phone</mat-icon> &nbsp; </span>
+          <input matInput type="tel" [(ngModel)]="person.occupation.officeTelephone" name="officeTelephone" #officeTelephone placeholder="Office Telephone">
+        </mat-form-field>
+
+        <mat-form-field>
+          <span matPrefix> <mat-icon>location_on</mat-icon> &nbsp; </span>
+          <textarea matInput [(ngModel)]="person.occupation.officeAddress" name="officeAddress" #officeAdress placeholder="Office Address"></textarea>
+        </mat-form-field>
+
+      </div> 
+
+      <mat-action-row>
+        <button mat-raised-button type="button" (click)="prevStep()">Previous</button>
+        <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  
+    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Contact
+        </mat-panel-title>
+        <mat-panel-description>
+          Contact Details
+          <mat-icon>perm_contact_calendar</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <div class="form-field-container">
+
+        <mat-form-field>
+          <span matPrefix> <mat-icon>phone</mat-icon> &nbsp; </span>
+          <input matInput type="tel" [(ngModel)]="person.contact.mobilePhone1" name="mobilePhone1" #mobilePhone1 placeholder="Mobile Phone" required>
+          
+          <mat-error>
+            Mobile phone number is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <span matPrefix> <mat-icon>phone_iphone</mat-icon> &nbsp; </span>
+          <input matInput type="tel" [(ngModel)]="person.contact.mobilePhone2" name="mobilePhone2" #mobilePhone2 placeholder="Mobile Phone">
+        </mat-form-field>
+
+        <mat-form-field>
+          <span matPrefix> <mat-icon>contact_phone</mat-icon> &nbsp; </span>
+          <input matInput type="tel" [(ngModel)]="person.contact.homePhone" name="homePhone" #homePhone placeholder="Home Phone">
+        </mat-form-field> 
+
+        <mat-form-field>
+          <span matPrefix> <mat-icon>email</mat-icon> &nbsp; </span>
+          <input matInput type="email" [(ngModel)]="person.contact.email" name="email" #email placeholder="Email Address">
+        </mat-form-field>              
+        
+        <mat-form-field>
+          <span matPrefix> <mat-icon>location_city</mat-icon> &nbsp; </span>
+          <input matInput [(ngModel)]="person.contact.city" name="city" #city placeholder="City" required> 
+          
+          <mat-error>
+            Address city is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <span matPrefix> <mat-icon>my_location</mat-icon> &nbsp; </span>
+          <input matInput maxlength="3" [(ngModel)]="person.contact.zip" name="zip" #zip placeholder="Zip" required>
+          <mat-hint>Enter area code</mat-hint>
+          <mat-hint align="end">{{zip.value?.length || 0}}/3</mat-hint>
+          
+          <mat-error>
+            Zip code is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <span matPrefix> <mat-icon>location_on</mat-icon> &nbsp; </span>
+          <textarea matInput [(ngModel)]="person.contact.residentialAddress" name="residentialAddress" #residentialAddress placeholder="Residential Address" required></textarea>
+          
+          <mat-error>
+            Residential address is <strong>required</strong>
+          </mat-error>
+        </mat-form-field> 
+
+      </div>            
+  
+      <mat-action-row>
+        <button mat-raised-button type="button" (click)="prevStep()">Previous</button>
+        <button mat-raised-button type="button" color="primary" (click)="nextStep()">Finish</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  
+  </mat-accordion>
+
+</form>
