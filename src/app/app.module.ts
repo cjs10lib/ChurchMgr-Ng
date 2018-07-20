@@ -53,6 +53,9 @@ import { DropZoneDirective } from './directives/drop-zone.directive';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthenticationLayoutComponent } from './layouts/authentication-layout/authentication-layout.component';
 import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.component';
+import { AuthenticationComponent } from './admin/authentication/authentication.component';
+import { LoginFormComponent } from './admin/authentication/login-form/login-form.component';
+import { HomeComponent } from './general/home/home.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,10 @@ import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.
     PeopleRegistrationComponent,
     PeopleProfileComponent,
     PeopleBasicFormComponent,
-    DropZoneDirective
+    DropZoneDirective,
+    AuthenticationComponent,
+    LoginFormComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

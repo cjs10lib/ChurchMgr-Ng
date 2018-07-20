@@ -1,23 +1,35 @@
+import { HomeComponent } from './general/home/home.component';
+import { LoginFormComponent } from './admin/authentication/login-form/login-form.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { PeopleRegistrationComponent } from './admin/people/people-registration/people-registration.component';
 import { PeopleRegistryComponent } from './admin/people/people-registry/people-registry.component';
 import { TransactionsComponent } from './admin/transactions/transactions.component';
-import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthenticationLayoutComponent } from './layouts/authentication-layout/authentication-layout.component';
 import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.component';
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { PeopleComponent } from './admin/people/people.component';
 
 const routes: Routes = [
   {
     path: '',
     component: GeneralLayoutComponent,
-    children: []
+    children: [
+      {
+        path: 'home',
+        component: HomeComponent
+      }
+    ]
   }, {
     path: '',
     component: AuthenticationLayoutComponent,
-    children: []
+    children: [
+      {
+        path: 'auth/login',
+        component: LoginFormComponent
+      }
+    ]
   }, {
     path: '',
     component: AdminLayoutComponent,
