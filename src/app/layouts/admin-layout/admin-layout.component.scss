@@ -2,9 +2,19 @@
 //   height: 100%;
 // }
 
-// .sidenav {
-//   width: 250px;
-// }
+.sidenav {  
+  background: #2D2E2E;
+}
+
+mat-nav-list .mat-list-item {
+  color: #fff;
+  padding: 15px;
+  display: block;
+}
+
+.activated {
+  background-color: #4c4d4e;
+}
 
 // .mat-toolbar.mat-primary {
 //   position: sticky;

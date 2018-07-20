@@ -1,8 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~material-design-icons/iconfont/material-icons.css';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: 'Roboto', sans-serif; }
+html, body { 
+    height: 100%; 
+}
+
+body { 
+    margin: 0; 
+    background: #f2f2f2;
+    font-family: 'Montserrat', 'Roboto', sans-serif; 
+    height: 100vh;
+}
 
 // Active icon color in list nav
 // mat-list {

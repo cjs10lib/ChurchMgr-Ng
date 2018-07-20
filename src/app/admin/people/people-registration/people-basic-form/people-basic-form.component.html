@@ -1,5 +1,7 @@
 
-<form #f="ngForm" (ngSubmit)="onSubmit(f.value)"> 
+{{ f.value | json }}
+
+<form #f="ngForm" [@listStagger]> 
 
   <div class="submit-button">
     <button mat-raised-button color="primary" (click)="nextStep()" [disabled]="!f.valid"> <mat-icon>save</mat-icon> Save Record</button>    
@@ -120,11 +122,11 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput [(ngModel)]="person.city" name="city" #city placeholder="Home City">
+          <input matInput [(ngModel)]="person.home.city" name="city" #city placeholder="Home City">
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput [(ngModel)]="person.state" name="state" #state placeholder="Home State">
+          <input matInput [(ngModel)]="person.home.state" name="state" #state placeholder="Home State">
         </mat-form-field>       
 
       </div>            

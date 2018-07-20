@@ -1,9 +1,35 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  trigger,
+  style,
+  transition,
+  animate,
+  keyframes,
+  query,
+  stagger
+} from '@angular/animations';
+import { Person } from '../../../../models/person.model';
 
 @Component({
   selector: 'app-people-basic-form',
   templateUrl: './people-basic-form.component.html',
-  styleUrls: ['./people-basic-form.component.scss']
+  styleUrls: ['./people-basic-form.component.scss'],
+  animations: [
+    trigger('listStagger', [
+      transition('* <=> *', [
+        query(':enter',
+        [
+          style({opacity: 0, transform: ' translateY(-15px)' }),
+          stagger('50ms',
+          animate('550ms ease-out',
+          style({ opacity: 1, transform: 'translateY(0px)' })))
+        ], { optional: true }),
+        query(':leave', animate('50ms', style({ opacity: 0 })), {
+          optional: true
+        })
+      ])
+    ])
+  ]
 })
 export class PeopleBasicFormComponent implements OnInit {
   step = 0;
@@ -12,10 +38,11 @@ export class PeopleBasicFormComponent implements OnInit {
   fileToUpload: File = null;
   isHovering: boolean;
 
-  person = {
+  person: Person = {
     education: {},
     occupation: {},
-    contact: {}
+    contact: {},
+    home: {}
   };
 
   constructor() { }

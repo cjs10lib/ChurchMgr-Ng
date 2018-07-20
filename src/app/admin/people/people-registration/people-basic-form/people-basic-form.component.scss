@@ -35,8 +35,12 @@
 
     border: 1px solid white; /* Gray border */     
     border-radius: 130px;  /* Rounded border */     
-    padding: 5px; /* Some padding */     
+    padding: 1px; /* Some padding */     
     width: 100px; /* Set a small width */ 
+}
+
+.profile-image:hover {     
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5); 
 }
 
 .dropzone {
