@@ -1,3 +1,4 @@
+import { SweetAlertService } from './../../../../services/sweet-alert.service';
 import { PeopleService } from './../../../../services/people.service';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -48,18 +49,17 @@ export class PeopleBasicFormComponent implements OnInit {
     home: {}
   };
 
-  constructor(private peopleService: PeopleService) { }
+  constructor(private peopleService: PeopleService, private sweetAlertService: SweetAlertService) { }
 
   ngOnInit() {
-    this.peopleService.getPeople().subscribe(resp => {
-      console.log(resp);
-    });
   }
 
   onSubmit() {
     this.peopleService.addPerson(this.person).then(resp => {
       console.log(resp.id);
     });
+
+    this.sweetAlertService.afterUpdateSuccess();
   }
 
   toggleHover($event: boolean) {

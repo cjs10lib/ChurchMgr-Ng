@@ -30,6 +30,7 @@
     "material-design-icons": "^3.0.1",
     "ngx-perfect-scrollbar": "^6.2.0",
     "rxjs": "^6.0.0",
+    "sweetalert2": "^7.25.6",
     "wfk-montserrat": "^1.0.0",
     "zone.js": "^0.8.26"
   },
