@@ -31,6 +31,7 @@ export class PeopleService {
   }
 
   addPerson(person: Person) {
+    person.fullname = person.surname + ' ' + person.firstname + ' ' + person.othernames;
     return this.peopleCollection.add(person);
   }
 }

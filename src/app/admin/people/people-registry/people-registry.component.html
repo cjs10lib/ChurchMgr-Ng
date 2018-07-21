@@ -9,8 +9,8 @@
           <span matPrefix>
             <mat-icon>search</mat-icon> &nbsp;
           </span>
-          <input matInput #query (keyup)="search(query.value)" [(ngModel)]="searchQuery" name="searchQry"placeholder="Search People...">
-          <button mat-button *ngIf="searchQuery" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchField()">
+          <input matInput #query (keyup)="search(query.value)" [(ngModel)]="searchQry" name="searchQuery" placeholder="Search People...">
+          <button mat-button *ngIf="searchQry" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchField()">
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
@@ -30,17 +30,17 @@
         </section>
 
         <mat-nav-list [@people-registryStagger]>
-          <mat-list-item *ngIf="(people$ | async) as people">
+          <mat-list-item *ngIf="filteredPeople">
             <mat-divider></mat-divider>
             <h3 matLine>  
               <strong>                  
-                {{ people?.length }} record(s) found.
+                {{ filteredPeople?.length }} record(s) found.
               </strong>
             </h3>
           </mat-list-item>
-          <mat-list-item *ngFor="let people of people$ | async">
+          <mat-list-item *ngFor="let people of filteredPeople">
             <mat-divider></mat-divider>
-            <img matListAvatar src="../../../../assets/avatars/avatar1.png" alt="...">
+            <img matListAvatar src="../../../../assets/avatars/avatar4.png" alt="...">
             <h3 matLine> 
               <strong>                  
                 {{ people.surname }} 
@@ -50,59 +50,26 @@
             <p matLine>
               {{ people.otherNames }} 
             </p>
-            <button mat-icon-button>
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button>
-              <mat-icon>folder</mat-icon>
-            </button>
+
+              <!-- <button mat-icon-button fxShow.lt-sm="false" fxShow="true">
+                <mat-icon color="primary">edit</mat-icon>
+              </button> -->
+              <button mat-icon-button>
+                <mat-icon color="primary">search</mat-icon>
+              </button>
+
           </mat-list-item>
         </mat-nav-list>
-
-        <!-- <div *ngIf="(people$ | async)? as people.length < 1"> 
+<!-- 
+        <div *ngIf="filteredPeople.length < 1"> 
           <p>
             No people record found :(
           </p>
-        </div> -->
-        
-
-        <!-- <div *ngIf="filteredDetails?.length >= 1">
-          <mat-nav-list dense>
-            <mat-list-item>
-              <mat-divider></mat-divider>
-              <h3 matLine>  
-                <strong>                  
-                  {{ filteredDetails?.length }} record(s) found.
-                </strong>
-              </h3>
-            </mat-list-item>
-            <mat-list-item *ngFor="let detail of filteredDetails" routerLink="/profile/{{ detail.id }}">
-              <mat-divider></mat-divider>
-              <img *ngIf="detail.imageURL; else noImageAvatar" matListAvatar [src]="detail.imageURL" [alt]="detail.person.surname">
-              <h3 matLine> 
-                <strong>                  
-                  {{ detail.person.title }}
-                  {{ detail.person.surname }},
-                  {{ detail.person.firstname }} 
-                </strong>
-              </h3>
-              <p matLine>
-                <span> Gender: </span>
-                <span class="demo-2"> {{ detail.person.gender }}  </span>
-              </p>
-            </mat-list-item>            
-          </mat-nav-list>
-
-          <div *ngIf="filteredDetails?.length < 1"> 
-            <p>
-              No people record found :(
-            </p>
-          </div>
-        </div> -->
-
+        </div>         -->
+<!-- 
         <ng-template #noImageAvatar>
           <img matListAvatar src="../../../assets/avatar/avatar1.png" alt="...">
-        </ng-template>
+        </ng-template> -->
 
       </div>
     </div>

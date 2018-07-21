@@ -1,7 +1,7 @@
 import { PeopleService } from './../../../services/people.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
   trigger,
@@ -35,14 +35,38 @@ import { Person } from '../../../models/person.model';
     ])
   ]
 })
-export class PeopleRegistryComponent implements OnInit {
+export class PeopleRegistryComponent implements OnInit, OnDestroy {
 
-  people$: Observable<Person[]>;
+  searchQry: string;
+
+  people$: Person[];
+  filteredPeople: Person[];
+
+  subscription: Subscription;
 
   constructor(private peopleService: PeopleService) { }
 
   ngOnInit() {
-    this.people$ = this.peopleService.getPeople();
+    this.subscription = this.peopleService.getPeople().subscribe(resp => {
+      this.people$ = this.filteredPeople = resp;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  search(qry: string) {
+
+    this.filteredPeople = qry ?
+    this.people$.filter(
+      p => p.surname.toLowerCase().includes(qry.toLowerCase()) ||
+      p.firstname.toLowerCase().includes(qry.toLowerCase())) : this.people$;
+  }
+
+  clearSearchField() {
+    this.search('');
+    this.searchQry = '';
   }
 
 }
