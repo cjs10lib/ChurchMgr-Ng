@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~material-design-icons/iconfont/material-icons.css';
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+// @import "~wfk-montserrat/montserrat";
 
 html, body { 
     height: 100%; 
@@ -8,8 +10,20 @@ html, body {
 body { 
     margin: 0; 
     background: #f2f2f2;
-    font-family: 'Montserrat', 'Roboto', sans-serif; 
+    font-family: 'Montserrat', 'Roboto', sans-serif !important;  
     height: 100vh;
+}
+
+.spc-10 {
+    padding: 10px;
+}
+
+.spc-20 {
+    padding: 20px;
+}
+
+.spc-30 {
+    padding: 20px;
 }
 
 // Active icon color in list nav

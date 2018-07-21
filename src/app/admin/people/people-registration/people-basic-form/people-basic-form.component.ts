@@ -1,3 +1,4 @@
+import { PeopleService } from './../../../../services/people.service';
 import { Component, OnInit } from '@angular/core';
 import {
   trigger,
@@ -34,7 +35,9 @@ import { Person } from '../../../../models/person.model';
 export class PeopleBasicFormComponent implements OnInit {
   step = 0;
 
-  imageUrl = '../../assets/avatar/avatar3.png';
+  people$;
+
+  imageUrl = '../../../../../assets/avatars/avatar3.png';
   fileToUpload: File = null;
   isHovering: boolean;
 
@@ -45,9 +48,18 @@ export class PeopleBasicFormComponent implements OnInit {
     home: {}
   };
 
-  constructor() { }
+  constructor(private peopleService: PeopleService) { }
 
   ngOnInit() {
+    this.peopleService.getPeople().subscribe(resp => {
+      console.log(resp);
+    });
+  }
+
+  onSubmit() {
+    this.peopleService.addPerson(this.person).then(resp => {
+      console.log(resp.id);
+    });
   }
 
   toggleHover($event: boolean) {
@@ -80,5 +92,4 @@ export class PeopleBasicFormComponent implements OnInit {
   prevStep() {
     this.step--;
   }
-
 }

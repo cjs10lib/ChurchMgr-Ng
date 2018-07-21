@@ -4,7 +4,7 @@ export interface Person {
     title?: string;
     surname?: string;
     firstname?: string;
-    otherNames?: string;
+    othernames?: string;
     fullname?: string;
     gender?: string;
     dob?: Date;
@@ -15,6 +15,7 @@ export interface Person {
     contact?: Contact;
     home?: Home;
     createdDate?: Date;
+    createdBy?: string;
 }
 
 interface Home {

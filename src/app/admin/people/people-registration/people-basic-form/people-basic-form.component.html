@@ -1,10 +1,10 @@
-
-{{ f.value | json }}
-
 <form #f="ngForm" [@listStagger]> 
 
   <div class="submit-button">
-    <button mat-raised-button color="primary" (click)="nextStep()" [disabled]="!f.valid"> <mat-icon>save</mat-icon> Save Record</button>    
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!f.valid"> 
+      <mat-icon>save</mat-icon> 
+      <span>Save Record</span> 
+    </button>    
   </div>
 
   <mat-accordion class="example-headers-align">
@@ -33,7 +33,6 @@
           <!-- <h3>Drop Zone</h3> -->
           <mat-icon>cloud_upload</mat-icon>
           <input type="file" (change)="handleFileInput($event.target.files)">
-
         </div>
     
       </div>

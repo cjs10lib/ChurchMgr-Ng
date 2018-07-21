@@ -57,6 +57,10 @@ import { AuthenticationComponent } from './admin/authentication/authentication.c
 import { LoginFormComponent } from './admin/authentication/login-form/login-form.component';
 import { HomeComponent } from './general/home/home.component';
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,8 +80,11 @@ import { HomeComponent } from './general/home/home.component';
     HomeComponent
   ],
   imports: [
-    BrowserModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule.enablePersistence(),
+
     AppRoutingModule,
+    BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     FlexLayoutModule,
