@@ -1,3 +1,4 @@
+import { PeopleService } from './../../../services/people.service';
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
@@ -11,6 +12,7 @@ import {
   query,
   stagger
 } from '@angular/animations';
+import { Person } from '../../../models/person.model';
 
 @Component({
   selector: 'app-people-registry',
@@ -35,14 +37,12 @@ import {
 })
 export class PeopleRegistryComponent implements OnInit {
 
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  people$: Observable<Person[]>;
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches)
-    );
+  constructor(private peopleService: PeopleService) { }
 
   ngOnInit() {
+    this.people$ = this.peopleService.getPeople();
   }
 
 }

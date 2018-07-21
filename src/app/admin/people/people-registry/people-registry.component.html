@@ -29,23 +29,27 @@
           </div>
         </section>
 
-        <mat-nav-list  [@people-registryStagger]>
-          <mat-list-item>
+        <mat-nav-list [@people-registryStagger]>
+          <mat-list-item *ngIf="(people$ | async) as people">
             <mat-divider></mat-divider>
             <h3 matLine>  
               <strong>                  
-                {{ filteredDetails?.length }} record(s) found.
+                {{ people?.length }} record(s) found.
               </strong>
             </h3>
           </mat-list-item>
-          <mat-list-item>
+          <mat-list-item *ngFor="let people of people$ | async">
             <mat-divider></mat-divider>
             <img matListAvatar src="../../../../assets/avatars/avatar1.png" alt="...">
             <h3 matLine> 
               <strong>                  
-               Onwe Ada Chinenye
+                {{ people.surname }} 
+                {{ people.firstname }}                
               </strong>
             </h3>
+            <p matLine>
+              {{ people.otherNames }} 
+            </p>
             <button mat-icon-button>
               <mat-icon>edit</mat-icon>
             </button>
@@ -54,6 +58,13 @@
             </button>
           </mat-list-item>
         </mat-nav-list>
+
+        <!-- <div *ngIf="(people$ | async)? as people.length < 1"> 
+          <p>
+            No people record found :(
+          </p>
+        </div> -->
+        
 
         <!-- <div *ngIf="filteredDetails?.length >= 1">
           <mat-nav-list dense>
