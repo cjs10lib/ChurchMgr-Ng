@@ -1,0 +1,26 @@
+<mat-card class="card-wrapper">
+  <div fxLayout="row" fxLayout.lt-sm="column" fxFlexAlign.lt-sm="center center">
+
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          Basic Information
+        </ng-template>
+        <p>The wizard will guide you through the basic form information requirements.</p>
+        
+        <app-people-basic-form></app-people-basic-form>
+
+      </mat-tab>
+      <mat-tab *ngIf="personId">
+        <ng-template mat-tab-label>
+          Extended Information
+        </ng-template>
+        <p>The wizard will guide you through the extended form information requirements.</p>
+
+        <!-- <app-extended-registration-form [person-id]="personId"></app-extended-registration-form> -->
+
+      </mat-tab>
+    </mat-tab-group>
+      
+  </div>
+</mat-card>

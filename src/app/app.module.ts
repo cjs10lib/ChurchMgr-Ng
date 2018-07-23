@@ -62,6 +62,9 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
 import { ProfileIntroComponent } from './admin/people/people-profile/profile-intro/profile-intro.component';
 import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.component';
+import { ProfileBioComponent } from './admin/people/people-profile/profile-bio/profile-bio.component';
+import { ProfileBioExtComponent } from './admin/people/people-profile/profile-bio-ext/profile-bio-ext.component';
+import { ProfileEditComponent } from './admin/people/people-profile/profile-edit/profile-edit.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +84,10 @@ import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.co
     LoginFormComponent,
     HomeComponent,
     ProfileIntroComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    ProfileBioComponent,
+    ProfileBioExtComponent,
+    ProfileEditComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

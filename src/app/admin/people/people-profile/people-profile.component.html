@@ -18,175 +18,40 @@
       <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
         <div fxFlex="35"  fxFlexOrder.xs="1">
 
-          <mat-list>
-
-            <mat-list-item>
-              <mat-icon matListIcon color="primary">person</mat-icon>
-              <span matLine>
-                <strong>
-                  Gender
-                </strong>
-              </span>
-
-              <span>Male</span>
-              <mat-divider></mat-divider>
-            </mat-list-item>
-
-            <h2 mat-header>Phones</h2>
-            <mat-list-item>
-              <mat-icon matListIcon color="primary">phone_iphone</mat-icon>
-              <h3 matLine>
-                <strong>
-                  Mobile
-                </strong>
-              </h3>
-
-              <span>08087881103, <br> 07034306929</span>
-            </mat-list-item>
-
-            <mat-list-item>
-              <mat-icon matListIcon color="primary">phone</mat-icon>
-              <h3 matLine>
-                <strong>
-                  Home
-                </strong>
-              </h3>
-
-              <span>08087881103, <br> 07034306929</span>
-              <mat-divider></mat-divider>
-            </mat-list-item>
-
-
-            <h2 mat-header>Email</h2>
-            <mat-list-item>
-              <mat-icon matListIcon color="primary">email</mat-icon>
-              <h3 matLine>
-                <strong>
-                  <a class="email-address" href="christainonwe@gmail.com" target="_blank"> christainonwe@gmail.com </a>
-                </strong>
-              </h3>
-              <mat-divider></mat-divider>
-            </mat-list-item>
-
-            <h2 mat-header>Dates</h2>
-            <mat-list-item>
-              <mat-icon matListIcon color="primary">date_range</mat-icon>
-              <h3 matLine>
-                <strong>
-                  Dates
-                </strong>
-              </h3>
-              <mat-divider></mat-divider>
-            </mat-list-item>
-
-          </mat-list>
+         <app-profile-bio [person]="person"></app-profile-bio>
 
         </div>
 
         <div fxFlex="60" fxFlexOrder.xs="2">
-          <mat-card class="bio-info-card">
-            <mat-nav-list>
-
-              <h2 mat-header>Family</h2>
-
-              <mat-list-item>
-                <h3 matLine>
-                  <strong class="link">Onwe Christainonwe</strong> &nbsp;
-                  <small>Primary</small>    
-                </h3>
-
-                <span>01/01/2018</span>
-                <mat-divider></mat-divider>
-              </mat-list-item>
-
-              <mat-list-item>
-                <h3 matLine>
-                  <strong class="link">Onwe Charles</strong> &nbsp;
-                  <small>Child</small>    
-                </h3>
-
-                <span>01/06/2018</span>
-                <mat-divider></mat-divider>
-              </mat-list-item>
-
-            </mat-nav-list> 
-          </mat-card>
-
-          <mat-card class="bio-info-card">
-            <mat-nav-list>
-
-              <h2 mat-header>Groups</h2>
-              <mat-list-item>
-                <h3 matLine>
-                  <strong class="link">Choir</strong>
-                </h3>
-
-                <span>01/01/2018</span>
-                <mat-divider></mat-divider>
-              </mat-list-item>
-
-              <mat-list-item>
-                <h3 matLine>
-                  <strong class="link">Instrumentalist</strong>
-                </h3>
-
-                <span>02/05/2018</span>
-                <mat-divider></mat-divider>
-              </mat-list-item>
-
-            </mat-nav-list> 
-          </mat-card>
-
-          <mat-card class="bio-info-card">
-            <mat-nav-list>
-
-              <h2 mat-header>Note</h2>
-              <mat-list-item>
-                <h3 matLine>
-                  <button mat-icon-button>
-                    <mat-icon color="primary">note_add</mat-icon>
-                  </button>
-                </h3>
-
-                <span>01/01/2018</span>
-                <mat-divider></mat-divider>
-              </mat-list-item>
-
-            </mat-nav-list> 
-          </mat-card>
           
-          <mat-card class="bio-info-card">
-            <mat-nav-list>
-
-              <h2 mat-header>Documents</h2>
-              <mat-list-item>
-                <h3 matLine>
-                  <mat-icon color="primary">insert_drive_file</mat-icon>
-                </h3>
-
-                <span>01/01/2018</span>
-                <mat-divider></mat-divider>
-              </mat-list-item>
-
-            </mat-nav-list> 
-          </mat-card>
-          
+         <app-profile-bio-ext></app-profile-bio-ext>
 
         </div>
-
-      </div>
-     
+      </div>    
       
     </mat-tab>
 
     <mat-tab>
+
       <ng-template mat-tab-label>
-        <mat-icon>edit</mat-icon> &nbsp;
+        <mat-icon>border_color</mat-icon> &nbsp;
         <span>Edit</span>
+      </ng-template>
+      
+      <app-profile-edit></app-profile-edit>
+  
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>photo_size_select_actual</mat-icon> &nbsp;
+        <span>Gallery</span>
       </ng-template>
       <p>The wizard will guide you through the extended form information requirements.</p>
   
     </mat-tab>
+
+    
 
     <mat-tab>
       <ng-template mat-tab-label>
