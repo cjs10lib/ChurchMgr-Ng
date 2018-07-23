@@ -14,8 +14,8 @@ export interface Person {
     occupation?: Work;
     contact?: Contact;
     home?: Home;
-    createdDate?: Date;
-    createdBy?: string;
+    lastUpdate?: number;
+    updatedBy?: string;
 }
 
 interface Home {

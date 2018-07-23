@@ -8,19 +8,20 @@
         </ng-template>
         <p>The wizard will guide you through the basic form information requirements.</p>
         
-        <!-- <app-basic-registration-form [person-id]="personId"></app-basic-registration-form> -->
         <app-people-basic-form></app-people-basic-form>
 
       </mat-tab>
-      <mat-tab *ngIf="personId">
+
+      <!-- <mat-tab>
         <ng-template mat-tab-label>
           Extended Information
         </ng-template>
         <p>The wizard will guide you through the extended form information requirements.</p>
 
-        <!-- <app-extended-registration-form [person-id]="personId"></app-extended-registration-form> -->
+        
 
-      </mat-tab>
+      </mat-tab> -->
+    
     </mat-tab-group>
       
   </div>

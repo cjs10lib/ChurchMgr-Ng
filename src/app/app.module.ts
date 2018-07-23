@@ -65,6 +65,7 @@ import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.co
 import { ProfileBioComponent } from './admin/people/people-profile/profile-bio/profile-bio.component';
 import { ProfileBioExtComponent } from './admin/people/people-profile/profile-bio-ext/profile-bio-ext.component';
 import { ProfileEditComponent } from './admin/people/people-profile/profile-edit/profile-edit.component';
+import { PeopleExtendedFormComponent } from './admin/people/people-registration/people-extended-form/people-extended-form.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { ProfileEditComponent } from './admin/people/people-profile/profile-edit
     LoadingSpinnerComponent,
     ProfileBioComponent,
     ProfileBioExtComponent,
-    ProfileEditComponent
+    ProfileEditComponent,
+    PeopleExtendedFormComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

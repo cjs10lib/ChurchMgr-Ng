@@ -1,3 +1,4 @@
+import { SweetAlertService } from './../../../../services/sweet-alert.service';
 import { PeopleService } from './../../../../services/people.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Person } from '../../../../models/person.model';
@@ -12,15 +13,19 @@ export class ProfileIntroComponent implements OnInit {
 
   @Input() person: Person = {};
 
-  constructor(private peopleService: PeopleService, private router: Router) { }
+  constructor(private peopleService: PeopleService, private router: Router, private sweetAlertService: SweetAlertService) { }
 
   ngOnInit() {}
 
   deleteProfile() {
-    if (confirm ('Are you sure of deleting this record?')) {
-      this.peopleService.deletePerson(this.person.id);
-      this.router.navigate(['people']);
-    }
+    this.sweetAlertService.confirmDelete().then(resp => {
+      if (resp.value) {
+        this.peopleService.deletePerson(this.person.id);
+
+        this.sweetAlertService.afterDeleteSuccess();
+        this.router.navigate(['people']);
+      }
+    });
   }
 
 }

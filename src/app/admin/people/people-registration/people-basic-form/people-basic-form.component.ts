@@ -1,6 +1,6 @@
 import { SweetAlertService } from './../../../../services/sweet-alert.service';
 import { PeopleService } from './../../../../services/people.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import {
   trigger,
   style,
@@ -11,6 +11,8 @@ import {
   stagger
 } from '@angular/animations';
 import { Person } from '../../../../models/person.model';
+import { ActivatedRoute, Router } from '../../../../../../node_modules/@angular/router';
+import { Subscription } from '../../../../../../node_modules/rxjs';
 
 @Component({
   selector: 'app-people-basic-form',
@@ -33,14 +35,7 @@ import { Person } from '../../../../models/person.model';
     ])
   ]
 })
-export class PeopleBasicFormComponent implements OnInit {
-  step = 0;
-
-  people$;
-
-  imageUrl = '../../../../../assets/avatars/avatar3.png';
-  fileToUpload: File = null;
-  isHovering: boolean;
+export class PeopleBasicFormComponent implements OnInit, OnDestroy {
 
   person: Person = {
     education: {},
@@ -49,17 +44,58 @@ export class PeopleBasicFormComponent implements OnInit {
     home: {}
   };
 
-  constructor(private peopleService: PeopleService, private sweetAlertService: SweetAlertService) { }
+  personId: string;
+
+  step = 0;
+
+  imageUrl = '../../../../../assets/avatars/avatar3.png';
+  fileToUpload: File = null;
+  isHovering: boolean;
+
+  subscription: Subscription;
+
+  constructor(private peopleService: PeopleService,
+    private sweetAlertService: SweetAlertService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
+
+    this.personId = this.route.snapshot.paramMap.get('id');
+
+    if (this.personId) {
+
+      this.subscription = this.peopleService.getPerson(this.personId).subscribe((resp: Person) => {
+        this.person = resp;
+        this.person.education = resp.education;
+        this.person.occupation = resp.occupation;
+        this.person.contact = resp.contact;
+        this.person.home = resp.home;
+        console.log(this.person);
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   onSubmit() {
-    this.peopleService.addPerson(this.person).then(resp => {
-      console.log(resp.id);
-    });
+    this.sweetAlertService.confirmUpdate().then(result => {
+      if (result.value) {
 
-    this.sweetAlertService.afterUpdateSuccess();
+        if (this.personId) {
+          this.peopleService.updatePerson(this.personId, this.person);
+        } else {
+          this.peopleService.addPerson(this.person).then(resp => {
+            console.log(resp.id);
+          });
+        }
+
+        this.sweetAlertService.afterUpdateSuccess();
+        this.router.navigate(['people-profile', this.personId]);
+      }
+    });
   }
 
   toggleHover($event: boolean) {

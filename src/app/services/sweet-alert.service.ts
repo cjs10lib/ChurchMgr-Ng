@@ -6,19 +6,52 @@ import swal from 'sweetalert2';
 })
 export class SweetAlertService {
 
-  constructor() { }
+  toast;
 
-  afterUpdateSuccess() {
-    const toast = swal.mixin({
+  constructor() {
+    this.toast = swal.mixin({
       toast: true,
       position: 'top-end',
       showConfirmButton: false,
       timer: 3000
     });
+  }
 
-    return toast({
+  confirmUpdate() {
+    return swal({
+      title: 'Record Update!',
+      text: 'Are you sure of the record supplied?',
+      type: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirm!'
+    });
+  }
+
+  afterUpdateSuccess() {
+    return this.toast({
       type: 'success',
       title: 'Record saved successfully'
+    });
+  }
+
+  confirmDelete() {
+    return swal({
+      title: 'Record Delete!',
+      text: 'You won\'t be able to revert this!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirm!'
+    });
+  }
+
+  afterDeleteSuccess() {
+    return this.toast({
+      type: 'success',
+      title: 'Record deleted successfully'
     });
   }
 }
