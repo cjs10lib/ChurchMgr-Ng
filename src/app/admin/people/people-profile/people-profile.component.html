@@ -4,3 +4,225 @@
   <app-profile-intro [person]="person"></app-profile-intro>
 
 </mat-card>
+
+<mat-card>
+  <mat-tab-group>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>person</mat-icon> &nbsp;
+        <span>Bio Information</span>
+      </ng-template>
+
+      <div class="spc-10"></div>
+
+      <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
+        <div fxFlex="35"  fxFlexOrder.xs="1">
+
+          <mat-list>
+
+            <mat-list-item>
+              <mat-icon matListIcon color="primary">person</mat-icon>
+              <span matLine>
+                <strong>
+                  Gender
+                </strong>
+              </span>
+
+              <span>Male</span>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+
+            <h2 mat-header>Phones</h2>
+            <mat-list-item>
+              <mat-icon matListIcon color="primary">phone_iphone</mat-icon>
+              <h3 matLine>
+                <strong>
+                  Mobile
+                </strong>
+              </h3>
+
+              <span>08087881103, <br> 07034306929</span>
+            </mat-list-item>
+
+            <mat-list-item>
+              <mat-icon matListIcon color="primary">phone</mat-icon>
+              <h3 matLine>
+                <strong>
+                  Home
+                </strong>
+              </h3>
+
+              <span>08087881103, <br> 07034306929</span>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+
+
+            <h2 mat-header>Email</h2>
+            <mat-list-item>
+              <mat-icon matListIcon color="primary">email</mat-icon>
+              <h3 matLine>
+                <strong>
+                  <a class="email-address" href="christainonwe@gmail.com" target="_blank"> christainonwe@gmail.com </a>
+                </strong>
+              </h3>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+
+            <h2 mat-header>Dates</h2>
+            <mat-list-item>
+              <mat-icon matListIcon color="primary">date_range</mat-icon>
+              <h3 matLine>
+                <strong>
+                  Dates
+                </strong>
+              </h3>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+
+          </mat-list>
+
+        </div>
+
+        <div fxFlex="60" fxFlexOrder.xs="2">
+          <mat-card class="bio-info-card">
+            <mat-nav-list>
+
+              <h2 mat-header>Family</h2>
+
+              <mat-list-item>
+                <h3 matLine>
+                  <strong class="link">Onwe Christainonwe</strong> &nbsp;
+                  <small>Primary</small>    
+                </h3>
+
+                <span>01/01/2018</span>
+                <mat-divider></mat-divider>
+              </mat-list-item>
+
+              <mat-list-item>
+                <h3 matLine>
+                  <strong class="link">Onwe Charles</strong> &nbsp;
+                  <small>Child</small>    
+                </h3>
+
+                <span>01/06/2018</span>
+                <mat-divider></mat-divider>
+              </mat-list-item>
+
+            </mat-nav-list> 
+          </mat-card>
+
+          <mat-card class="bio-info-card">
+            <mat-nav-list>
+
+              <h2 mat-header>Groups</h2>
+              <mat-list-item>
+                <h3 matLine>
+                  <strong class="link">Choir</strong>
+                </h3>
+
+                <span>01/01/2018</span>
+                <mat-divider></mat-divider>
+              </mat-list-item>
+
+              <mat-list-item>
+                <h3 matLine>
+                  <strong class="link">Instrumentalist</strong>
+                </h3>
+
+                <span>02/05/2018</span>
+                <mat-divider></mat-divider>
+              </mat-list-item>
+
+            </mat-nav-list> 
+          </mat-card>
+
+          <mat-card class="bio-info-card">
+            <mat-nav-list>
+
+              <h2 mat-header>Note</h2>
+              <mat-list-item>
+                <h3 matLine>
+                  <button mat-icon-button>
+                    <mat-icon color="primary">note_add</mat-icon>
+                  </button>
+                </h3>
+
+                <span>01/01/2018</span>
+                <mat-divider></mat-divider>
+              </mat-list-item>
+
+            </mat-nav-list> 
+          </mat-card>
+          
+          <mat-card class="bio-info-card">
+            <mat-nav-list>
+
+              <h2 mat-header>Documents</h2>
+              <mat-list-item>
+                <h3 matLine>
+                  <mat-icon color="primary">insert_drive_file</mat-icon>
+                </h3>
+
+                <span>01/01/2018</span>
+                <mat-divider></mat-divider>
+              </mat-list-item>
+
+            </mat-nav-list> 
+          </mat-card>
+          
+
+        </div>
+
+      </div>
+     
+      
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>edit</mat-icon> &nbsp;
+        <span>Edit</span>
+      </ng-template>
+      <p>The wizard will guide you through the extended form information requirements.</p>
+  
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>people</mat-icon> &nbsp;
+        <span>Family</span>
+      </ng-template>
+      <p>The wizard will guide you through the extended form information requirements.</p>
+  
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>date_range</mat-icon> &nbsp;
+        <span>Attendance</span>
+      </ng-template>
+      <p>The wizard will guide you through the extended form information requirements.</p>
+  
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>monetization_on</mat-icon> &nbsp;
+        <span>Giving</span>
+      </ng-template>
+      <p>The wizard will guide you through the extended form information requirements.</p>
+  
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>account_circle</mat-icon> &nbsp;
+        <span>Account</span>
+      </ng-template>
+      <p>The wizard will guide you through the extended form information requirements.</p>
+  
+    </mat-tab>
+
+  </mat-tab-group>
+</mat-card>

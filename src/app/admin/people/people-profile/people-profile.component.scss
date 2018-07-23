@@ -1,4 +1,13 @@
+@import '../../../theme/custom-theme.scss';
 
 .profile-intro {
     background: url(../../../../assets/banners/banner1.jpg);
+}
+
+.bio-info-card {
+    margin: 20px;
+}
+
+.link {
+    color: mat-color($primary);
 }

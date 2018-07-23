@@ -29,7 +29,9 @@
           </div>
         </section>
 
-        <mat-nav-list [@people-registryStagger]>
+        <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
+
+        <mat-nav-list>
           <mat-list-item *ngIf="filteredPeople">
             <mat-divider></mat-divider>
             <h3 matLine>  
@@ -51,12 +53,9 @@
               {{ people.otherNames }} 
             </p>
 
-              <!-- <button mat-icon-button fxShow.lt-sm="false" fxShow="true">
-                <mat-icon color="primary">edit</mat-icon>
-              </button> -->
-              <button mat-icon-button>
-                <mat-icon color="primary">search</mat-icon>
-              </button>
+            <button mat-icon-button>
+              <mat-icon color="primary">search</mat-icon>
+            </button>
 
           </mat-list-item>
         </mat-nav-list>
