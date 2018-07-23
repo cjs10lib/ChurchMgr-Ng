@@ -61,6 +61,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
 import { ProfileIntroComponent } from './admin/people/people-profile/profile-intro/profile-intro.component';
+import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { ProfileIntroComponent } from './admin/people/people-profile/profile-int
     AuthenticationComponent,
     LoginFormComponent,
     HomeComponent,
-    ProfileIntroComponent
+    ProfileIntroComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

@@ -12,8 +12,15 @@ export class ProfileIntroComponent implements OnInit {
 
   @Input() person: Person = {};
 
-  constructor(private route: ActivatedRoute, private peopleService: PeopleService) { }
+  constructor(private peopleService: PeopleService) { }
 
   ngOnInit() {}
+
+  deleteProfile() {
+    if (confirm ('Are you sure of deleting this record?')) {
+      this.peopleService.deletePerson(this.person.id);
+    }
+
+  }
 
 }

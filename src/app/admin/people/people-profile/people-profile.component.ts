@@ -12,6 +12,8 @@ import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
 export class PeopleProfileComponent implements OnInit, OnDestroy {
 
   person: Person = {};
+  showSpinner = true;
+
   subscription: Subscription;
 
   constructor(private peopleService: PeopleService, private route: ActivatedRoute) {}
@@ -21,7 +23,8 @@ export class PeopleProfileComponent implements OnInit, OnDestroy {
 
     this.subscription = this.peopleService.getPerson(personId).subscribe(resp => {
       this.person = resp;
-      console.log('profile-comp', resp);
+      this.person.id = personId;
+      this.showSpinner = false;
     });
   }
 

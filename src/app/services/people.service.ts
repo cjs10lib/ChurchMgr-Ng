@@ -38,4 +38,8 @@ export class PeopleService {
     person.fullname = person.surname + ' ' + person.firstname + ' ' + person.othernames;
     return this.peopleCollection.add(person);
   }
+
+  deletePerson(personId: string) {
+    return this.db.doc(`people/${personId}`).delete();
+  }
 }
