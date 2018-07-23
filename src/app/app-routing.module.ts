@@ -1,3 +1,4 @@
+import { PeopleProfileComponent } from './admin/people/people-profile/people-profile.component';
 import { HomeComponent } from './general/home/home.component';
 import { LoginFormComponent } from './admin/authentication/login-form/login-form.component';
 import { NgModule } from '@angular/core';
@@ -37,6 +38,9 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent
+      }, {
+        path: 'people-profile/:id',
+        component: PeopleProfileComponent
       }, {
         path: 'people',
         component: PeopleRegistryComponent

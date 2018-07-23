@@ -38,7 +38,7 @@
               </strong>
             </h3>
           </mat-list-item>
-          <mat-list-item *ngFor="let people of filteredPeople">
+          <mat-list-item *ngFor="let people of filteredPeople" routerLink="/people-profile/{{ people.id }}" >
             <mat-divider></mat-divider>
             <img matListAvatar src="../../../../assets/avatars/avatar4.png" alt="...">
             <h3 matLine> 
@@ -60,12 +60,7 @@
 
           </mat-list-item>
         </mat-nav-list>
-<!-- 
-        <div *ngIf="filteredPeople.length < 1"> 
-          <p>
-            No people record found :(
-          </p>
-        </div>         -->
+
 <!-- 
         <ng-template #noImageAvatar>
           <img matListAvatar src="../../../assets/avatar/avatar1.png" alt="...">

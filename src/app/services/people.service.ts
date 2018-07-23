@@ -30,6 +30,10 @@ export class PeopleService {
     return this.people$;
   }
 
+  getPerson(personId: string) {
+    return this.db.doc(`people/${personId}`).valueChanges();
+  }
+
   addPerson(person: Person) {
     person.fullname = person.surname + ' ' + person.firstname + ' ' + person.othernames;
     return this.peopleCollection.add(person);

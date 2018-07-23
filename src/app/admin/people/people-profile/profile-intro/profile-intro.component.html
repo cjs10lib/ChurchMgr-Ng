@@ -1,0 +1,84 @@
+<div class="profile-intro">
+  <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center" style="text-align: 'center';">
+    
+      <!-- <div class="intro-img" > -->
+      <div fxFlexOrder.xs="1">
+        <!-- <div *ngIf="details.imageURL; else noImageAvatar" class="flex-details" style="margin-bottom: 20px;"> -->
+        
+        <!-- <img [src]="personImage" alt="" style="width: 100%;"> -->
+        <!-- <img [src]="details.imageURL" [alt]="details.person.surname" style="width: 100%;"> -->
+        <img class="avatar" src="../../../../assets/avatars/avatar4.png" alt="...">
+       
+      </div>
+
+      <ng-template #noImageAvatar>
+        <div class="flex-details" style="margin-bottom: 20px;">
+          <img class="avatar" src="../../../../assets/avatars/avatar4.png" alt="...">
+        </div>
+      </ng-template>
+
+      <!-- <div class="flex-details"> -->
+      <div fxFlex="50" fxFlexOrder.xs="2" style="padding: 20px 20px 0 5px ;">
+        <div class="flex-details">
+
+          <mat-list>
+
+            <mat-list-item>
+              <h2>
+                {{ person.surname }}
+                {{ person.firstname }}
+              </h2> &nbsp;
+              <small>(Chikwado) </small> 
+            </mat-list-item>
+  
+            <mat-list-item>
+              <mat-icon>phone_iphone</mat-icon> &nbsp;
+              <span>
+                {{ person.contact?.mobilePhone1 }}, &nbsp;
+                {{ person.contact?.mobilePhone2 }}
+              </span>
+            </mat-list-item>
+  
+            <!-- <mat-list-item *ngIf="details.person.contact.email"> -->
+            <mat-list-item>
+              <mat-icon>email</mat-icon> &nbsp;
+              <span>
+                {{ person.contact?.email }}
+              </span>  
+            </mat-list-item>
+  
+            <mat-list-item>
+              <mat-icon>location_on</mat-icon> &nbsp;          
+              <span>
+                {{ person.contact?.residentialAddress }}
+              </span>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+
+            
+            <div class="edit-button">
+              <button mat-raised-button color="primary" (click)="editProfile()">
+                <mat-icon>pen</mat-icon>
+                <span>Edit Profile</span>
+              </button> &nbsp;
+
+              <button mat-raised-button color="warn">
+                <mat-icon>trash</mat-icon>
+                <span>Delete Record</span>  
+              </button>
+            </div>
+  
+          </mat-list> 
+        
+        </div>
+
+      </div>
+  </div>
+
+  <ng-template #loader>
+    <strong>
+      .....
+    </strong>
+  </ng-template>
+
+</div>

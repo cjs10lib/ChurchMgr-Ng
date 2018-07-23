@@ -60,6 +60,7 @@ import { HomeComponent } from './general/home/home.component';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
+import { ProfileIntroComponent } from './admin/people/people-profile/profile-intro/profile-intro.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { environment } from '../environments/environment';
     DropZoneDirective,
     AuthenticationComponent,
     LoginFormComponent,
-    HomeComponent
+    HomeComponent,
+    ProfileIntroComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

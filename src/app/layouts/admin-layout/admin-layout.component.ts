@@ -18,6 +18,11 @@ export class AdminLayoutComponent {
       map(result => result.matches)
     );
 
+  isPhablet$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Small)
+    .pipe(
+      map(result => result.matches)
+    );
+
   constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
     router.events.subscribe((_: NavigationEnd) => this.currentUrl = _.url);
   }

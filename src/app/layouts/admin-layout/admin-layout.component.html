@@ -59,7 +59,7 @@
     fixedInViewport="true"
     fixedTopGap="64"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [mode]="((isPhablet$ | async) || (isHandset$ | async) ? 'over' : 'side')  "
     [opened]="!(isHandset$ | async)"
     style="width:300px;">
 
@@ -72,7 +72,7 @@
 
         <mat-nav-list>
             <!-- <a mat-list-item routerLink="/dashboard"> -->
-            <a mat-list-item routerLink="/dashboard"  [class.activated]="currentUrl == '/dashboard'">
+            <a mat-list-item routerLink="/dashboard" [class.activated]="currentUrl == '/dashboard'">
                 <mat-icon>dashboard</mat-icon> &nbsp;
                 <strong>Dashboard</strong>
             </a>

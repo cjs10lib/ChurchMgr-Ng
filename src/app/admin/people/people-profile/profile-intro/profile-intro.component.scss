@@ -1,0 +1,48 @@
+// .flex-details {
+//     display: flex;
+//     flex-direction: column;
+// }
+
+// .fill-space {
+//     flex: 1 1 auto;
+// }
+
+// .edit-button {
+//     text-align: right;
+//     padding: 10px;
+// }
+
+.avatar {
+    width: 70%;
+    height: 70%;
+    border-radius: 50%;
+    position: relative;
+    margin: 30px 30px 0 30px;
+}
+
+mat-list {
+
+    h2 {
+        // color: whitesmoke;
+       color: rgba(255,255,255,.87);
+    }
+
+    small {
+        color: rgba(255,255,255,.87);
+    }
+
+    span {
+        color: rgba(255,255,255,.87);
+    }
+
+    mat-icon {
+        color: rgba(255,255,255,.87);
+    }
+}
+
+// mat-card-header {
+//     background-color: rgb(192, 189, 189);
+//     color: rgb(150, 148, 148);
+//     line-height: 0.3;
+//     width: 100%;
+// }
