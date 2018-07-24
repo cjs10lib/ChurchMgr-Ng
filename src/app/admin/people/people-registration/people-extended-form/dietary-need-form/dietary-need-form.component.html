@@ -1,0 +1,14 @@
+<mat-form-field class="demo-chip-list">
+  <mat-chip-list #dietaryNeeds>
+    <mat-chip *ngFor="let need of dietaries$" [selectable]="selectable"
+              [removable]="removable" (remove)="removeDietary(need)">
+      {{ need.dietaryNeed }}
+      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+    </mat-chip>
+    <input placeholder="Enter dietary needs"
+            [matChipInputFor]="dietaryNeeds"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="addDietary($event)" />
+  </mat-chip-list>
+</mat-form-field>

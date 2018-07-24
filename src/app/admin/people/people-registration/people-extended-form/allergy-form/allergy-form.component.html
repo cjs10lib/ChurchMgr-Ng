@@ -1,0 +1,14 @@
+<mat-form-field class="demo-chip-list">
+  <mat-chip-list #allegy>
+    <mat-chip *ngFor="let allegy of allegies$" [selectable]="selectable"
+              [removable]="removable" (remove)="removeAllegy(allegy)">
+      {{ allegy.allegy }}
+      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+    </mat-chip>
+    <input placeholder="Enter allegies"
+            [matChipInputFor]="allegy"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="addAllegy($event)" />
+  </mat-chip-list>
+</mat-form-field>

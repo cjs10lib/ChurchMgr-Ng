@@ -1,8 +1,8 @@
 import { Subscription } from 'rxjs';
-import { PeopleService } from './../../../services/people.service';
+import { PeopleService } from '../../../services/people.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Person } from '../../../models/person.model';
-import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-people-profile',

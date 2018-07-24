@@ -1,8 +1,8 @@
-import { SweetAlertService } from './../../../../services/sweet-alert.service';
-import { PeopleService } from './../../../../services/people.service';
+import { SweetAlertService } from '../../../../services/sweet-alert.service';
+import { PeopleService } from '../../../../services/people.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Person } from '../../../../models/person.model';
-import { ActivatedRoute, Router } from '../../../../../../node_modules/@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-intro',

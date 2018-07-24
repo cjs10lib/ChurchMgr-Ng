@@ -39,7 +39,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
-import { FormsModule } from '../../node_modules/@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { PeopleProfileComponent } from './admin/people/people-profile/people-profile.component';
 import { PeopleBasicFormComponent } from './admin/people/people-registration/people-basic-form/people-basic-form.component';
@@ -66,6 +66,12 @@ import { ProfileBioComponent } from './admin/people/people-profile/profile-bio/p
 import { ProfileBioExtComponent } from './admin/people/people-profile/profile-bio-ext/profile-bio-ext.component';
 import { ProfileEditComponent } from './admin/people/people-profile/profile-edit/profile-edit.component';
 import { PeopleExtendedFormComponent } from './admin/people/people-registration/people-extended-form/people-extended-form.component';
+import { BaptismalFormComponent } from './admin/people/people-registration/people-extended-form/baptismal-form/baptismal-form.component';
+import { FamilyFormComponent } from './admin/people/people-registration/people-extended-form/family-form/family-form.component';
+import { FamilyFormAddComponent } from './admin/people/people-registration/people-extended-form/family-form-add/family-form-add.component';
+import { OtherFormComponent } from './admin/people/people-registration/people-extended-form/other-form/other-form.component';
+import { DietaryNeedFormComponent } from './admin/people/people-registration/people-extended-form/dietary-need-form/dietary-need-form.component';
+import { AllergyFormComponent } from './admin/people/people-registration/people-extended-form/allergy-form/allergy-form.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +95,13 @@ import { PeopleExtendedFormComponent } from './admin/people/people-registration/
     ProfileBioComponent,
     ProfileBioExtComponent,
     ProfileEditComponent,
-    PeopleExtendedFormComponent
+    PeopleExtendedFormComponent,
+    BaptismalFormComponent,
+    FamilyFormComponent,
+    FamilyFormAddComponent,
+    OtherFormComponent,
+    DietaryNeedFormComponent,
+    AllergyFormComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -135,6 +147,9 @@ import { PeopleExtendedFormComponent } from './admin/people/people-registration/
     MatToolbarModule,
     MatTooltipModule,
     MatNativeDateModule
+  ],
+  entryComponents: [
+    FamilyFormAddComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

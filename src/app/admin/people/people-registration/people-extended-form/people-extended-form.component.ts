@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-people-extended-form',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PeopleExtendedFormComponent implements OnInit {
 
-  constructor() { }
+  personId: string;
+
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.personId = this.route.snapshot.paramMap.get('id');
   }
 
 }

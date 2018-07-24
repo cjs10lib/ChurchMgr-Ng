@@ -1,0 +1,57 @@
+
+<form #f="ngForm">
+  <div fxLayout="row" fxLayout.xs="column">
+    <div fxFlex>            
+      <div class="flex-container">
+
+        
+        <div class="add-family">              
+          <button mat-raised-button color="primary" type="button" (click)="openDialog()">
+            <mat-icon>group_add</mat-icon> &nbsp;
+            Add Family
+          </button>
+        </div>  
+
+        <mat-form-field>
+          <span matPrefix>
+            <mat-icon>people</mat-icon> &nbsp;
+          </span> 
+          <mat-select [(ngModel)]="personFamily.familyId" name="familyId" #familyId placeholder="Select Family Name" required>
+            <mat-option>-- None --</mat-option>
+            <mat-option *ngFor="let family of families$ | async" [value]="family.id">
+              {{ family.name }}
+              <mat-divider></mat-divider>
+            </mat-option>
+          </mat-select>   
+          <span matSuffix>
+            Family
+          </span>       
+          <mat-error>
+            Family name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+              
+        <div style="text-align: right">    
+          <a mat-button color="primary">
+            View Members
+          </a>
+        </div>    
+
+        <p>Select tag &nbsp; <small>(this section is required [*])</small></p>
+        <div style="margin-left:30px;">          
+          <mat-radio-group [(ngModel)]="personFamily.tag" name="tag" #tag [value]="tags[0]" class="example-radio-group" required>
+            <mat-radio-button class="example-radio-button" *ngFor="let tag of tags" [value]="tag">
+              {{ tag }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div style="margin:10px 20px;">
+    <button mat-raised-button type="button" matStepperPrevious>Back</button>
+    <button mat-raised-button color="primary" matStepperNext (click)="onAddPersonFamily()" [disabled]="!f.valid">Next</button>
+  </div>
+</form>

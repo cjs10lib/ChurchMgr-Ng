@@ -1,0 +1,48 @@
+<form #f="ngForm">
+  <div class="wrapper">
+
+    <p>Baptismal Status</p>
+    <mat-radio-group class="example-radio-group" style="margin-left:20px;margin-bottom:10px;" name="baptismalStatus" [(ngModel)]="baptism.status" (change)="clearBaptismFields()">
+      <mat-radio-button class="example-radio-button" *ngFor="let bStatus of baptismalStatus" [value]="bStatus.value">
+        {{ bStatus.name }}
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field>
+      <span matPrefix>
+        <mat-icon>date_range</mat-icon> &nbsp;
+      </span>
+
+      <input matInput [matDatepicker]="baptismalDate" name="baptismalDate" [(ngModel)]="baptism.baptismalDate" placeholder="Date Baptised" [disabled]="baptism.status === 'Not-Baptised'">
+      <mat-datepicker-toggle matSuffix [for]="baptismalDate"></mat-datepicker-toggle>
+      <mat-datepicker #baptismalDate touchUi></mat-datepicker>
+      <mat-hint>Baptismal Date Format: mm/dd/yyyy</mat-hint>
+      <mat-hint align="end">Click toggle button to select date!</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>            
+      <span matPrefix>
+        <mat-icon>person</mat-icon> &nbsp;
+      </span>
+      <input matInput name="baptisedBy" [(ngModel)]="baptism.baptisedBy" placeholder="Baptised By?" [disabled]="baptism.status === 'Not-Baptised'">
+    </mat-form-field>
+
+    <mat-form-field>            
+      <span matPrefix>
+        <mat-icon>account_balance</mat-icon> &nbsp;
+      </span>
+      <input matInput name="churchBaptised" [(ngModel)]="baptism.churchBaptised" placeholder="Church Baptised" [disabled]="baptism.status === 'Not-Baptised'">
+    </mat-form-field>
+
+    <mat-form-field>            
+      <span matPrefix>
+        <mat-icon>note_add</mat-icon> &nbsp;
+      </span>
+      <textarea matInput matTextareaAutosize  name="extraNotes" [(ngModel)]="baptism.extraNotes" placeholder="Extra Notes" [disabled]="baptism.status === 'Not-Baptised'"></textarea>
+    </mat-form-field>
+
+  </div>
+  <div>
+    <button mat-raised-button color="primary" matStepperNext (click)="onSubmit()">Next</button>
+  </div>
+</form>

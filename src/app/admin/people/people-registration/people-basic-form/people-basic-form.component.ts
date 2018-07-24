@@ -1,5 +1,5 @@
-import { SweetAlertService } from './../../../../services/sweet-alert.service';
-import { PeopleService } from './../../../../services/people.service';
+import { SweetAlertService } from '../../../../services/sweet-alert.service';
+import { PeopleService } from '../../../../services/people.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import {
   trigger,
@@ -11,8 +11,8 @@ import {
   stagger
 } from '@angular/animations';
 import { Person } from '../../../../models/person.model';
-import { ActivatedRoute, Router } from '../../../../../../node_modules/@angular/router';
-import { Subscription } from '../../../../../../node_modules/rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-people-basic-form',

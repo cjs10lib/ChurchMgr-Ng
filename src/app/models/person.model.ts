@@ -1,3 +1,4 @@
+import { PersonFamily } from './person-family.model';
 
 export interface Person {
     id?: string;

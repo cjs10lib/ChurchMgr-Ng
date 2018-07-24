@@ -1,9 +1,9 @@
-import { Person } from './../models/person.model';
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { map } from '../../../node_modules/rxjs/operators';
-import { MatDatepickerInput } from '../../../node_modules/@angular/material';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { Person } from '../models/person.model';
 
 @Injectable({
   providedIn: 'root'

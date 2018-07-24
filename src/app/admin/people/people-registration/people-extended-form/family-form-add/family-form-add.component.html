@@ -1,0 +1,27 @@
+<form #f="ngForm">
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar>
+        <mat-icon>people</mat-icon>
+      </div>
+      <mat-card-title>
+        <strong>Add Family</strong>
+      </mat-card-title>
+    </mat-card-header>
+  
+    <mat-form-field>
+      <input matInput ngModel name="name" #name="ngModel" placeholder="Enter family name" required>
+      <mat-hint>Eg. Kweku, John etc.</mat-hint>
+      <mat-error>
+        Family Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-card-actions>
+      <div class="mat-card-actions">
+        <button mat-raised-button [mat-dialog-close]="name.value" color="primary" [disabled]="!f.valid">Save</button>
+        <button mat-raised-button mat-dialog-close type="button">Close</button>
+      </div>    
+    </mat-card-actions>
+  </mat-card>
+</form>

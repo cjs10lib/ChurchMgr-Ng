@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { Person } from '../../../models/person.model';
-import { PeopleService } from './../../../services/people.service';
+import { PeopleService } from '../../../services/people.service';
 
 @Component({
   selector: 'app-people-registry',
