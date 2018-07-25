@@ -15,9 +15,12 @@ import { Subscription } from '../../../../../../node_modules/rxjs';
 })
 export class FamilyRegistryComponent implements OnInit, OnDestroy {
 
+  searchQry: string;
+
   @Input() personId: string;
 
   people$ = [];
+  filteredPeople$ = [];
 
   familySubscription: Subscription;
   peopleSubscription: Subscription;
@@ -41,8 +44,11 @@ export class FamilyRegistryComponent implements OnInit, OnDestroy {
 
             this.peopleSubscription = this.peopleService.getPerson(personId).subscribe(result => {
               this.people$.push({
-                personId: personId,
-                person: result
+                personId: personId, person: result
+              });
+
+              this.filteredPeople$.push({
+                personId: personId, person: result
               });
           });
         });
@@ -63,4 +69,15 @@ export class FamilyRegistryComponent implements OnInit, OnDestroy {
     }
   }
 
+  search(qry: string) {
+    this.filteredPeople$ = qry ?
+      this.people$.filter(
+        p => p.person.surname.toLowerCase().includes(qry.toLowerCase()) ||
+        p.person.firstname.toLowerCase().includes(qry.toLowerCase())) : this.people$;
+  }
+
+  clearSearchField() {
+    this.search('');
+    this.searchQry = '';
+  }
 }

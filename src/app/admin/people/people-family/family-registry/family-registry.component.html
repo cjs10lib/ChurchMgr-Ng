@@ -2,8 +2,8 @@
     <!-- <div fxLayout="row" fxLayout.lt-sm="column" fxFlexAlign.lt-sm="center center"> -->
   <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
 
-    <div fxFlex="24" fxFlexOrder.xs="1">
-      <div class="flex-details margin-20">
+    <div fxFlex="20" fxFlexOrder.xs="1">
+      <div class="flex-details">
         
         <!-- <h3>Filter by Name</h3> -->
         <mat-form-field fxFlex.sm="style='font-size:10px;'">
@@ -34,34 +34,16 @@
         <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
 
         <mat-nav-list>
-          <mat-list-item *ngIf="people$">
+          <mat-list-item *ngIf="filteredPeople$">
             <mat-divider></mat-divider>
             <h3 matLine>  
               <strong>                  
-                {{ people$?.length }} record(s) found.
+                {{ filteredPeople$?.length }} record(s) found.
               </strong>
             </h3>
-          </mat-list-item>
-          <!-- <mat-list-item *ngFor="let members of people$" routerLink="/people-profile/{{ members.personId }}">
-            <mat-divider></mat-divider>
-            <img matListAvatar src="../../../../assets/avatars/avatar4.png" alt="...">
-            <h3 matLine> 
-              <strong>                  
-                {{ members.person.surname }} 
-                {{ members.person.firstname }}                
-              </strong>
-            </h3>
-            <p matLine>
-              {{ members.tag }} 
-            </p>
-
-            <button mat-icon-button>
-              <mat-icon color="primary">search</mat-icon>
-            </button>
-
-          </mat-list-item> -->
+          </mat-list-item>        
         
-          <a mat-list-item *ngFor="let members of people$" href="/people-profile/{{ members.personId }}">
+          <a mat-list-item *ngFor="let members of filteredPeople$" href="/people-profile/{{ members.personId }}">
             <mat-divider></mat-divider>
             <img matListAvatar src="../../../../assets/avatars/avatar4.png" alt="...">
             <h3 matLine> 
