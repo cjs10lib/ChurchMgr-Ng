@@ -67,11 +67,13 @@ import { ProfileBioExtComponent } from './admin/people/people-profile/profile-bi
 import { ProfileEditComponent } from './admin/people/people-profile/profile-edit/profile-edit.component';
 import { PeopleExtendedFormComponent } from './admin/people/people-registration/people-extended-form/people-extended-form.component';
 import { BaptismalFormComponent } from './admin/people/people-registration/people-extended-form/baptismal-form/baptismal-form.component';
-import { FamilyFormComponent } from './admin/people/people-registration/people-extended-form/family-form/family-form.component';
-import { FamilyFormAddComponent } from './admin/people/people-registration/people-extended-form/family-form-add/family-form-add.component';
+import { FamilyFormComponent } from './admin/people/people-family/family-form/family-form.component';
+import { FamilyFormAddComponent } from './admin/people/people-family/family-form-add/family-form-add.component';
 import { OtherFormComponent } from './admin/people/people-registration/people-extended-form/other-form/other-form.component';
 import { DietaryNeedFormComponent } from './admin/people/people-registration/people-extended-form/dietary-need-form/dietary-need-form.component';
 import { AllergyFormComponent } from './admin/people/people-registration/people-extended-form/allergy-form/allergy-form.component';
+import { PeopleFamilyComponent } from './admin/people/people-family/people-family.component';
+import { FamilyRegistryComponent } from './admin/people/people-family/family-registry/family-registry.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +103,9 @@ import { AllergyFormComponent } from './admin/people/people-registration/people-
     FamilyFormAddComponent,
     OtherFormComponent,
     DietaryNeedFormComponent,
-    AllergyFormComponent
+    AllergyFormComponent,
+    PeopleFamilyComponent,
+    FamilyRegistryComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class PeopleProfileComponent implements OnInit, OnDestroy {
 
   person: Person = {};
+  personId: string;
   showSpinner = true;
 
   subscription: Subscription;
@@ -19,11 +20,15 @@ export class PeopleProfileComponent implements OnInit, OnDestroy {
   constructor(private peopleService: PeopleService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    const personId = this.route.snapshot.paramMap.get('id');
+    this.personId = this.route.snapshot.paramMap.get('id');
+    // this.route.paramMap.subscribe(prams => {
+    //   this.personId =  prams.get('id');
+    //   console.log(this.personId);
+    // });
 
-    this.subscription = this.peopleService.getPerson(personId).subscribe(resp => {
+    this.subscription = this.peopleService.getPerson(this.personId).subscribe(resp => {
       this.person = resp;
-      this.person.id = personId;
+      this.person.id = this.personId;
       this.showSpinner = false;
     });
   }

@@ -2,10 +2,10 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { PersonFamilyService } from '../../../../../services/person-family.service';
+import { PersonFamilyService } from '../../../../services/person-family.service';
+import { Family, PersonFamily } from '../../../../models/person-family.model';
+import { SweetAlertService } from '../../../../services/sweet-alert.service';
 import { FamilyFormAddComponent } from '../family-form-add/family-form-add.component';
-import { Family, PersonFamily } from '../../../../../models/person-family.model';
-import { SweetAlertService } from '../../../../../services/sweet-alert.service';
 
 @Component({
   selector: 'app-family-form',
@@ -48,7 +48,9 @@ export class FamilyFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   onAddPersonFamily() {

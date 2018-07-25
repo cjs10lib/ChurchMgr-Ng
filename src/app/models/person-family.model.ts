@@ -6,14 +6,8 @@ export interface Family {
 }
 
 export interface PersonFamily {
+    personId?: string;
     familyId?: string;
     tag?: string;
     lastUpdate?: number;
-}
-
-export interface FamilyMembers {
-    personId?: string;
-    familyId?: string;
-    personTag?: string;
-    lastUpdate?: Date;
 }

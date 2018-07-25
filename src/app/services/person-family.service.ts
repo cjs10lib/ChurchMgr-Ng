@@ -5,7 +5,7 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 
 import { Family } from '../models/person-family.model';
 import { Person } from '../models/person.model';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -28,24 +28,16 @@ export class PersonFamilyService {
       }));
   }
 
-  getFamilyMembers(familyId: string) {
-    return this.db.collection('people', ref => ref.where('family.familyId', '==', familyId))
-      .snapshotChanges().pipe(map(change => {
-        return change.map(a => {
-          const data = a.payload.doc.data() as Person;
-          data.id = a.payload.doc.id;
+  getPersonFamily(personId: string) {
+    return this.db.doc(`people-family/${personId}`).valueChanges();
+  }
 
-          return data;
-        });
-      }));
+  getFamilyMembers(familyId: string) {
+    return this.db.collection('people-family', ref => ref.where('familyId', '==', familyId)).valueChanges();
   }
 
   getFamilies() {
     return this.families;
-  }
-
-  getPersonFamily(personId: string) {
-    return this.db.doc(`people-family/${personId}`).valueChanges();
   }
 
   addFamily(family: Family) {
@@ -54,6 +46,7 @@ export class PersonFamilyService {
   }
 
   updatePersonFamily(personId: string, family: PersonFamily) {
+    family.personId = personId;
     family.lastUpdate = new Date().getTime();
     return this.db.collection('people-family').doc(personId).set(family);
   }

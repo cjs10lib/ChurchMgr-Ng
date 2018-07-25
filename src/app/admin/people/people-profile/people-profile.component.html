@@ -18,7 +18,7 @@
       <!-- PROFILE BIO -->
       <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
         <div fxFlex="35"  fxFlexOrder.xs="1">
-
+          
          <app-profile-bio [person]="person"></app-profile-bio>
 
         </div>
@@ -29,9 +29,9 @@
 
         </div>
       </div>    
+      <!-- END OF PROFILE BIO -->
       
     </mat-tab>
-    <!-- END OF PROFILE BIO -->
 
     <!-- EDIT PROFILE-->
     <mat-tab>
@@ -46,6 +46,7 @@
     </mat-tab>
     <!-- END OF EDIT PROFILE -->
 
+    <!-- GALLERY -->
     <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon>photo_size_select_actual</mat-icon> &nbsp;
@@ -54,17 +55,19 @@
       <p>The wizard will guide you through the extended form information requirements.</p>
   
     </mat-tab>
-
-    
-
+    <!-- END OF GALLERY -->
+   
+    <!-- FAMILY -->
     <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon>people</mat-icon> &nbsp;
         <span>Family</span>
       </ng-template>
-      <p>The wizard will guide you through the extended form information requirements.</p>
-  
+        
+      <app-family-registry [personId]="personId"></app-family-registry>
+
     </mat-tab>
+    <!-- END OF FAMILY -->
 
     <mat-tab>
       <ng-template mat-tab-label>

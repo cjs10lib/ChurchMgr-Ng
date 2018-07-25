@@ -69,6 +69,7 @@ export class PeopleBasicFormComponent implements OnInit, OnDestroy {
         this.person.occupation = resp.occupation;
         this.person.contact = resp.contact;
         this.person.home = resp.home;
+
         console.log(this.person);
       });
     }

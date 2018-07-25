@@ -1,0 +1,114 @@
+<mat-card class="card-wrapper">
+    <!-- <div fxLayout="row" fxLayout.lt-sm="column" fxFlexAlign.lt-sm="center center"> -->
+  <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
+
+    <div fxFlex="24" fxFlexOrder.xs="1">
+      <div class="flex-details margin-20">
+        
+        <!-- <h3>Filter by Name</h3> -->
+        <mat-form-field fxFlex.sm="style='font-size:10px;'">
+          <span matPrefix>
+            <mat-icon>search</mat-icon> &nbsp;
+          </span>
+          <input matInput #query (keyup)="search(query.value)" [(ngModel)]="searchQry" name="searchQuery" placeholder="Search People...">
+          <button mat-button *ngIf="searchQry" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchField()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </div>
+    
+    
+    <div fxFlex fxFlexOrder.xs="2">
+      <div class="flex-details margin-20">
+
+        <section>
+          <div class="add-new">
+            <a mat-raised-button color="primary" routerLink="/people-registration">
+              <mat-icon>group_add</mat-icon> &nbsp;
+              Add New Record
+            </a>
+          </div>
+        </section>
+
+        <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
+
+        <mat-nav-list>
+          <mat-list-item *ngIf="people$">
+            <mat-divider></mat-divider>
+            <h3 matLine>  
+              <strong>                  
+                {{ people$?.length }} record(s) found.
+              </strong>
+            </h3>
+          </mat-list-item>
+          <!-- <mat-list-item *ngFor="let members of people$" routerLink="/people-profile/{{ members.personId }}">
+            <mat-divider></mat-divider>
+            <img matListAvatar src="../../../../assets/avatars/avatar4.png" alt="...">
+            <h3 matLine> 
+              <strong>                  
+                {{ members.person.surname }} 
+                {{ members.person.firstname }}                
+              </strong>
+            </h3>
+            <p matLine>
+              {{ members.tag }} 
+            </p>
+
+            <button mat-icon-button>
+              <mat-icon color="primary">search</mat-icon>
+            </button>
+
+          </mat-list-item> -->
+        
+          <a mat-list-item *ngFor="let members of people$" href="/people-profile/{{ members.personId }}">
+            <mat-divider></mat-divider>
+            <img matListAvatar src="../../../../assets/avatars/avatar4.png" alt="...">
+            <h3 matLine> 
+              <strong>                  
+                {{ members.person.surname }} 
+                {{ members.person.firstname }}                
+              </strong>
+            </h3>
+            <p matLine>
+              <!-- {{ members.tag }}  -->
+            </p>
+
+            <button mat-icon-button>
+              <mat-icon color="primary">search</mat-icon>
+            </button>
+
+          </a>
+        </mat-nav-list>
+
+<!-- 
+        <ng-template #noImageAvatar>
+          <img matListAvatar src="../../../assets/avatar/avatar1.png" alt="...">
+        </ng-template> -->
+
+      </div>
+    </div>
+    
+    <div fxShow.lt-lg="false" fxShow="true" fxFlex="20">
+    <!-- <div fxFlex="20" fxFlexOrder.xs="3"> -->
+      <div class="flex-details">
+
+        <div style="background-color: #e6e6e6e6">
+          <mat-list dense>
+            <mat-list-item>
+              <mat-icon matListIcon>mail_outline</mat-icon>             
+              <h3 matLine> Email People </h3>
+            </mat-list-item>         
+            <mat-list-item>
+              <mat-icon matListIcon>import_export</mat-icon>
+              <h3 matLine> Export </h3>
+            </mat-list-item>         
+          </mat-list>
+        </div>
+
+      </div>  
+    </div>
+
+  </div> 
+  
+</mat-card>

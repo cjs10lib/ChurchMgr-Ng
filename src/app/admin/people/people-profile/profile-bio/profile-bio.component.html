@@ -50,14 +50,13 @@
 
   <h2 mat-header>Dates</h2>
   <mat-list-item>
-    <mat-icon matListIcon color="primary">date_range</mat-icon>
+    <mat-icon matListIcon color="primary">cake</mat-icon>
     <h3 matLine>
       <strong>
-        Birth Date
+        {{ person.dob?.toDate() | date: 'longDate' }}
       </strong>
     </h3>
 
-    <span>{{ person.dob }}</span>
     <mat-divider></mat-divider>
   </mat-list-item>
 
