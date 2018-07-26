@@ -1,3 +1,4 @@
+import { PeopleGalleryComponent } from './admin/people/people-gallery/people-gallery.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -59,6 +60,8 @@ import { HomeComponent } from './general/home/home.component';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+
 import { environment } from '../environments/environment';
 import { ProfileIntroComponent } from './admin/people/people-profile/profile-intro/profile-intro.component';
 import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.component';
@@ -70,6 +73,7 @@ import { BaptismalFormComponent } from './admin/people/people-registration/peopl
 import { FamilyFormComponent } from './admin/people/people-family/family-form/family-form.component';
 import { FamilyFormAddComponent } from './admin/people/people-family/family-form-add/family-form-add.component';
 import { OtherFormComponent } from './admin/people/people-registration/people-extended-form/other-form/other-form.component';
+// tslint:disable-next-line:max-line-length
 import { DietaryNeedFormComponent } from './admin/people/people-registration/people-extended-form/dietary-need-form/dietary-need-form.component';
 import { AllergyFormComponent } from './admin/people/people-registration/people-extended-form/allergy-form/allergy-form.component';
 import { PeopleFamilyComponent } from './admin/people/people-family/people-family.component';
@@ -105,9 +109,11 @@ import { FamilyRegistryComponent } from './admin/people/people-family/family-reg
     DietaryNeedFormComponent,
     AllergyFormComponent,
     PeopleFamilyComponent,
-    FamilyRegistryComponent
+    FamilyRegistryComponent,
+    PeopleGalleryComponent
   ],
   imports: [
+    AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),
 

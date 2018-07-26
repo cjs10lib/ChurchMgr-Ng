@@ -104,6 +104,19 @@
           </mat-error>
         </mat-form-field>
 
+        <!-- <div *ngIf="personId">
+          <mat-nav-list>
+            <h3 matSubHeader>Date of birth</h3>
+            <mat-list-item matTooltip="click to select date" mat-datepicker-toggle="DOB">
+              <h3 matLine>
+                <strong>
+                  {{ person.dob?.toDate() | date: 'longDate' }}
+                </strong>
+              </h3>
+            </mat-list-item>
+          </mat-nav-list>
+        </div> -->
+
         <mat-form-field>
             <input matInput [(ngModel)]="person.ethnicity" name="ethnicity" #ethnicity placeholder="Ethnicity/Race">
             <mat-hint>Eg. White/Caucasian, British</mat-hint>

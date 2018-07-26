@@ -1,0 +1,40 @@
+<mat-card>
+
+  <form #f="ngForm">
+    <div class="image_upload">
+      <!-- <img class="profile-image" [src]="imageUrl" style="width:250px;height:250px;" alt="">
+      <br> -->
+      
+      <div class="dropzone" 
+        appDropZone
+        (hovered)="toggleHover($event)"
+        (dropped)="startUpload($event)"
+        [class.hovering]="isHovering">
+    
+        <!-- <h3>Drop Zone</h3> -->
+        <mat-icon>cloud_upload</mat-icon>
+        <input type="file" multiple (change)="startUpload($event.target.files)">
+      </div>
+
+    </div>
+  </form>
+
+  <div *ngIf="(uploadService.snapshot | async) as snap">
+    {{ snap.bytesTransferred }} of {{ snap.totalBytes }}    
+
+    <button mat-raised-button color="primary" (click)="task.resume()" [disabled]="!(snap?.state === 'paused')">Resume</button>
+    <button mat-raised-button color="accent" (click)="task.pause()" [disabled]="!isActive(snap)">Pause</button>
+    <button mat-raised-button color="warn" (click)="task.cancel()" [disabled]="!isActive(snap)">Cancel</button>
+    
+    <div *ngIf="uploadService.downloadUrl | async as url" class="image_upload">
+      <h3>Results</h3>
+  
+      <img [src]="url" alt="">
+  
+      <a [href]="url">Download Me!</a>
+    </div>
+
+  </div>
+
+</mat-card>
+

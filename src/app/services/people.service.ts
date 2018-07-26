@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Person } from '../models/person.model';
+import { DatePipe } from '../../../node_modules/@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,11 @@ export class PeopleService {
         return change.map(a => {
           const data = a.payload.doc.data() as Person;
           data.id = a.payload.doc.id;
+
+          // const datePipe = new DatePipe('en-US');
+          // const myFormattedDate = datePipe.transform(a.payload.doc.data().dob, 'MM, dd, yyyy');
+
+          // data.dob = + myFormattedDate;
 
           return data;
         });
