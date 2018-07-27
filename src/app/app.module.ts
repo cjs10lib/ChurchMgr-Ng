@@ -1,7 +1,7 @@
-import { PeopleGalleryComponent } from './admin/people/people-gallery/people-gallery.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule } from '@angular/forms';
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -38,12 +38,42 @@ import {
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
-import { FormsModule } from '@angular/forms';
+import { environment } from '../environments/environment';
+import { AuthenticationComponent } from './admin/authentication/authentication.component';
+import { LoginFormComponent } from './admin/authentication/login-form/login-form.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { FamilyFormAddComponent } from './admin/people/people-family/family-form-add/family-form-add.component';
+import { FamilyFormComponent } from './admin/people/people-family/family-form/family-form.component';
+import {
+  FamilyMembersRegistryComponent,
+} from './admin/people/people-family/family-members-registry/family-members-registry.component';
+import { FamilyRegistryComponent } from './admin/people/people-family/family-registry/family-registry.component';
+import { PeopleFamilyComponent } from './admin/people/people-family/people-family.component';
+import { PeopleGalleryComponent } from './admin/people/people-gallery/people-gallery.component';
 import { PeopleProfileComponent } from './admin/people/people-profile/people-profile.component';
+import { ProfileBioExtComponent } from './admin/people/people-profile/profile-bio-ext/profile-bio-ext.component';
+import { ProfileBioComponent } from './admin/people/people-profile/profile-bio/profile-bio.component';
+import { ProfileEditComponent } from './admin/people/people-profile/profile-edit/profile-edit.component';
+import { ProfileIntroComponent } from './admin/people/people-profile/profile-intro/profile-intro.component';
 import { PeopleBasicFormComponent } from './admin/people/people-registration/people-basic-form/people-basic-form.component';
+import {
+  AllergyFormComponent,
+} from './admin/people/people-registration/people-extended-form/allergy-form/allergy-form.component';
+import {
+  BaptismalFormComponent,
+} from './admin/people/people-registration/people-extended-form/baptismal-form/baptismal-form.component';
+import {
+  DietaryNeedFormComponent,
+} from './admin/people/people-registration/people-extended-form/dietary-need-form/dietary-need-form.component';
+import { OtherFormComponent } from './admin/people/people-registration/people-extended-form/other-form/other-form.component';
+import {
+  PeopleExtendedFormComponent,
+} from './admin/people/people-registration/people-extended-form/people-extended-form.component';
 import { PeopleRegistrationComponent } from './admin/people/people-registration/people-registration.component';
 import { PeopleRegistryComponent } from './admin/people/people-registry/people-registry.component';
 import { PeopleComponent } from './admin/people/people.component';
@@ -51,34 +81,13 @@ import { TransactionsComponent } from './admin/transactions/transactions.compone
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DropZoneDirective } from './directives/drop-zone.directive';
+import { HomeComponent } from './general/home/home.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthenticationLayoutComponent } from './layouts/authentication-layout/authentication-layout.component';
 import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.component';
-import { AuthenticationComponent } from './admin/authentication/authentication.component';
-import { LoginFormComponent } from './admin/authentication/login-form/login-form.component';
-import { HomeComponent } from './general/home/home.component';
-
-import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireStorageModule } from 'angularfire2/storage';
-
-import { environment } from '../environments/environment';
-import { ProfileIntroComponent } from './admin/people/people-profile/profile-intro/profile-intro.component';
 import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.component';
-import { ProfileBioComponent } from './admin/people/people-profile/profile-bio/profile-bio.component';
-import { ProfileBioExtComponent } from './admin/people/people-profile/profile-bio-ext/profile-bio-ext.component';
-import { ProfileEditComponent } from './admin/people/people-profile/profile-edit/profile-edit.component';
-import { PeopleExtendedFormComponent } from './admin/people/people-registration/people-extended-form/people-extended-form.component';
-import { BaptismalFormComponent } from './admin/people/people-registration/people-extended-form/baptismal-form/baptismal-form.component';
-import { FamilyFormComponent } from './admin/people/people-family/family-form/family-form.component';
-import { FamilyFormAddComponent } from './admin/people/people-family/family-form-add/family-form-add.component';
-import { OtherFormComponent } from './admin/people/people-registration/people-extended-form/other-form/other-form.component';
-// tslint:disable-next-line:max-line-length
-import { DietaryNeedFormComponent } from './admin/people/people-registration/people-extended-form/dietary-need-form/dietary-need-form.component';
-import { AllergyFormComponent } from './admin/people/people-registration/people-extended-form/allergy-form/allergy-form.component';
-import { PeopleFamilyComponent } from './admin/people/people-family/people-family.component';
-import { FamilyRegistryComponent } from './admin/people/people-family/family-registry/family-registry.component';
 
+// tslint:disable-next-line:max-line-length
 @NgModule({
   declarations: [
     AppComponent,
@@ -110,7 +119,8 @@ import { FamilyRegistryComponent } from './admin/people/people-family/family-reg
     AllergyFormComponent,
     PeopleFamilyComponent,
     FamilyRegistryComponent,
-    PeopleGalleryComponent
+    PeopleGalleryComponent,
+    FamilyMembersRegistryComponent
   ],
   imports: [
     AngularFireStorageModule,

@@ -36,8 +36,7 @@ export class PeopleRegistryComponent implements OnInit, OnDestroy {
 
     this.filteredPeople = qry ?
     this.people$.filter(
-      p => p.surname.toLowerCase().includes(qry.toLowerCase()) ||
-      p.firstname.toLowerCase().includes(qry.toLowerCase())) : this.people$;
+      p => p.fullname.toLowerCase().includes(qry.toLowerCase())) : this.people$;
   }
 
   clearSearchField() {

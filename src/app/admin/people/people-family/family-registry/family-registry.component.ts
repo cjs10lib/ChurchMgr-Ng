@@ -17,63 +17,31 @@ export class FamilyRegistryComponent implements OnInit, OnDestroy {
 
   searchQry: string;
 
-  @Input() personId: string;
+  families$ = [];
+  filteredFamily$ = [];
 
-  people$ = [];
-  filteredPeople$ = [];
+  showSpinner = true;
+  subscription: Subscription;
 
-  familySubscription: Subscription;
-  peopleSubscription: Subscription;
-
-  constructor(private personFamilyService: PersonFamilyService,
-    private peopleService: PeopleService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private personFamilyService: PersonFamilyService) { }
 
   ngOnInit() {
-
-    if (this.personId) {
-
-      this.familySubscription = this.personFamilyService.getPersonFamily(this.personId)
-        .pipe(switchMap((resp: PersonFamily) => {
-          const familyId = resp.familyId;
-          return this.personFamilyService.getFamilyMembers(familyId);
-       })).
-        subscribe(resp => {
-
-          resp.forEach(doc => {
-            const personId = doc['personId'];
-
-            this.peopleSubscription = this.peopleService.getPerson(personId).subscribe(result => {
-              this.people$.push({
-                personId: personId, person: result
-              });
-
-              this.filteredPeople$.push({
-                personId: personId, person: result
-              });
-          });
-        });
-
-      });
-
-    }
-
+    this.personFamilyService.getFamilies().subscribe(resp => {
+      this.families$ = this.filteredFamily$ = resp;
+      this.showSpinner = false;
+    });
   }
 
   ngOnDestroy(): void {
-    if (this.familySubscription) {
-      this.familySubscription.unsubscribe();
-    }
-
-    if (this.peopleSubscription) {
-      this.peopleSubscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
 
   search(qry: string) {
-    this.filteredPeople$ = qry ?
-      this.people$.filter(
-        p => p.person.surname.toLowerCase().includes(qry.toLowerCase()) ||
-        p.person.firstname.toLowerCase().includes(qry.toLowerCase())) : this.people$;
+    this.filteredFamily$ = qry ?
+      this.families$.filter(
+        f => f.name.toLowerCase().includes(qry.toLowerCase())) : this.families$;
   }
 
   clearSearchField() {

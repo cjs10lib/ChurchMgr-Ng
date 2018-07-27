@@ -71,19 +71,57 @@
         <div class="spc-30"></div>
 
         <mat-nav-list>
-            <!-- <a mat-list-item routerLink="/dashboard"> -->
-            <a mat-list-item routerLink="/dashboard" [class.activated]="currentUrl == '/dashboard'">
-                <mat-icon>dashboard</mat-icon> &nbsp;
-                <strong>Dashboard</strong>
-            </a>
-            <a mat-list-item routerLink="/people" [class.activated]="currentUrl == '/people'">
-                <mat-icon>person</mat-icon> &nbsp;
-                <strong>People</strong>
-            </a>
-            <a mat-list-item routerLink="/transaction" [class.activated]="currentUrl == '/transaction'">
-                <mat-icon>account_balance_wallet</mat-icon> &nbsp;
-                <strong>Transactions</strong>
-            </a>
+            <mat-accordion displayMode="flat">
+
+                <a mat-list-item routerLink="/dashboard" [class.activated]="currentUrl == '/dashboard'">
+                    <mat-icon>dashboard</mat-icon> &nbsp;
+                    <strong>Dashboard</strong>
+                </a>
+
+                <!-- <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                        <span matLine> People </span>
+                        </mat-panel-title>                           
+                    </mat-expansion-panel-header>
+
+                    <a mat-list-item routerLink="/people" [class.activated]="currentUrl == '/people'">
+                        <mat-icon>supervised_user_circle</mat-icon> &nbsp;
+                        <strong>People</strong>
+                    </a>
+
+                    <a mat-list-item routerLink="/people" [class.activated]="currentUrl == '/families'">
+                        <mat-icon>people</mat-icon> &nbsp;
+                        <strong>Family</strong>
+                    </a>
+
+                </mat-expansion-panel> -->
+
+
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <strong> People </strong>
+                        </mat-panel-title>                           
+                    </mat-expansion-panel-header>
+
+                    <a mat-list-item routerLink="/people" [class.activated]="currentUrl == '/people'">
+                        <mat-icon>person</mat-icon> &nbsp;
+                        <strong>People</strong>
+                    </a>
+
+                    <a mat-list-item routerLink="/families" [class.activated]="currentUrl == '/families'">
+                        <mat-icon>people</mat-icon> &nbsp;
+                        <strong>Family</strong>
+                    </a>       
+                </mat-expansion-panel>  
+
+                <a mat-list-item routerLink="/transaction" [class.activated]="currentUrl == '/transaction'">
+                    <mat-icon>account_balance_wallet</mat-icon> &nbsp;
+                    <strong>Transactions</strong>
+                </a>
+
+            </mat-accordion>
         </mat-nav-list>
     </perfect-scrollbar>
 </mat-sidenav>

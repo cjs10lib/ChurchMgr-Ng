@@ -1,3 +1,4 @@
+import { FamilyRegistryComponent } from './admin/people/people-family/family-registry/family-registry.component';
 import { PeopleProfileComponent } from './admin/people/people-profile/people-profile.component';
 import { HomeComponent } from './general/home/home.component';
 import { LoginFormComponent } from './admin/authentication/login-form/login-form.component';
@@ -47,6 +48,12 @@ const routes: Routes = [
       }, {
         path: 'people-registration',
         component: PeopleRegistrationComponent
+      }, {
+        path: 'family-profile/:id',
+        component: FamilyRegistryComponent
+      }, {
+        path: 'families',
+        component: FamilyRegistryComponent
       }, {
         path: 'transaction',
         component: TransactionsComponent

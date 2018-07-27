@@ -56,17 +56,21 @@ export class PeopleGalleryComponent implements OnInit {
 
   detectFiles(event) {
     this.selectedFiles = event.target.files;
+
+    if (this.selectedFiles) {
+      return this.upload;
+    }
   }
 
-  upload(event: FileList) {
-    const baseRoot = 'Gallery';
+  upload() {
+    const basePath = 'Gallery';
     const files = this.selectedFiles;
     // const filesIndex = _.range(files.length);
 
     // _.each(filesIndex, (idx) => {
     //   // this.currentUpload = new Upload(files[idx]);
     //   this.currentUpload.file = (files[idx]);
-    //   this.uploadService.pushUpload(this.currentUpload, baseRoot);
+    //   this.uploadService.pushUpload(this.currentUpload, basePath);
     // });
   }
 

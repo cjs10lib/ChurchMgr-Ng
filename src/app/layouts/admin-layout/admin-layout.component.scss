@@ -10,12 +10,37 @@
   font-family: 'Montserrat', 'Roboto', sans-serif; 
 }
 
-mat-nav-list .mat-list-item {
-  color: rgba(255,255,255,.87);
-  padding: 5px;
-  display: block;
-  letter-spacing: 2px;
+mat-nav-list {
+
+  .mat-list-item {
+    color: rgba(255,255,255,.87);
+    padding: 5px;
+    display: block;
+    letter-spacing: 2px;
+  }
+
+  .example-headers-align .mat-expansion-panel-header-title, 
+  .example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+  }
+
+  .example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  mat-expansion-panel {
+    // background: url(../../../assets/banners/banner1.jpg);
+    background: transparent;
+    color: rgba(255,255,255,.87); 
+
+    mat-expansion-panel-header mat-panel-title {
+      color:rgba(255,255,255,.87);
+      letter-spacing: 2px;
+    }
+  }
 }
+
 
 .mat-list-item mat-icon {
   margin-right: 20px;
