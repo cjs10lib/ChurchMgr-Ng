@@ -86,6 +86,8 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { AuthenticationLayoutComponent } from './layouts/authentication-layout/authentication-layout.component';
 import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.component';
 import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.component';
+import { FamilyProfileComponent } from './admin/people/people-family/family-profile/family-profile.component';
+import { FileSizePipe } from './pipes/file-size.pipe';
 
 // tslint:disable-next-line:max-line-length
 @NgModule({
@@ -120,7 +122,9 @@ import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.co
     PeopleFamilyComponent,
     FamilyRegistryComponent,
     PeopleGalleryComponent,
-    FamilyMembersRegistryComponent
+    FamilyMembersRegistryComponent,
+    FamilyProfileComponent,
+    FileSizePipe
   ],
   imports: [
     AngularFireStorageModule,

@@ -42,6 +42,66 @@
     }
 }
 
-progress::-webkit-progress-value {
+mat-progress-bar::-webkit-progress-value {
     transition: width 0.1s ease;
 }
+
+
+
+.gallery {
+    max-width: 290px; 
+    max-height: 350px;
+    margin: 0 10px 20px 10px;
+    overflow: hidden;
+
+    img {
+        width: 290px;    
+        height: 250px;
+    }
+}
+
+mat-card-content .imgBox {
+    position: relative;
+    text-align: center;
+
+    img {
+        background-size: cover;
+    }
+}
+
+mat-card-content img {
+    transition: transform 2s;    
+}
+
+mat-card-content .imgBox:hover img {
+    transform: scale(1.2);
+}
+
+.grid-container {
+    margin: 5px;
+    // display: inline-flex;
+    // flex-direction: row;
+}
+  
+.dashboard-card {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+}
+  
+.more-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.dashboard-card-content {
+    text-align: center;
+}
+

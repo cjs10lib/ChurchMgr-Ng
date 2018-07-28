@@ -1,40 +1,108 @@
 <mat-card>
 
-  <form #f="ngForm">
-    <div class="image_upload">
-      <!-- <img class="profile-image" [src]="imageUrl" style="width:250px;height:250px;" alt="">
-      <br> -->
+  <div>
       
-      <div class="dropzone" 
-        appDropZone
-        (hovered)="toggleHover($event)"
-        (dropped)="startUpload($event)"
-        [class.hovering]="isHovering">
-    
-        <!-- <h3>Drop Zone</h3> -->
-        <mat-icon>cloud_upload</mat-icon>
-        <input type="file" multiple (change)="startUpload($event.target.files)">
+    <form #f="ngForm">
+      <div class="image_upload">
+        <!-- <img class="profile-image" [src]="imageUrl" style="width:250px;height:250px;" alt="">
+        <br> -->
+        
+        <div class="dropzone" 
+          appDropZone
+          (hovered)="toggleHover($event)"
+          (dropped)="upload($event)"
+          [class.hovering]="isHovering">
+
+          <!-- <app-loading-spinner *ngIf="uploadService.snapshot | async"></app-loading-spinner> -->
+      
+          <!-- <h3>Drop Zone</h3> -->
+          <mat-icon>cloud_upload</mat-icon>
+          <input type="file" multiple (change)="upload($event.target.files)">
+        </div>
+
       </div>
+    </form>
+
+    <div *ngIf="uploadService.percentage | async as prog">
+
+      <mat-progress-bar  mode="determinate" [value]="prog" max="100"></mat-progress-bar> 
+      {{ prog | number }}%   
 
     </div>
-  </form>
 
-  <div *ngIf="(uploadService.snapshot | async) as snap">
-    {{ snap.bytesTransferred }} of {{ snap.totalBytes }}    
+    <div class="spc-10"></div>
 
-    <button mat-raised-button color="primary" (click)="task.resume()" [disabled]="!(snap?.state === 'paused')">Resume</button>
-    <button mat-raised-button color="accent" (click)="task.pause()" [disabled]="!isActive(snap)">Pause</button>
-    <button mat-raised-button color="warn" (click)="task.cancel()" [disabled]="!isActive(snap)">Cancel</button>
+    <div *ngIf="(uploadService.snapshot | async) as snap">
+      ({{ snap.bytesTransferred  | fileSize }} of {{ snap.totalBytes | fileSize }})    
     
-    <div *ngIf="uploadService.downloadUrl | async as url" class="image_upload">
-      <h3>Results</h3>
-  
-      <img [src]="url" alt="">
-  
-      <a [href]="url">Download Me!</a>
+      <div class="spc-10"></div>
+      <mat-divider></mat-divider>
+    
+      <button mat-raised-button color="primary" (click)="uploadService.task.resume()" [disabled]="!(snap?.state === 'paused')">Resume</button>
+      <button mat-raised-button color="accent" (click)="uploadService.task.pause()" [disabled]="!isActive(snap)">Pause</button>
+      <button mat-raised-button color="warn" (click)="uploadService.task.cancel()" [disabled]="!isActive(snap)">Cancel</button>
+          
     </div>
 
   </div>
 
+  
+  <div class="grid-container">
+    <!-- <h1 class="mat-h1">Dashboard</h1> -->
+    <mat-grid-list *ngIf="(isHandset$ | async); else largeDisplay"  cols="4" rowHeight="350px">
+      <!-- <mat-grid-tile *ngFor="let gry of gallery" [colspan]="cards.colspan" [rowspan]="cards.rowspan"> -->
+      <mat-grid-tile *ngFor="let gry of gallery" colspan="4" rowspan="1">
+        <mat-card class="dashboard-card parent">
+          <mat-card-header>
+            <mat-card-title>
+              {{gry.title}}
+              <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item>Expand</button>
+                <button mat-menu-item>Remove</button>
+              </mat-menu>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="dashboard-card-content">
+            <div class="imgBox">
+              <img class="child" mat-card-image [src]="gry.url" alt="...">
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+  <ng-template #largeDisplay>
+
+    <mat-grid-list cols="4" rowHeight="350px">
+      <!-- <mat-grid-tile *ngFor="let gry of gallery" [colspan]="cards.colspan" [rowspan]="cards.rowspan"> -->
+      <mat-grid-tile *ngFor="let gry of gallery" colspan="1" rowspan="1">
+        <mat-card class="dashboard-card parent">
+          <mat-card-header>
+            <mat-card-title>
+              {{gry.title}}
+              <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item>Expand</button>
+                <button mat-menu-item>Remove</button>
+              </mat-menu>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="dashboard-card-content">
+            <div class="imgBox">
+              <img class="child" mat-card-image [src]="gry.url" alt="...">
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+  </ng-template>
+ 
 </mat-card>
 

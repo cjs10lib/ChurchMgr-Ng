@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AngularFireStorage, AngularFireUploadTask } from '../../../../../node_modules/angularfire2/storage';
+import { AngularFireStorage, AngularFireUploadTask, AngularFireStorageReference } from '../../../../../node_modules/angularfire2/storage';
 import { UploadService } from '../../../services/upload.service';
 import { Upload } from '../../../models/upload.model';
+import * as _ from 'lodash';
+import { map } from '../../../../../node_modules/rxjs/operators';
 
 @Component({
   selector: 'app-people-gallery',
@@ -12,66 +15,34 @@ import { Upload } from '../../../models/upload.model';
 })
 export class PeopleGalleryComponent implements OnInit {
 
-  task: AngularFireUploadTask;
-  percentage: Observable<number>;
-  snapshot: Observable<any>;
-  downloadUrl: Observable<string>;
-
+  @Input() personId: string;
   isHovering: boolean;
 
-  selectedFiles: FileList;
-  currentUpload: Upload;
+  gallery = [];
 
-  constructor(private storage: AngularFireStorage, private uploadService: UploadService) { }
+  private basePath = 'Gallery';
+  cards;
+
+  /** Based on the screen size, switch from standard to one column per row */
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
+    map(result => result.matches)
+  );
+
+  isPhablet$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Small)
+  .pipe(
+    map(result => result.matches)
+  );
+
+
+  constructor(private storage: AngularFireStorage, private uploadService: UploadService, private breakpointObserver: BreakpointObserver) {}
 
   toggleHover(event: boolean) {
     this.isHovering = event;
   }
 
-  // async startUpload(event: FileList) {
-  //   const file = event.item(0);
-
-  //   if (file.type.split('/')[0] !== 'image') {
-  //     console.log('Unsupported file type :(' );
-  //     return;
-  //   }
-
-  //   // the storage path
-  //   const path = `images/${new Date().getTime()}_${file.name}`;
-
-  //   const customMetadata = { app: 'Church-Mgr!' };
-
-  //   // the main task
-  //   this.task = this.storage.upload(path, file, { customMetadata });
-
-  //   // progress
-  //   this.percentage = this.task.percentageChanges();
-  //   this.snapshot = this.task.snapshotChanges();
-
-  //   const downloadURL = (await this.task).downloadURL;
-
-  // }
-
-  // determines if the upload task is active
-
-  detectFiles(event) {
-    this.selectedFiles = event.target.files;
-
-    if (this.selectedFiles) {
-      return this.upload;
-    }
-  }
-
-  upload() {
-    const basePath = 'Gallery';
-    const files = this.selectedFiles;
-    // const filesIndex = _.range(files.length);
-
-    // _.each(filesIndex, (idx) => {
-    //   // this.currentUpload = new Upload(files[idx]);
-    //   this.currentUpload.file = (files[idx]);
-    //   this.uploadService.pushUpload(this.currentUpload, basePath);
-    // });
+  upload(event: FileList) {
+    this.uploadService.pushUpload(event, this.basePath, this.personId);
   }
 
   isActive(snapshot) {
@@ -79,6 +50,10 @@ export class PeopleGalleryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.uploadService.getPersonGallery(this.personId).subscribe(resp => {
+      this.gallery = resp;
+      console.log(resp);
+    });
   }
 
 }
