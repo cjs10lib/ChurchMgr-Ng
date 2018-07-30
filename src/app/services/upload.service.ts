@@ -25,6 +25,10 @@ export class UploadService {
   private percentage: Observable<number>;
   private snapshot: Observable<any>;
 
+
+
+  imagePath;
+
   constructor(private storage: AngularFireStorage, private db: AngularFirestore, private route: ActivatedRoute) {}
 
   getPersonGallery(personId: string) {
@@ -71,6 +75,7 @@ export class UploadService {
     Array.from(event).forEach(file => {
 
       const path = this.uploadPath(personId, basePath);
+      const fileRef = this.storageRef.ref(path);
 
       const customMetadata = { app: 'Church-Mgr!' };
 
@@ -83,26 +88,30 @@ export class UploadService {
         customMetadata: customMetadata
       });
 
+      this.storageRef.upload(path, file, { customMetadata: customMetadata });
+
       this.percentage = this.uploadTask.percentageChanges();
       this.snapshot = this.uploadTask.snapshotChanges();
 
       this.uploadTask.snapshotChanges().pipe(finalize(() => {
 
-        this.uploadTask.task.snapshot.ref.getDownloadURL().then(url => {
+        const downloadURL = fileRef.getDownloadURL();
+
+        downloadURL.subscribe(url => {
+
           console.log(url);
+
+          this.fileToUpload.Id = this.db.createId();
+          this.fileToUpload.personId = personId;
+
           this.fileToUpload.url = url;
+          this.fileToUpload.path = path;
+          // this.fileToUpload.note = note;
+          this.fileToUpload.createdDate = new Date();
 
           this.saveFileData(this.fileToUpload); // save file data to firestore gallery
         });
-      })).subscribe(resp => {
-        this.fileToUpload.personId = personId;
-        this.fileToUpload.path = resp.ref.fullPath;
-        this.fileToUpload.name = resp.ref.name;
-        this.fileToUpload.createdDate = new Date();
-
-        this.fileToUpload.progress = (resp.bytesTransferred / resp.totalBytes) * 100;
-
-      });
+      })).subscribe();
 
     });
 
@@ -114,7 +123,6 @@ export class UploadService {
       this.deleteFileStorage(file.path);
     });
   }
-
 }
 
 

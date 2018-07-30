@@ -1,3 +1,4 @@
+import { FamilyProfileComponent } from './admin/people/people-family/family-profile/family-profile.component';
 import { FamilyRegistryComponent } from './admin/people/people-family/family-registry/family-registry.component';
 import { PeopleProfileComponent } from './admin/people/people-profile/people-profile.component';
 import { HomeComponent } from './general/home/home.component';
@@ -50,7 +51,7 @@ const routes: Routes = [
         component: PeopleRegistrationComponent
       }, {
         path: 'family-profile/:id',
-        component: FamilyRegistryComponent
+        component: FamilyProfileComponent
       }, {
         path: 'families',
         component: FamilyRegistryComponent

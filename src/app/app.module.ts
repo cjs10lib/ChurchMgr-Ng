@@ -88,6 +88,8 @@ import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.
 import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.component';
 import { FamilyProfileComponent } from './admin/people/people-family/family-profile/family-profile.component';
 import { FileSizePipe } from './pipes/file-size.pipe';
+import { ModalGalleryModule } from '@ks89/angular-modal-gallery';
+import { FamilyMembersListComponent } from './admin/people/people-family/family-members-list/family-members-list.component';
 
 // tslint:disable-next-line:max-line-length
 @NgModule({
@@ -124,7 +126,8 @@ import { FileSizePipe } from './pipes/file-size.pipe';
     PeopleGalleryComponent,
     FamilyMembersRegistryComponent,
     FamilyProfileComponent,
-    FileSizePipe
+    FileSizePipe,
+    FamilyMembersListComponent
   ],
   imports: [
     AngularFireStorageModule,
@@ -138,6 +141,7 @@ import { FileSizePipe } from './pipes/file-size.pipe';
     FlexLayoutModule,
     LayoutModule,
     PerfectScrollbarModule,
+    ModalGalleryModule,
 
     MatAutocompleteModule,
     MatButtonModule,

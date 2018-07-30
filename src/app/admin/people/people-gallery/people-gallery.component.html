@@ -28,9 +28,7 @@
       <mat-progress-bar  mode="determinate" [value]="prog" max="100"></mat-progress-bar> 
       {{ prog | number }}%   
 
-    </div>
-
-    <div class="spc-10"></div>
+    </div>   
 
     <div *ngIf="(uploadService.snapshot | async) as snap">
       ({{ snap.bytesTransferred  | fileSize }} of {{ snap.totalBytes | fileSize }})    
@@ -38,9 +36,9 @@
       <div class="spc-10"></div>
       <mat-divider></mat-divider>
     
-      <button mat-raised-button color="primary" (click)="uploadService.task.resume()" [disabled]="!(snap?.state === 'paused')">Resume</button>
-      <button mat-raised-button color="accent" (click)="uploadService.task.pause()" [disabled]="!isActive(snap)">Pause</button>
-      <button mat-raised-button color="warn" (click)="uploadService.task.cancel()" [disabled]="!isActive(snap)">Cancel</button>
+      <button mat-raised-button color="primary" (click)="uploadService.uploadTask.resume()" [disabled]="!(snap?.state === 'paused')">Resume</button>
+      <button mat-raised-button color="accent" (click)="uploadService.uploadTask.pause()" [disabled]="!isActive(snap)">Pause</button>
+      <button mat-raised-button color="warn" (click)="uploadService.uploadTask.cancel()" [disabled]="!isActive(snap)">Cancel</button>
           
     </div>
 

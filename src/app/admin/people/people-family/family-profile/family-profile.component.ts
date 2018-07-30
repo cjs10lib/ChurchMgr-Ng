@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FamilyProfileComponent implements OnInit {
 
-  constructor() { }
+  parentComponent = 'family-profile';
+  showControls = true;
 
-  ngOnInit() {
-  }
+  constructor() {}
+
+  ngOnInit() {}
 
 }

@@ -1,12 +1,10 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AngularFireStorage, AngularFireUploadTask, AngularFireStorageReference } from '../../../../../node_modules/angularfire2/storage';
-import { UploadService } from '../../../services/upload.service';
-import { Upload } from '../../../models/upload.model';
-import * as _ from 'lodash';
+import { AngularFireStorage } from '../../../../../node_modules/angularfire2/storage';
 import { map } from '../../../../../node_modules/rxjs/operators';
+import { UploadService } from '../../../services/upload.service';
 
 @Component({
   selector: 'app-people-gallery',

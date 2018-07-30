@@ -1,5 +1,4 @@
-import { Person } from '../../../../models/person.model';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-profile-bio-ext',
@@ -7,6 +6,9 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./profile-bio-ext.component.scss']
 })
 export class ProfileBioExtComponent implements OnInit {
+
+  parentComponent = 'people-profile';
+  showControls = false;
 
   constructor() { }
 

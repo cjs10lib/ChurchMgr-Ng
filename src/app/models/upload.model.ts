@@ -2,7 +2,7 @@
 export interface Upload {
     Id?: string;
     personId?: string;
-    name?: string;
+    note?: string;
     url?: string;
     path?: string;
     progress?: number;

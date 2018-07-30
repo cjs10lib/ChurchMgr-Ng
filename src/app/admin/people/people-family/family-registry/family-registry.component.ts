@@ -26,7 +26,7 @@ export class FamilyRegistryComponent implements OnInit, OnDestroy {
   constructor(private personFamilyService: PersonFamilyService) { }
 
   ngOnInit() {
-    this.personFamilyService.getFamilies().subscribe(resp => {
+    this.subscription = this.personFamilyService.getFamilies().subscribe(resp => {
       this.families$ = this.filteredFamily$ = resp;
       this.showSpinner = false;
     });

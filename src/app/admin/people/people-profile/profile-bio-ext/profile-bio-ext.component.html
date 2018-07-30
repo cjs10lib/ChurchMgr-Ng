@@ -1,31 +1,9 @@
 <mat-card class="bio-info-card">
-  <mat-nav-list>
 
-    <h2 mat-header>Family</h2>
+  <h2 mat-header>Family</h2>
 
-    <mat-list-item>
-      <img matListAvatar src="../../../../../assets/avatars/avatar4.png" alt="...">
-      <h3 matLine>
-        <strong class="link">Onwe Christainonwe</strong> &nbsp;
-        <small>Primary</small>    
-      </h3>
+  <app-family-members-list [parentComponent]="parentComponent" [showControls]='showControls'></app-family-members-list>
 
-      <span>30yrs</span>
-      <mat-divider></mat-divider>
-    </mat-list-item>
-
-    <mat-list-item>
-      <img matListAvatar src="../../../../../assets/avatars/avatar4.png" alt="...">
-      <h3 matLine>
-        <strong class="link">Onwe Charles</strong> &nbsp;
-        <small>Child</small>    
-      </h3>
-
-      <span>20yrs</span>
-      <mat-divider></mat-divider>
-    </mat-list-item>
-
-  </mat-nav-list> 
 </mat-card>
 
 <mat-card class="bio-info-card">

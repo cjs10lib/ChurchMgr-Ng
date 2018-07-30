@@ -32,7 +32,7 @@ export class PersonFamilyService {
     return this.db.doc(`people-family/${personId}`).valueChanges();
   }
 
-  getFamilyMembers(familyId: string) {
+  getFamilyMembers(familyId: string): Observable<PersonFamily[]> {
     return this.db.collection('people-family', ref => ref.where('familyId', '==', familyId)).valueChanges();
   }
 
