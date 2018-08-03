@@ -65,6 +65,7 @@ export class PeopleBasicFormComponent implements OnInit, OnDestroy {
 
       this.subscription = this.peopleService.getPerson(this.personId).subscribe((resp: Person) => {
         this.person = resp;
+        this.person.dob = resp.dob;
         this.person.education = resp.education;
         this.person.occupation = resp.occupation;
         this.person.contact = resp.contact;

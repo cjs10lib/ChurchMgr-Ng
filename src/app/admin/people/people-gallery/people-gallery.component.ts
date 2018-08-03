@@ -2,8 +2,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AngularFireStorage } from '../../../../../node_modules/angularfire2/storage';
-import { map } from '../../../../../node_modules/rxjs/operators';
+import { AngularFireStorage } from 'angularfire2/storage';
+import { map } from 'rxjs/operators';
 import { UploadService } from '../../../services/upload.service';
 
 @Component({

@@ -1,0 +1,38 @@
+<form #f="ngForm">
+  <div class="form-field-container">
+
+    <mat-form-field>
+      <input matInput [(ngModel)]="givingBatch.name" name="batchName" #batchName placeholder="Name" required>
+      <mat-error>
+        Name of batch is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <span matPrefix> <mat-icon>date_range</mat-icon> &nbsp; </span>
+      <input matInput [matDatepicker]="RD" [(ngModel)]="givingBatch.recieved" name="recieved" #RD placeholder="Recieved Date" required>
+      <mat-datepicker-toggle matSuffix [for]="RD"></mat-datepicker-toggle>
+      <mat-datepicker #RD touchUi="true"></mat-datepicker>
+      <mat-hint align="end">Click toggle button to select date!</mat-hint>
+
+      <mat-error>
+        A valid <strong>Date Recieved</strong> is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [(ngModel)]="givingBatch.amount" name="amount" #amount placeholder="Amount" required>
+      <mat-error>
+        Amount is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!f.valid">
+        <mat-icon>create</mat-icon>
+        <span>Create</span>
+      </button>
+    </mat-card-actions>
+
+  </div>
+</form> 

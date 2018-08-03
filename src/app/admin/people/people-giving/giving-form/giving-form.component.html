@@ -1,0 +1,34 @@
+<mat-card>
+  
+  <app-giving-form-intro></app-giving-form-intro>
+
+  <div class="spc-10"></div>
+
+  <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
+
+    <div fxFlex fxShow.lt-sm="false" fxShow="true">
+
+      <div>
+        <div *ngIf="showGivingBatch">
+          <h3 mat-header>
+            Batch
+          </h3>            
+          <strong>{{ givingBatch?.batch.name }} - {{ givingBatch?.batch?.created?.toDate() | date:'longDate' }}</strong> <br>
+          Expected Total: {{ givingBatch?.batch.amount | number:'' }} <br>
+          Date Recieved: {{ givingBatch?.batch.recieved?.toDate() | date:'longDate' }} <br>
+        </div>
+
+        <div class="spc-10"></div>
+
+        <button mat-raised-button color="primary" (click)="openDialog()">Choose a Batch (Optional)</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="spc-20"></div>
+
+  <app-giving-form-fields [givingBatch]="givingBatch.batchId"></app-giving-form-fields>
+
+</mat-card>
+

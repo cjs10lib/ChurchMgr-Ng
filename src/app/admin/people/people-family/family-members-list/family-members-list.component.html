@@ -1,5 +1,4 @@
-<!-- <div class="card-wrapper"> -->
-    
+
   <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
 
     <div *ngIf="showControls" fxFlex="20" fxFlexOrder.xs="1">
@@ -62,7 +61,7 @@
       </div>
     </div>
     
-    <div fxShow.lt-lg="false" fxShow="true" fxFlex="20">
+    <div *ngIf="showControls" fxShow.lt-lg="false" fxShow="true" fxFlex="20">
       <div class="flex-details">
 
         <div style="background-color: #e6e6e6e6">
@@ -83,4 +82,3 @@
 
   </div> 
   
-<!-- </div> -->

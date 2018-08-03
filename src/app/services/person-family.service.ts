@@ -1,11 +1,9 @@
-import { PersonFamily } from '../models/person-family.model';
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { Family } from '../models/person-family.model';
-import { Person } from '../models/person.model';
-import { map, take } from 'rxjs/operators';
+import { Family, PersonFamily } from '../models/person-family.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,9 +1,9 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Subscription } from '../../../../../../node_modules/rxjs';
+import { Subscription } from 'rxjs';
 import { PersonFamilyService } from '../../../../services/person-family.service';
 import { PeopleService } from '../../../../services/people.service';
-import { switchMap } from '../../../../../../node_modules/rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { PersonFamily } from '../../../../models/person-family.model';
 
 @Component({

@@ -2,8 +2,8 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { MatChipInputEvent } from '../../../../../../../node_modules/@angular/material';
-import { PersonAllergyService } from './../../../../../services/person-allergy.service';
+import { MatChipInputEvent } from '@angular/material';
+import { PersonAllergyService } from '../../../../../services/person-allergy.service';
 import { PersonAllegyService } from '../../../../../services/person-allegy.service';
 
 @Component({

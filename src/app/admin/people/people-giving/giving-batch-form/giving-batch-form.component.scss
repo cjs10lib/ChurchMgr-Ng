@@ -1,0 +1,16 @@
+.form-field-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-field-container > * {
+    width: 98%;
+}
+
+mat-form-field {
+    margin: 7px;
+}
+
+mat-card-actions {
+    margin-left: 10px;
+}

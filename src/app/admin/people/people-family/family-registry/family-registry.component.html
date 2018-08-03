@@ -9,7 +9,7 @@
           <span matPrefix>
             <mat-icon>search</mat-icon> &nbsp;
           </span>
-          <input matInput #query (keyup)="search(query.value)" [(ngModel)]="searchQry" name="searchQuery" placeholder="Search family...">
+          <input matInput #query (keyup)="search(query.value)" [(ngModel)]="searchQry" name="searchQuery" placeholder="Search Family...">
           <button mat-button *ngIf="searchQry" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchField()">
             <mat-icon>close</mat-icon>
           </button>

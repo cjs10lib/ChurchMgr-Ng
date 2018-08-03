@@ -1,12 +1,12 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { switchMap } from '../../../../../../node_modules/rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { PersonFamilyService } from '../../../../services/person-family.service';
-import { PersonFamily } from './../../../../models/person-family.model';
-import { Person } from './../../../../models/person.model';
-import { PeopleService } from './../../../../services/people.service';
-import { Subscription } from '../../../../../../node_modules/rxjs';
+import { PersonFamily } from '../../../../models/person-family.model';
+import { Person } from '../../../../models/person.model';
+import { PeopleService } from '../../../../services/people.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-family-registry',

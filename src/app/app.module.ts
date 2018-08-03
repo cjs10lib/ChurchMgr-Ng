@@ -1,7 +1,7 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -38,6 +38,7 @@ import {
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
@@ -49,12 +50,17 @@ import { LoginFormComponent } from './admin/authentication/login-form/login-form
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { FamilyFormAddComponent } from './admin/people/people-family/family-form-add/family-form-add.component';
 import { FamilyFormComponent } from './admin/people/people-family/family-form/family-form.component';
+import { FamilyMembersListComponent } from './admin/people/people-family/family-members-list/family-members-list.component';
 import {
   FamilyMembersRegistryComponent,
 } from './admin/people/people-family/family-members-registry/family-members-registry.component';
+import { FamilyProfileComponent } from './admin/people/people-family/family-profile/family-profile.component';
 import { FamilyRegistryComponent } from './admin/people/people-family/family-registry/family-registry.component';
 import { PeopleFamilyComponent } from './admin/people/people-family/people-family.component';
 import { PeopleGalleryComponent } from './admin/people/people-gallery/people-gallery.component';
+import { GivingCategoriesComponent } from './admin/people/people-giving/giving-categories/giving-categories.component';
+import { GivingFormComponent } from './admin/people/people-giving/giving-form/giving-form.component';
+import { PeopleGivingComponent } from './admin/people/people-giving/people-giving.component';
 import { PeopleProfileComponent } from './admin/people/people-profile/people-profile.component';
 import { ProfileBioExtComponent } from './admin/people/people-profile/profile-bio-ext/profile-bio-ext.component';
 import { ProfileBioComponent } from './admin/people/people-profile/profile-bio/profile-bio.component';
@@ -85,13 +91,19 @@ import { HomeComponent } from './general/home/home.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthenticationLayoutComponent } from './layouts/authentication-layout/authentication-layout.component';
 import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.component';
-import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.component';
-import { FamilyProfileComponent } from './admin/people/people-family/family-profile/family-profile.component';
 import { FileSizePipe } from './pipes/file-size.pipe';
-import { ModalGalleryModule } from '@ks89/angular-modal-gallery';
-import { FamilyMembersListComponent } from './admin/people/people-family/family-members-list/family-members-list.component';
+import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.component';
+import { BreadcrumComponent } from './layouts/breadcrum/breadcrum.component';
+import { GivingCategoryFormComponent } from './admin/people/people-giving/giving-category-form/giving-category-form.component';
+import { GivingBatchComponent } from './admin/people/people-giving/giving-batch/giving-batch.component';
+import { GivingBatchFormComponent } from './admin/people/people-giving/giving-batch-form/giving-batch-form.component';
+import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
+import { polyfill as keyboardEventKeyPolyfill } from 'keyboardevent-key-polyfill';
+import { GivingFormFieldsComponent } from './admin/people/people-giving/giving-form/giving-form-fields/giving-form-fields.component';
+import { GivingFormIntroComponent } from './admin/people/people-giving/giving-form/giving-form-intro/giving-form-intro.component';
 
-// tslint:disable-next-line:max-line-length
+keyboardEventKeyPolyfill();
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -127,7 +139,16 @@ import { FamilyMembersListComponent } from './admin/people/people-family/family-
     FamilyMembersRegistryComponent,
     FamilyProfileComponent,
     FileSizePipe,
-    FamilyMembersListComponent
+    FamilyMembersListComponent,
+    PeopleGivingComponent,
+    GivingFormComponent,
+    GivingCategoriesComponent,
+    BreadcrumComponent,
+    GivingCategoryFormComponent,
+    GivingBatchComponent,
+    GivingBatchFormComponent,
+    GivingFormIntroComponent,
+    GivingFormFieldsComponent
   ],
   imports: [
     AngularFireStorageModule,
@@ -142,6 +163,9 @@ import { FamilyMembersListComponent } from './admin/people/people-family/family-
     LayoutModule,
     PerfectScrollbarModule,
     ModalGalleryModule,
+    ReactiveFormsModule,
+
+    TextInputAutocompleteModule,
 
     MatAutocompleteModule,
     MatButtonModule,
@@ -177,7 +201,9 @@ import { FamilyMembersListComponent } from './admin/people/people-family/family-
     MatNativeDateModule
   ],
   entryComponents: [
-    FamilyFormAddComponent
+    FamilyFormAddComponent,
+    GivingCategoryFormComponent,
+    GivingBatchComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

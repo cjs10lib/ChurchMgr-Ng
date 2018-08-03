@@ -17,6 +17,13 @@ export class SweetAlertService {
     });
   }
 
+  fieldRequiredError() {
+    return this.toast({
+      type: 'error',
+      title: 'One or more required criterias is empty! Complete required details before subitting the form'
+    });
+  }
+
   confirmUpdate() {
     return swal({
       title: 'Record Update!',

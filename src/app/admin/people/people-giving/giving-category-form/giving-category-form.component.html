@@ -1,0 +1,38 @@
+<mat-card>
+  <mat-card-header>
+    <h3 mat-subHeader>Add a Category</h3>
+  </mat-card-header>
+
+  <mat-divider></mat-divider>
+
+  <div class="spc-10"></div>
+
+  <form #f="ngForm"> 
+
+    <mat-card-content>
+      <div class="form-field-container">
+
+        <mat-form-field>
+          <input matInput [(ngModel)]="category.name" name="category" placeholder="Category Name" required>
+          <mat-error >
+            Category name is <strong>required</strong> 
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <textarea matInput [(ngModel)]="category.notes" name="note" placeholder="Notes"></textarea>
+        </mat-form-field>
+
+      </div>
+      
+    </mat-card-content>
+    
+    <mat-card-actions>
+      <button mat-raised-button color="primary" [mat-dialog-close]="category" [disabled]="!f.valid">
+        <mat-icon>save</mat-icon> &nbsp;
+        <span>Save</span>
+      </button>
+    </mat-card-actions>
+
+  </form>
+</mat-card>

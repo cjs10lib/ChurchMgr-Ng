@@ -1,0 +1,43 @@
+
+<app-breadcrum [pageTitle]="pageTitle" [pageIcon]="pageIcon"></app-breadcrum>
+
+<mat-card>
+
+  <mat-card class="active-cat">
+    <div style="text-align: right;">
+      <button mat-raised-button color="primary" (click)="openDialog()">
+        <mat-icon>add</mat-icon>
+        Add Category
+      </button>
+    </div>
+
+    <div class="spc-10"></div>
+
+    <mat-divider></mat-divider> 
+
+    <mat-card-content>
+
+      <perfect-scrollbar style="max-width: 100%; height: 100%;" [config]="config">
+        <mat-nav-list>
+  
+          <mat-list-item *ngFor="let category of categories$">
+            <mat-icon matListIcon color="primary">import_export</mat-icon>
+            <h3 matLine> {{ category.name }} </h3>
+  
+            <span>
+              <button mat-icon-button>
+                <mat-icon color="primary">settings</mat-icon> &nbsp;
+              </button>
+            </span>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+  
+        </mat-nav-list>
+  
+        <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
+  
+      </perfect-scrollbar>
+    </mat-card-content>
+  </mat-card>
+
+</mat-card>

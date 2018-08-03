@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Person } from '../models/person.model';
-import { DatePipe } from '../../../node_modules/@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +43,7 @@ export class PeopleService {
 
   addPerson(person: Person) {
     person.fullname = person.surname + ' ' + person.firstname + ' ' + person.othernames;
+    person.lastUpdate = new Date().getTime();
     return this.peopleCollection.add(person);
   }
 

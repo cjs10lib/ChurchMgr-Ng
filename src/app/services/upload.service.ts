@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 
-import { AngularFireStorage, AngularFireUploadTask } from '../../../node_modules/angularfire2/storage';
-import { Observable } from '../../../node_modules/rxjs';
-import { finalize, map } from '../../../node_modules/rxjs/operators';
-import { Upload } from './../models/upload.model';
+import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
+import { Observable } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
+import { Upload } from '../models/upload.model';
 
 @Injectable({
   providedIn: 'root'
