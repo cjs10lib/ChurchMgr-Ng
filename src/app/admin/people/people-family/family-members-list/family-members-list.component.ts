@@ -16,6 +16,9 @@ export class FamilyMembersListComponent implements OnInit, OnDestroy {
   @Input() parentComponent: string;
   @Input() showControls: boolean;
 
+  // pageTitle = 'Family Members';
+  // pageIcon = '';
+
   routeId: string;
   searchQry: string;
 

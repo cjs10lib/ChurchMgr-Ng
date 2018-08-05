@@ -11,6 +11,9 @@ import { PeopleService } from '../../../services/people.service';
 })
 export class PeopleRegistryComponent implements OnInit, OnDestroy {
 
+  pageTitle = 'People';
+  pageIcon = '';
+
   searchQry: string;
 
   people$: Person[];

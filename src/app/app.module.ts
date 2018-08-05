@@ -101,6 +101,10 @@ import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
 import { polyfill as keyboardEventKeyPolyfill } from 'keyboardevent-key-polyfill';
 import { GivingFormFieldsComponent } from './admin/people/people-giving/giving-form/giving-form-fields/giving-form-fields.component';
 import { GivingFormIntroComponent } from './admin/people/people-giving/giving-form/giving-form-intro/giving-form-intro.component';
+import { PeopleVisitorsComponent } from './admin/people/people-visitors/people-visitors.component';
+import { VisitorsFormComponent } from './admin/people/people-visitors/visitors-form/visitors-form.component';
+import { VisitorsRegistryComponent } from './admin/people/people-visitors/visitors-registry/visitors-registry.component';
+import { VisitorProfileComponent } from './admin/people/people-visitors/visitor-profile/visitor-profile.component';
 
 keyboardEventKeyPolyfill();
 
@@ -148,7 +152,11 @@ keyboardEventKeyPolyfill();
     GivingBatchComponent,
     GivingBatchFormComponent,
     GivingFormIntroComponent,
-    GivingFormFieldsComponent
+    GivingFormFieldsComponent,
+    PeopleVisitorsComponent,
+    VisitorsFormComponent,
+    VisitorsRegistryComponent,
+    VisitorProfileComponent
   ],
   imports: [
     AngularFireStorageModule,
@@ -203,7 +211,8 @@ keyboardEventKeyPolyfill();
   entryComponents: [
     FamilyFormAddComponent,
     GivingCategoryFormComponent,
-    GivingBatchComponent
+    GivingBatchComponent,
+    VisitorsFormComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

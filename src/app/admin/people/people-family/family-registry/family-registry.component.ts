@@ -14,6 +14,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./family-registry.component.scss']
 })
 export class FamilyRegistryComponent implements OnInit, OnDestroy {
+  pageTitle = 'Family';
+  pageIcon = '';
 
   searchQry: string;
 

@@ -1,3 +1,5 @@
+import { VisitorProfileComponent } from './admin/people/people-visitors/visitor-profile/visitor-profile.component';
+import { VisitorsFormComponent } from './admin/people/people-visitors/visitors-form/visitors-form.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -14,6 +16,8 @@ import { HomeComponent } from './general/home/home.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthenticationLayoutComponent } from './layouts/authentication-layout/authentication-layout.component';
 import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.component';
+import { GivingFormComponent } from './admin/people/people-giving/giving-form/giving-form.component';
+import { VisitorsRegistryComponent } from './admin/people/people-visitors/visitors-registry/visitors-registry.component';
 
 const routes: Routes = [
   {
@@ -57,8 +61,23 @@ const routes: Routes = [
         path: 'families',
         component: FamilyRegistryComponent
       }, {
+        path: 'visitors',
+        component: VisitorsRegistryComponent
+      }, {
+        path: 'visitors-registration',
+        component: VisitorsFormComponent
+      }, {
+        path: 'visitors-registration/:id',
+        component: VisitorsFormComponent
+      }, {
+        path: 'visitor-profile',
+        component: VisitorProfileComponent
+      }, {
         path: 'giving-categories',
         component: GivingCategoriesComponent
+      }, {
+        path: 'giving',
+        component: GivingFormComponent
       }, {
         path: 'transaction',
         component: TransactionsComponent

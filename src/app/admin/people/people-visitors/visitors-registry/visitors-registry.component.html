@@ -24,7 +24,8 @@
 
         <section>
           <div class="add-new">
-            <a mat-raised-button color="primary" routerLink="/people-registration">
+            <!-- <a mat-raised-button color="primary" (click)="openDialog()"> -->
+            <a mat-raised-button color="primary" routerLink="/visitors-registration">
               <mat-icon>group_add</mat-icon> &nbsp;
               Add New Record
             </a>
@@ -32,25 +33,25 @@
         </section>
 
         <mat-nav-list>
-          <mat-list-item *ngIf="filteredPeople">
+          <mat-list-item *ngIf="filteredVisitors$">
             <mat-divider></mat-divider>
             <h3 matLine>  
               <strong>                  
-                {{ filteredPeople?.length }} record(s) found.
+                {{ filteredVisitors$?.length }} record(s) found.
               </strong>
             </h3>
           </mat-list-item>
-          <mat-list-item *ngFor="let people of filteredPeople" routerLink="/people-profile/{{ people.id }}" >
+          <mat-list-item *ngFor="let visitor of filteredVisitors$" routerLink="/visitor-profile/{{ visitor.id }}" >
             <mat-divider></mat-divider>
-            <img matListAvatar src="../../../../assets/avatars/avatar4.png" alt="...">
+            <img matListAvatar src="../../../../../assets/avatars/avatar4.png" alt="...">
             <h3 matLine> 
               <strong>                  
-                {{ people.surname }} 
-                {{ people.firstname }}                
+                {{ visitor.surname }} 
+                {{ visitor.firstname }}                
               </strong>
             </h3>
             <p matLine>
-              {{ people.othernames }} 
+              <!-- {{ visitor.created.toDate() | date:'longDate' }}  -->
             </p>
 
             <button mat-icon-button>

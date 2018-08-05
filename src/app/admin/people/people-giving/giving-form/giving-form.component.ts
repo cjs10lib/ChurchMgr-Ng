@@ -10,6 +10,9 @@ import { GivingBatchComponent } from './../giving-batch/giving-batch.component';
 })
 export class GivingFormComponent implements OnInit {
 
+  pageTitle = 'Giving';
+  pageIcon = '';
+
   givingBatch = {};
   showGivingBatch = false;
 
