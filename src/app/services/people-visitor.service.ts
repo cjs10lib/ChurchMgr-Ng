@@ -37,13 +37,19 @@ export class PeopleVisitorService {
 
   addVisitor(visitor: Visitor) {
     visitor.created = new Date;
+    visitor.fullname = visitor.surname + ' ' + visitor.firstname + ' ' + visitor.othernames;
 
     return this.visitorCollection.add(visitor);
   }
 
   updateVisitor(visitorId: string, visitor: Visitor) {
     visitor.created = new Date;
+    visitor.fullname = visitor.surname + ' ' + visitor.firstname + ' ' + visitor.othernames;
 
     return this.visitorCollection.doc(visitorId).set(visitor);
+  }
+
+  deleteVisitor(visitorId: string) {
+    return this.visitorCollection.doc(visitorId).delete();
   }
 }

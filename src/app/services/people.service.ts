@@ -37,14 +37,19 @@ export class PeopleService {
     return this.people$;
   }
 
-  getPerson(personId: string) {
+  getPerson(personId: string): Observable<Person> {
     return this.db.doc(`people/${personId}`).valueChanges();
   }
 
   addPerson(person: Person) {
     person.fullname = person.surname + ' ' + person.firstname + ' ' + person.othernames;
     person.lastUpdate = new Date().getTime();
-    return this.peopleCollection.add(person);
+
+    const profileImgId = this.db.createId(); // generates an Id to save into people and set into gallery
+    person.profileImage = profileImgId;
+
+
+    return { personData: this.peopleCollection.add(person), profileImgId: profileImgId };
   }
 
   updatePerson(personId: string, person: Person) {

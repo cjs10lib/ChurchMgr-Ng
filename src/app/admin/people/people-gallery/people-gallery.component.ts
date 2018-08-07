@@ -50,7 +50,6 @@ export class PeopleGalleryComponent implements OnInit {
   ngOnInit() {
     this.uploadService.getPersonGallery(this.personId).subscribe(resp => {
       this.gallery = resp;
-      console.log(resp);
     });
   }
 

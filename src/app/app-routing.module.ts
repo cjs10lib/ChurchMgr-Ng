@@ -70,7 +70,7 @@ const routes: Routes = [
         path: 'visitors-registration/:id',
         component: VisitorsFormComponent
       }, {
-        path: 'visitor-profile',
+        path: 'visitor-profile/:id',
         component: VisitorProfileComponent
       }, {
         path: 'giving-categories',

@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { Person } from '../../../models/person.model';
 import { PeopleService } from '../../../services/people.service';
+import { UploadService } from '../../../services/upload.service';
 
 @Component({
   selector: 'app-people-registry',
@@ -16,18 +18,35 @@ export class PeopleRegistryComponent implements OnInit, OnDestroy {
 
   searchQry: string;
 
-  people$: Person[];
-  filteredPeople: Person[];
+  people$ = [];
+  // filteredPeople: Person[];
+  filteredPeople = [];
 
   showSpinner = true;
   subscription: Subscription;
 
-  constructor(private peopleService: PeopleService) { }
+  constructor(private peopleService: PeopleService, private uploadService: UploadService) { }
 
   ngOnInit() {
     this.subscription = this.peopleService.getPeople().subscribe(resp => {
-      this.people$ = this.filteredPeople = resp;
-      this.showSpinner = false;
+
+      resp.forEach(object => {
+        this.uploadService.getProfileImage(object.profileImage).pipe(take(1)).subscribe(result => {
+
+          this.showSpinner = false;
+
+          this.filteredPeople.push({ // for each people record, set person data and avatar
+            avatar: result,
+            data: object
+          });
+
+          this.people$.push({
+            avatar: result,
+            data: object
+          });
+
+        });
+      });
     });
   }
 
@@ -39,7 +58,7 @@ export class PeopleRegistryComponent implements OnInit, OnDestroy {
 
     this.filteredPeople = qry ?
     this.people$.filter(
-      p => p.fullname.toLowerCase().includes(qry.toLowerCase())) : this.people$;
+      p => p.data.fullname.toLowerCase().includes(qry.toLowerCase())) : this.people$;
   }
 
   clearSearchField() {

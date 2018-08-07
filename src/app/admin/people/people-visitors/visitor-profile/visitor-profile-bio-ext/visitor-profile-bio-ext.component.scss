@@ -1,0 +1,10 @@
+@import '../../../../../theme/custom-theme.scss';
+
+.bio-info-card {
+    // margin: 20px 10px 20px 20px;
+    margin: 20px 10px;
+}
+
+.link {
+    color: mat-color($primary);
+}

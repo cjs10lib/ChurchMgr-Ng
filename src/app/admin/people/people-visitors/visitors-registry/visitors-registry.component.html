@@ -23,7 +23,7 @@
       <div class="flex-details margin-20">
 
         <section>
-          <div class="add-new">
+          <div class="actions">
             <!-- <a mat-raised-button color="primary" (click)="openDialog()"> -->
             <a mat-raised-button color="primary" routerLink="/visitors-registration">
               <mat-icon>group_add</mat-icon> &nbsp;
@@ -41,7 +41,7 @@
               </strong>
             </h3>
           </mat-list-item>
-          <mat-list-item *ngFor="let visitor of filteredVisitors$" routerLink="/visitor-profile/{{ visitor.id }}" >
+          <mat-list-item *ngFor="let visitor of filteredVisitors$" routerLink="/visitor-profile/{{ visitor.Id }}" >
             <mat-divider></mat-divider>
             <img matListAvatar src="../../../../../assets/avatars/avatar4.png" alt="...">
             <h3 matLine> 

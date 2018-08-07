@@ -1,0 +1,91 @@
+
+
+<mat-list>
+
+  <mat-list-item>
+    <h2 mat-header>
+      <strong>
+        {{ visitor.fullname }}
+      </strong>
+    </h2>
+    <!-- <mat-divider></mat-divider> -->
+  </mat-list-item>
+
+  <div class="spc-10"></div>
+
+  <mat-list-item>
+    <mat-icon matListIcon color="primary">person</mat-icon>
+    <span matLine>
+      <strong>
+        Gender
+      </strong>
+    </span>
+
+    <span>{{ visitor.gender }}</span>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+
+  <h2 mat-header>Phone(s)</h2>
+  <mat-list-item>
+    <mat-icon matListIcon color="primary">phone_iphone</mat-icon>
+    <h3 matLine>
+      <strong>
+        Mobile
+      </strong>
+    </h3>
+
+    <span>{{ visitor.contact?.mobilePhone }} <br> {{ visitor.contact?.homePhone }}</span>
+  </mat-list-item>
+  
+  <h2 mat-header>Email</h2>
+  <mat-list-item>
+    <mat-icon matListIcon color="primary">email</mat-icon>
+    <h3 matLine>
+      <strong>
+        <a class="email-address" href="{{ visitor.contact?.email }}" target="_blank"> {{ visitor.contact?.email }} </a>
+      </strong>
+    </h3>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+
+  <h2 mat-header>Dates</h2>
+  <mat-list-item>
+    <mat-icon matListIcon color="primary">cake</mat-icon>
+    <h3 matLine>
+      <strong>
+        {{ visitor.dob?.toDate() | date: 'longDate' }}
+      </strong>
+    </h3>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+
+  <mat-list-item>
+    <mat-icon matListIcon color="primary">child_friendly</mat-icon>
+    <h3 matLine>
+      <strong>
+        {{ visitor.beliefs?.bornAgainDate?.toDate() | date: 'longDate' }}
+      </strong>
+    </h3>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+
+  <mat-list-item>
+    <h3 matLine>
+      Joined: {{ visitor.created?.toDate() | date: 'longDate' }}
+    </h3>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+
+
+
+  <h2 mat-header>Address</h2>
+  <mat-list-item>
+    <mat-icon matListIcon color="primary">location_on</mat-icon>
+    <h3 matLine>
+      <p>{{ visitor.contact?.residentialAddress }}</p>
+    </h3>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+
+</mat-list>  
+

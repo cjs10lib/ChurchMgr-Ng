@@ -2,13 +2,11 @@
   <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
     
     <div fxFlexOrder.xs="1">
-      <img class="avatar" src="../../../../assets/avatars/avatar4.png" alt="...">       
+      <img *ngIf="profileImage; else noImageAvatar" class="avatar" [src]="profileImage" alt="...">       
     </div>
 
     <ng-template #noImageAvatar>
-      <div style="margin-bottom: 20px;">
-        <img class="avatar" src="../../../../assets/avatars/avatar4.png" alt="...">
-      </div>
+      <img class="avatar" src="../../../../assets/avatars/avatar4.png" alt="...">
     </ng-template>
 
     <div fxFlex="50" fxFlexOrder.xs="2" style="padding: 20px 20px 0 5px ;">

@@ -3,8 +3,10 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PersonFamilyService } from '../../../../services/person-family.service';
 import { PeopleService } from '../../../../services/people.service';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { PersonFamily } from '../../../../models/person-family.model';
+import { exists } from 'fs';
+import { UploadService } from '../../../../services/upload.service';
 
 @Component({
   selector: 'app-family-members-list',
@@ -30,7 +32,7 @@ export class FamilyMembersListComponent implements OnInit, OnDestroy {
   peopleSubscription: Subscription;
 
   constructor(private personFamilyService: PersonFamilyService,
-    private peopleService: PeopleService, private route: ActivatedRoute) { }
+    private peopleService: PeopleService, private route: ActivatedRoute, private uploadService: UploadService) { }
 
 
   ngOnInit() {
@@ -60,24 +62,36 @@ export class FamilyMembersListComponent implements OnInit, OnDestroy {
         .pipe(switchMap((resp: PersonFamily) => {
           this.showSpinner = false;
 
-          const familyId = resp.familyId;
+          const familyId = resp ? resp.familyId : null; // If family exists, useId else null
           return this.personFamilyService.getFamilyMembers(familyId);
+
        })).
         subscribe(resp => {
 
-          resp.forEach(doc => {
-            const personId = doc['personId'];
+          if (resp) {
 
-            this.peopleSubscription = this.peopleService.getPerson(personId).subscribe(result => {
-              this.people$.push({
-                personId: personId, person: result
-              });
+              resp.forEach(doc => {
+                const personId = doc['personId'];
 
-              this.filteredPeople$.push({
-                personId: personId, person: result
+                // this.peopleSubscription = this.peopleService.getPerson(personId).subscribe(result => {
+                this.peopleSubscription = this.peopleService.getPerson(personId).subscribe(data => {
+
+                  this.uploadService.getProfileImage(data.profileImage).pipe(take(1)).subscribe(avatar => {
+
+                    this.people$.push({
+                      personId: personId, data: data, avatar: avatar
+                    });
+
+                    this.filteredPeople$.push({
+                      personId: personId, data: data, avatar: avatar
+                    });
+
+                  });
               });
-          });
-        });
+            });
+
+          }
+
 
       });
 
@@ -88,17 +102,23 @@ export class FamilyMembersListComponent implements OnInit, OnDestroy {
 
       this.showSpinner = false;
 
-      resp.forEach(p => {
-        // get people
-        this.peopleSubscription = this.peopleService.getPerson(p.personId).subscribe(result => {
-          this.people$.push({
-            personId: p.personId,
-            person: result
-          });
+      resp.forEach(person => {
 
-          this.filteredPeople$.push({
-            personId: p.personId,
-            person: result
+        const personId = person.personId;
+
+        // get people
+        this.peopleSubscription = this.peopleService.getPerson(personId).subscribe(data => {
+
+          this.uploadService.getProfileImage(data.profileImage).pipe(take(1)).subscribe(avatar => {
+
+            this.people$.push({
+              personId: personId, data: data, avatar: avatar
+            });
+
+            this.filteredPeople$.push({
+              personId: personId, data: data, avatar: avatar
+            });
+
           });
 
         });
@@ -109,7 +129,7 @@ export class FamilyMembersListComponent implements OnInit, OnDestroy {
   search(qry: string) {
     this.filteredPeople$ = qry ?
       this.people$.filter(
-        p => p.person.fullname.toLowerCase().includes(qry.toLowerCase())) : this.people$;
+        p => p.data.fullname.toLowerCase().includes(qry.toLowerCase())) : this.people$;
   }
 
   clearSearchField() {

@@ -1,3 +1,4 @@
+import { UploadService } from './../../../../services/upload.service';
 import { SweetAlertService } from '../../../../services/sweet-alert.service';
 import { PeopleService } from '../../../../services/people.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
@@ -49,13 +50,16 @@ export class PeopleBasicFormComponent implements OnInit, OnDestroy {
   step = 0;
 
   imageUrl = '../../../../../assets/avatars/avatar3.png';
-  fileToUpload: File = null;
+  fileToUpload: FileList;
   isHovering: boolean;
+
+  private basePath = 'Gallery';
 
   subscription: Subscription;
 
   constructor(private peopleService: PeopleService,
-    private sweetAlertService: SweetAlertService, private route: ActivatedRoute, private router: Router) { }
+    private sweetAlertService: SweetAlertService, private route: ActivatedRoute,
+    private router: Router, private uploadService: UploadService) { }
 
   ngOnInit() {
 
@@ -70,8 +74,6 @@ export class PeopleBasicFormComponent implements OnInit, OnDestroy {
         this.person.occupation = resp.occupation;
         this.person.contact = resp.contact;
         this.person.home = resp.home;
-
-        console.log(this.person);
       });
     }
   }
@@ -83,15 +85,20 @@ export class PeopleBasicFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.sweetAlertService.confirmUpdate().then(result => {
+    this.sweetAlertService.confirmUpdate().then(async result => {
       if (result.value) {
 
         if (this.personId) {
-          this.peopleService.updatePerson(this.personId, this.person);
+
+          await this.peopleService.updatePerson(this.personId, this.person);
+
         } else {
-          this.peopleService.addPerson(this.person).then(resp => {
-            console.log(resp.id);
-          });
+          const data = this.peopleService.addPerson(this.person);
+
+          this.personId = (await data.personData).id;
+          const profileImgId = data.profileImgId; // get profile image id from people service
+
+          this.uploadService.pushUpload(this.fileToUpload, this.basePath, this.personId, profileImgId);
         }
 
         this.sweetAlertService.afterUpdateSuccess();
@@ -105,9 +112,9 @@ export class PeopleBasicFormComponent implements OnInit, OnDestroy {
   }
 
   handleFileInput(file: FileList) {
-    this.fileToUpload = file.item(0);
+    this.fileToUpload = file;
 
-    if (this.fileToUpload.type.split('/')[0] !== 'image') {
+    if (this.fileToUpload.item(0).type !== 'image') {
       console.log('unsupported file type :( ');
     }
 
@@ -116,7 +123,7 @@ export class PeopleBasicFormComponent implements OnInit, OnDestroy {
     reader.onload = (event: any) => {
       this.imageUrl = event.target.result;
     };
-    reader.readAsDataURL(this.fileToUpload);
+    reader.readAsDataURL(this.fileToUpload.item(0));
   }
 
   setStep(index: number) {

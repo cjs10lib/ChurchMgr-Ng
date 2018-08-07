@@ -25,11 +25,23 @@ export class UploadService {
   private percentage: Observable<number>;
   private snapshot: Observable<any>;
 
-
-
   imagePath;
 
-  constructor(private storage: AngularFireStorage, private db: AngularFirestore, private route: ActivatedRoute) {}
+  constructor(private storage: AngularFireStorage, private db: AngularFirestore, private route: ActivatedRoute) {
+
+  }
+
+  getAllGallery() {
+    return this.uploads$ = this.db.collection('gallery').snapshotChanges().pipe(
+      map(change => {
+        return change.map(a => {
+          const data = a.payload.doc.data() as Upload;
+          data.Id = a.payload.doc.id;
+
+          return data;
+        });
+      }));
+  }
 
   getPersonGallery(personId: string) {
 
@@ -50,8 +62,12 @@ export class UploadService {
     return `${basePath}/${person}/${person}_${new Date().getTime()}`;
   }
 
-  private saveFileData(fileToUpload: Upload) {
-    return this.db.collection('gallery').add(fileToUpload);
+  private saveFileData(fileToUpload: Upload, fileId?: string) {
+
+    // if fileId is not included in parameter, generate new fileId
+
+    const newFileId = this.db.createId();
+    return this.db.doc(`gallery/${fileId ? fileId : newFileId}`).set(fileToUpload);
   }
 
   private deleteFileData(fileId: string) {
@@ -70,9 +86,15 @@ export class UploadService {
     return this.storageRef.ref(path).getDownloadURL();
   }
 
-  async pushUpload(event: FileList, basePath: string, personId: string) {
+  getProfileImage(profileImgId: string): Observable<Upload> {
+    return this.db.doc(`gallery/${profileImgId}`).valueChanges();
+  }
 
+  async pushUpload(event: FileList, basePath: string, personId: string, fileId?: string) {
+
+    console.log('file upload service', event);
     Array.from(event).forEach(file => {
+
 
       const path = this.uploadPath(personId, basePath);
       const fileRef = this.storageRef.ref(path);
@@ -99,17 +121,16 @@ export class UploadService {
 
         downloadURL.subscribe(url => {
 
-          console.log(url);
+          // console.log(url);
 
-          this.fileToUpload.Id = this.db.createId();
+          // this.fileToUpload.Id = this.db.createId();
           this.fileToUpload.personId = personId;
 
           this.fileToUpload.url = url;
           this.fileToUpload.path = path;
-          // this.fileToUpload.note = note;
           this.fileToUpload.createdDate = new Date();
 
-          this.saveFileData(this.fileToUpload); // save file data to firestore gallery
+          this.saveFileData(this.fileToUpload, fileId); // save file data to firestore gallery
         });
       })).subscribe();
 

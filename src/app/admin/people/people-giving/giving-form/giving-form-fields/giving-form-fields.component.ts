@@ -134,6 +134,9 @@ export class GivingFormFieldsComponent implements OnInit, OnDestroy {
           control.setValue(this.givingBatch); // sets selected batchId if any
         }
 
+        const controls = <FormArray>this.givingForm.controls['records'];
+        // this.givingForm.
+
         this.givingService.addGiving(this.givingForm.value);
 
         this.clearControl();

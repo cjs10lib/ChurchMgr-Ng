@@ -1,9 +1,9 @@
-import { Router, ActivatedRoute } from '@angular/router';
-import { PeopleVisitorService } from './../../../../services/people-visitor.service';
-import { Visitor } from './../../../../models/person-visitor.model';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '../../../../../../node_modules/@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { SweetAlertService } from '../../../../services/sweet-alert.service';
+import { Visitor } from './../../../../models/person-visitor.model';
+import { PeopleVisitorService } from './../../../../services/people-visitor.service';
 
 @Component({
   selector: 'app-visitors-form',
@@ -34,7 +34,7 @@ export class VisitorsFormComponent implements OnInit {
 
     if (this.visitorId) {
       this.visitorService.getVisitor(this.visitorId).subscribe(resp => {
-        console.log(resp);
+        this.visitor = resp;
       });
     }
   }
@@ -46,10 +46,12 @@ export class VisitorsFormComponent implements OnInit {
         if (this.visitorId) {
           await this.visitorService.updateVisitor(this.visitorId, this.visitor);
         } else {
-          await this.visitorService.addVisitor(this.visitor);
+          const data = await this.visitorService.addVisitor(this.visitor);
+
+          this.visitorId = data.id;
         }
 
-        this.router.navigate(['visitors']);
+        this.router.navigate(['visitor-profile', this.visitorId]);
         this.alertService.afterUpdateSuccess();
       }
     });

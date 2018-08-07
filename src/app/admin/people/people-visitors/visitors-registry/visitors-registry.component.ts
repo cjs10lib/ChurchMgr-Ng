@@ -29,6 +29,8 @@ export class VisitorsRegistryComponent implements OnInit, OnDestroy {
     this.subscription = this.visitorService.getVisitors().subscribe(resp => {
       this.visitors$ = this.filteredVisitors$ = resp;
 
+      console.log(resp);
+
       this.showSpinner = false;
     });
   }

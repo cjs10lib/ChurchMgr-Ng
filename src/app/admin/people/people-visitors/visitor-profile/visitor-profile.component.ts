@@ -1,7 +1,7 @@
-import { Visitor } from './../../../../models/person-visitor.model';
-import { PeopleVisitorService } from './../../../../services/people-visitor.service';
-import { ActivatedRoute } from '@angular/router';
+import { SweetAlertService } from './../../../../services/sweet-alert.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { PeopleVisitorService } from '../../../../services/people-visitor.service';
 
 @Component({
   selector: 'app-visitor-profile',
@@ -10,17 +10,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VisitorProfileComponent implements OnInit {
 
-  visitor: Visitor = {};
+  pageTitle = 'Visitors';
+  pageIcon = '';
 
-  constructor(private visitorService: PeopleVisitorService, private route: ActivatedRoute) { }
+  visitorId: string;
+
+  constructor(private route: ActivatedRoute, private visitorService: PeopleVisitorService,
+    private alertService: SweetAlertService, private router: Router) { }
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
+    this.visitorId = this.route.snapshot.paramMap.get('id');
+  }
 
-    if (id) {
-      this.visitorService.getVisitor(id).subscribe(resp => {
-        this.visitor = resp;
-      });
+  async deleteProfile() {
+    if (this.visitorId) {
+
+      const alert = await this.alertService.confirmDelete();
+
+      if (alert.value) {
+        this.visitorService.deleteVisitor(this.visitorId);
+
+        this.alertService.afterDeleteSuccess();
+        this.router.navigate(['visitors']);
+      }
+
     }
   }
 
