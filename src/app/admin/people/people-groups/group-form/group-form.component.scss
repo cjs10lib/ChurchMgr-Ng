@@ -1,3 +1,9 @@
+
+.card-wrapper {
+    display: 100%;
+    margin: 20px;
+}
+
 .form-field-container {
     display: flex;
     flex-direction: column;
@@ -5,4 +11,24 @@
 
 .form-field-container > * {
     width: 100%;
+}
+
+//expansion panel
+.example-headers-align .mat-expansion-panel-header-title, 
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.submit-button {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+mat-form-field {
+    margin: 7px;
 }

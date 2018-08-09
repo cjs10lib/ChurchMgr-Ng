@@ -1,40 +1,108 @@
 
-<mat-card>
+<mat-card class="card-wrapper">
   <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
 
-    <div fxFlex="50" fxFlexOrder.xs="1">
+    <div fxFlex fxFlexOrder.xs="1">
 
-      <div class="form-field-container">
+      <pre>{{ f.value | json }}</pre>
 
-        <mat-form-field>
-          <input type="text" placeholder="Group Name">
-        </mat-form-field>
-          
-        <mat-form-field>
-          <textarea placeholder="Description"></textarea>
-        </mat-form-field>
-  
-        <mat-form-field>
-          <input type="text" placeholder="Address">
-        </mat-form-field>
-  
-        <mat-form-field>
-          <input type="text" placeholder="State">
-        </mat-form-field>
-  
-        <mat-form-field>
-          <input type="text" placeholder="City">
-        </mat-form-field>
-  
-        <mat-form-field>
-          <input type="text" placeholder="Meeting Days">
-        </mat-form-field>
-  
-        <mat-form-field>
-          <input type="text" placeholder="Time">
-        </mat-form-field>
+      <form #f="ngForm">
 
-      </div>
+        <div class="submit-button">
+          <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!f.valid"> 
+            <mat-icon>save</mat-icon> 
+            <span>Save Record</span> 
+          </button>    
+        </div>
+  
+        <mat-accordion class="example-headers-align">
+  
+          <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Bio Info
+              </mat-panel-title>
+              <mat-panel-description>
+                Basic Information
+                <mat-icon>person</mat-icon>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+  
+            <div class="form-field-container">
+  
+              <mat-form-field>
+                <input matInput [(ngModel)]="group.name" name="name" #name placeholder="Group Name" required>
+                <mat-error>
+                  Group Name is <strong>required</strong>
+                </mat-error>        
+              </mat-form-field>
+      
+              <mat-form-field>
+                <input matInput [(ngModel)]="group.leader" name="leader" #leader placeholder="Leader" required>
+                <mat-error>
+                  Leader is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>       
+      
+              <mat-form-field>
+                <textarea matInput [(ngModel)]="group.description" name="description" #description placeholder="Description"></textarea>
+              </mat-form-field>
+  
+            </div>
+       
+            <mat-action-row>
+              <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
+            </mat-action-row>
+      
+          </mat-expansion-panel>
+  
+          <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Contact Info
+              </mat-panel-title>
+              <mat-panel-description>
+                Addresses
+                <mat-icon>place</mat-icon>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+  
+            <div class="form-field-container">
+  
+              <mat-form-field>
+                <textarea matInput [(ngModel)]="group.contact.address" name="address" #address placeholder="Address" required></textarea>
+                <mat-error>
+                  Address is <strong>required</strong>
+                </mat-error>        
+              </mat-form-field>
+      
+              <mat-form-field>
+                <input matInput [(ngModel)]="group.contact.city" name="city" #city placeholder="City" required>
+                <mat-error>
+                  City is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>  
+    
+              <mat-form-field>
+                <input matInput [(ngModel)]="group.contact.state" name="state" #state placeholder="State">
+              </mat-form-field>  
+    
+              <mat-form-field>
+                <input matInput [(ngModel)]="group.contact.zip" name="zip" #zip placeholder="Zip Code">
+              </mat-form-field>  
+  
+            </div>
+       
+            <mat-action-row>
+              <button mat-raised-button type="button" (click)="prevStep()">Previous</button>
+              <button mat-raised-button type="button" color="primary" (click)="nextStep()">Finish</button>
+            </mat-action-row>
+      
+          </mat-expansion-panel>
+  
+        </mat-accordion>
+
+      </form>
 
     </div>
 
