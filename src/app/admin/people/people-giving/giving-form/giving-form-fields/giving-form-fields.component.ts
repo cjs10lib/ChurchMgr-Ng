@@ -1,13 +1,18 @@
+import { ConvertTimestampService } from './../../../../../custom-functions/convert-timestamp.service';
+import { GivingCategory } from './../../../../../models/giving-category.model';
+import { Giving } from './../../../../../models/person-giving.model';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
-import { FormArray, FormBuilder, FormGroup, Validators } from '../../../../../../../node_modules/@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '../../../../../../../node_modules/@angular/forms';
 import { map, startWith } from '../../../../../../../node_modules/rxjs/operators';
 import { PersonGivingService } from '../../../../../services/person-giving.service';
 import { Person } from './../../../../../models/person.model';
 import { PeopleService } from './../../../../../services/people.service';
 import { PersonGivingCategoryService } from './../../../../../services/person-giving-category.service';
 import { SweetAlertService } from './../../../../../services/sweet-alert.service';
+import { MatDatepickerInputEvent } from '../../../../../../../node_modules/@angular/material';
+import firebase = require('../../../../../../../node_modules/firebase');
 
 @Component({
   selector: 'app-giving-form-fields',
@@ -17,44 +22,50 @@ import { SweetAlertService } from './../../../../../services/sweet-alert.service
 export class GivingFormFieldsComponent implements OnInit, OnDestroy {
 
   @Input() givingBatch;
+  myPersonControl = new FormControl();
 
-  categories$ = [];
+  categories$: GivingCategory[];
 
-  isReady;
-  givingForm: FormGroup;
-  options: Person[];
-  filteredOptions: Observable<Person[]>[] = [];
+  // new giving record
+  giving: Giving = {
+    data: {}
+  };
 
-  subscription: Subscription;
+  peopleGivings: Observable<Giving[]>; // giving records
+
+  people: Person[];
+  filteredOptions: Observable<Person[]>;
+
+  categorySubscription: Subscription;
   peopleSubscription: Subscription;
 
   constructor(private fb: FormBuilder, private givingCategoryService: PersonGivingCategoryService,
     private alertService: SweetAlertService, private givingService: PersonGivingService,
-    private peopleService: PeopleService) {
-
-      this.createForm(); // create form
+    private peopleService: PeopleService, private timestampService: ConvertTimestampService) {
   }
 
   ngOnInit() {
-
-    // set default date to today
-    const control = <FormGroup>this.givingForm.controls.created;
-    control.setValue(new Date());
-
-    // get people and filter for auto-complete
+    // get people and initialize autocomplete
     this.peopleSubscription = this.peopleService.getPeople().subscribe(resp => {
-      this.options = resp;
+      this.people = resp;
+
+      this.filteredOptions = this.myPersonControl.valueChanges
+        .pipe(
+        startWith<string | Person>(''),
+        map(value => typeof value === 'string' ? value : value.fullname),
+        map(name => name ? this._filter(name) : this.people.slice())
+      );
     });
 
     // get categories
-    this.subscription = this.givingCategoryService.getGivingCategories().subscribe(resp => {
+    this.categorySubscription = this.givingCategoryService.getGivingCategories().subscribe(resp => {
       this.categories$ = resp;
-    });
+     });
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    if (this.categorySubscription) {
+      this.categorySubscription.unsubscribe();
     }
 
     if (this.peopleSubscription) {
@@ -62,95 +73,66 @@ export class GivingFormFieldsComponent implements OnInit, OnDestroy {
     }
   }
 
-  createForm() {
-    this.givingForm = this.fb.group({
-      created: [],
-      batch: [],
-      records: this.fb.array([])
-    });
+  givingDateEvent(event: MatDatepickerInputEvent<Date>) {
+    const givingDate = this.timestampService.dateToTimestamp(event.value);
 
-    this.isReady = true;
+    // coverts selected date to timestamp for easy querying to the qryGivingDate field
+    this.peopleGivings = this.givingService.getGivingByDate(givingDate);
   }
 
-  ManageNameControl(index: number) {
-    const arrayControl = this.givingForm.get('records') as FormArray;
-    this.filteredOptions[index] = arrayControl.at(index).get('personId').valueChanges
-      .pipe(
-      startWith<string | Person>(''),
-      map(value => typeof value === 'string' ? value : value.fullname),
-      map(name => name ? this._filter(name) : this.options.slice())
-    );
-
-  }
-
-  addNewRecord() {
-    const controls = <FormArray>this.givingForm.controls['records'];
-    const formGroup = this.fb.group({
-      personId: ['', [Validators.required]],
-      category: ['', [Validators.required]],
-      amount: ['', [Validators.required]],
-      notes: []
-    });
-    controls.push(formGroup);
-
-    // Build the account Auto Complete values
-    this.ManageNameControl(controls.length - 1);
-  }
-
-  removeRecord(i: number) {
-    const controls = <FormArray>this.givingForm.controls['records'];
-    controls.removeAt(i);
-    // remove from filteredOptions too.
-    this.filteredOptions.splice(i, 1);
-  }
-
-  displayFn(id) {
-    // I want to get the full object and display the name
-    if (!id) {
-      return '';
-    }
-
-    const index = this.options.findIndex(p => p.id === id);
-    return this.options[index].fullname;
-  }
-
-  private _filter(name: string): Person[] {
-    const filterValue = name.toLowerCase();
-
-    return this.options.filter(option => option.fullname.toLowerCase().indexOf(filterValue) === 0);
-  }
-
-  // save form
   onSubmit() {
-    if (!this.givingForm.valid) {
-      return this.alertService.fieldRequiredError();
-    }
-
     this.alertService.confirmUpdate().then(resp => {
       if (resp.value) {
+        this.giving.batch = this.givingBatch ? this.givingBatch : null ; // set giving batch if it is supplied
 
-        if (this.givingBatch) {
-          const control = <FormGroup>this.givingForm.controls.batch;
-          control.setValue(this.givingBatch); // sets selected batchId if any
-        }
-
-        const controls = <FormArray>this.givingForm.controls['records'];
-        // this.givingForm.
-
-        this.givingService.addGiving(this.givingForm.value);
-
-        this.clearControl();
+        this.givingService.addGiving(this.giving);
         this.alertService.afterUpdateSuccess();
       }
     });
   }
 
-  // reset form
-  clearControl() {
-    this.createForm();
+  private _filter(name: string): Person[] {
+    const filterValue = name.toLowerCase();
 
-    // set date to today
-    const control = <FormGroup>this.givingForm.controls.created;
-    control.setValue(new Date());
+    return this.people.filter(option => option.fullname.toLowerCase().includes(filterValue));
+    // return this.people.filter(option => option.fullname.toLowerCase().indexOf(filterValue) === 0);
   }
+
+  getPersonDetails(personId: string) {
+
+    if (!personId) {
+      return;
+    }
+
+    const index = this.people.findIndex(p => p.id === personId);
+    return this.people[index].fullname;
+  }
+
+  getCategoryDetails(categoryId) {
+    if (!categoryId) {
+      return;
+    }
+
+    const index = this.categories$.findIndex(p => p.Id === categoryId);
+    return this.categories$[index].name;
+  }
+
+  displayFn(personId) {
+
+    // I want to get the full object and display the name
+    if (!personId) {
+      return '';
+    }
+
+    this.giving.data.person = personId; // assign selected person id to model
+
+    const index = this.people.findIndex(p => p.id === personId);
+    return this.people[index].fullname;
+  }
+
+  resetInput() {
+    this.myPersonControl.value(''); // clears auto complete
+    this.giving = null; // clears giving input
+  }
+
 }

@@ -117,6 +117,10 @@ import { BreadcrumComponent } from './layouts/breadcrum/breadcrum.component';
 import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.component';
 import { FileSizePipe } from './pipes/file-size.pipe';
 import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.component';
+import { PeopleGroupsComponent } from './admin/people/people-groups/people-groups.component';
+import { GroupRegistryComponent } from './admin/people/people-groups/group-registry/group-registry.component';
+import { GroupRegistrationComponent } from './admin/people/people-groups/group-registration/group-registration.component';
+import { GroupFormComponent } from './admin/people/people-groups/group-form/group-form.component';
 
 
 keyboardEventKeyPolyfill();
@@ -171,7 +175,11 @@ keyboardEventKeyPolyfill();
     VisitorsRegistryComponent,
     VisitorProfileComponent,
     VisitorProfileBioComponent,
-    VisitorProfileBioExtComponent
+    VisitorProfileBioExtComponent,
+    PeopleGroupsComponent,
+    GroupRegistryComponent,
+    GroupRegistrationComponent,
+    GroupFormComponent
   ],
   imports: [
     AngularFireStorageModule,

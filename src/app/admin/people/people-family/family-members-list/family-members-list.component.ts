@@ -1,11 +1,11 @@
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { PersonFamilyService } from '../../../../services/person-family.service';
-import { PeopleService } from '../../../../services/people.service';
 import { switchMap, take } from 'rxjs/operators';
+
 import { PersonFamily } from '../../../../models/person-family.model';
-import { exists } from 'fs';
+import { PeopleService } from '../../../../services/people.service';
+import { PersonFamilyService } from '../../../../services/person-family.service';
 import { UploadService } from '../../../../services/upload.service';
 
 @Component({
@@ -108,6 +108,10 @@ export class FamilyMembersListComponent implements OnInit, OnDestroy {
 
         // get people
         this.peopleSubscription = this.peopleService.getPerson(personId).subscribe(data => {
+
+          if (!data.profileImage) {
+            return;
+          }
 
           this.uploadService.getProfileImage(data.profileImage).pipe(take(1)).subscribe(avatar => {
 

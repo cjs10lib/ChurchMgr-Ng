@@ -47,7 +47,11 @@ mat-nav-list {
 }
 
 .activated {
-  background: #1c8adb;
+  background: #1c8adb;  
+}
+
+a .activated {
+  border-left:5px solid #b61616;
 }
 
 .sidenav-container {

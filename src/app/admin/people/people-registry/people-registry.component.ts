@@ -29,11 +29,11 @@ export class PeopleRegistryComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.peopleService.getPeople().subscribe(resp => {
+      this.showSpinner = false;
 
       resp.forEach(object => {
         this.uploadService.getProfileImage(object.profileImage).pipe(take(1)).subscribe(result => {
 
-          this.showSpinner = false;
 
           this.filteredPeople.push({ // for each people record, set person data and avatar
             avatar: result,

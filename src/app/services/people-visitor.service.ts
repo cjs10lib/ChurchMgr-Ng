@@ -31,7 +31,7 @@ export class PeopleVisitorService {
     return this.visitors$;
   }
 
-  getVisitor(visitorId: string) {
+  getVisitor(visitorId: string): Observable<Visitor> {
     return this.visitorCollection.doc(visitorId).valueChanges();
   }
 

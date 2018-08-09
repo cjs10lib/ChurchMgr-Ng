@@ -3,7 +3,7 @@
 
 <mat-card class="card-wrapper">
 
-  <!-- <pre>{{ f.value | json }}</pre> -->
+  <pre>{{ visitor | json }}</pre>
 
   <form #f="ngForm">
 
@@ -204,8 +204,15 @@
         <div class="form-field-container">
 
           <mat-form-field>
-            <!-- <span matPrefix> <mat-icon>phone</mat-icon> &nbsp; </span> -->
-            <input matInput [(ngModel)]="visitor.invitee.personId" name="personId" placeholder="Invitee">
+            <input type="text" placeholder="Search..." aria-label="Number" matInput [formControl]="myPersonControl" name="person" [matAutocomplete]="auto">
+            <button type="button" mat-button *ngIf="myPersonControl" matSuffix mat-icon-button aria-label="Clear" (click)="clearAutoCompleteField()">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
+              <mat-option *ngFor="let p of filteredOptions | async" [value]="p.id">
+                {{p.fullname}}
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field>
       
           <mat-form-field>

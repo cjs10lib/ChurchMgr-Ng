@@ -1,15 +1,18 @@
 
-<!-- <pre>{{givingForm.value | json}}</pre> -->
+<!-- <pre>{{giving | json}}</pre> -->
 
-<form [formGroup]="givingForm" (ngSubmit)="onSubmit()" *ngIf="isReady">
+<form #f="ngForm">
 
   <div class="form-field-container">
 
     <mat-form-field>
       <span matPrefix> <mat-icon>date_range</mat-icon> &nbsp; </span>
-      <input matInput [matDatepicker]="GD" #GD formControlName="created" placeholder="Giving Date" required>
-      <mat-datepicker-toggle matSuffix [for]="GD"></mat-datepicker-toggle>
-      <mat-datepicker #GD touchUi="true"></mat-datepicker>
+      
+      <input matInput [matDatepicker]="picker" [(ngModel)]="giving.givingDate" name="givingDate" placeholder="Giving Date"
+        (dateChange)="givingDateEvent($event)" disabled>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker touchUi="true" disabled="false"></mat-datepicker>
+      
       <mat-hint>Giving Date Format: mm/dd/yyyy</mat-hint>
       <mat-hint align="end">Click toggle button to select date!</mat-hint>
 
@@ -22,83 +25,89 @@
 
   <div class="spc-20"></div>
 
+
   <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
 
     <div fxFlex fxShow.lt-sm="false" fxShow="true" fxFlexOrder.xs="1">
-      <mat-card>
+      <mat-card> 
+        <h3 mat-subheader>Giving Record</h3>
 
-        <div formArrayName="records">
-          <div *ngFor="let record of givingForm.get('records').controls; let i=index"> 
-            <h3 mat-subheader>Giving-Record {{ i + 1 }}</h3>
+        <div>
 
-            <div [formGroupName]="i">
+          <mat-form-field>
+            <input type="text" placeholder="Search..." aria-label="Number" matInput [formControl]="myPersonControl" name="person" [matAutocomplete]="auto" required>
+            <button type="button" mat-button *ngIf="myPersonControl" matSuffix mat-icon-button aria-label="Clear" (click)="clearAutoCompleteField()">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
+              <mat-option *ngFor="let p of filteredOptions | async" [value]="p.id">
+                {{p.fullname}}
+              </mat-option>
+            </mat-autocomplete>
 
-              <mat-form-field>
-                <input type="text" placeholder="Search..." aria-label="Number" matInput formControlName="personId" [matAutocomplete]="auto">
-                <button type="button" mat-button *ngIf="myControl" matSuffix mat-icon-button aria-label="Clear" (click)="clearAutoCompleteField()">
-                  <mat-icon>close</mat-icon>
-                </button>
-                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
-                  <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option.id">
-                    {{option.fullname}}
-                  </mat-option>
-                </mat-autocomplete>
+            <mat-error>
+              Person is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
 
-                <mat-error>
-                  Person is <strong>required</strong>
-                </mat-error>
-              </mat-form-field>
+          <mat-form-field>
+            <mat-select [(ngModel)]="giving.data.category" name="category" placeholder="Category" required>
+              <mat-option value="">--None--</mat-option>
+              <mat-option *ngFor="let category of categories$" [value]="category.Id">{{ category.name }}</mat-option>
+            </mat-select>
+            <mat-error>
+              Category is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
 
-              <mat-form-field>
-                <mat-select formControlName="category" placeholder="Category" required>
-                  <mat-option value="">--None--</mat-option>
-                  <mat-option *ngFor="let category of categories$" [value]="category.Id">{{ category.name }}</mat-option>
-                </mat-select>
-                <mat-error>
-                  Category is <strong>required</strong>
-                </mat-error>
-              </mat-form-field>
+          <mat-form-field>
+            <input type="number" matInput [(ngModel)]="giving.data.amount" name="amount" placeholder="Amount" required>
+            <mat-icon matPrefix>attach_money</mat-icon>
+            <mat-error>
+              Amount is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
 
-              <mat-form-field>
-                <input type="number" matInput formControlName="amount" placeholder="Amount" required>
-                <mat-icon matPrefix>attach_money</mat-icon>
-                <mat-error>
-                  Amount is <strong>required</strong>
-                </mat-error>
-              </mat-form-field>
+          <mat-form-field>
+            <input matInput [(ngModel)]="giving.data.notes" name="notes" placeholder="Notes">
+            <mat-icon matPrefix>notes</mat-icon>
+            <mat-hint>Cheque number or 'CASH'</mat-hint>
+          </mat-form-field>
 
-              <mat-form-field>
-                <input matInput formControlName="notes" placeholder="Notes">
-                <mat-icon matPrefix>notes</mat-icon>
-                <mat-hint>Cheque number or 'CASH'</mat-hint>
-              </mat-form-field>
+          <button type="button" mat-icon-button color="warn" (click)="resetInput()">
+            <mat-icon>cancel</mat-icon>
+          </button>
 
-              <button type="button" mat-icon-button color="warn" (click)="removeRecord(i)">
-                <mat-icon>cancel</mat-icon>
-              </button>
+          <div class="spc-10"></div>
+  
+          <mat-divider></mat-divider> 
+          
+          <mat-card-actions>
+            <button type="button" mat-raised-button color="primary" (click)="onSubmit()">Add Record</button>
+          </mat-card-actions> 
+          
+          <mat-list>
+            <mat-list-item *ngFor="let giving of peopleGivings | async">
+              <!-- <h3 matLine> {{ giving.data.person }} </h3> -->
+              <h3 matLine> 
+                <strong>{{ getPersonDetails(giving.data.person) }}</strong>  
+              </h3>
+              <p matLine>
+                <span> {{ getCategoryDetails(giving.data.category) }} </span>
+                <span class="demo-2"> -- {{ giving.givingDate.toDate() | date:'longDate' }} </span>
+              </p>
+              
+              <span> 
+                <strong>{{ giving.data.amount }}</strong> 
+              </span>
+              <mat-divider></mat-divider> 
+            </mat-list-item>
+          </mat-list>
 
-              <div class="spc-10"></div>
-      
-              <mat-divider></mat-divider>  
-
-            </div>
-
-          </div>
-        </div>
-
-        <mat-card-actions>
-          <button type="button" mat-raised-button color="primary" (click)="addNewRecord()">Add Record</button>
-        </mat-card-actions> 
+        </div>        
+       
 
       </mat-card>   
-      
-      <div class="spc-20"></div>
-
-      <button mat-raised-button color="primary">
-        <mat-icon>save</mat-icon> &nbsp;
-        <span>Save</span>
-      </button>
-
     </div>
 
     <div fxShow.lt-sm="true" fxShow="false">

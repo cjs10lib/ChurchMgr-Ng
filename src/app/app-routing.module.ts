@@ -1,3 +1,4 @@
+import { GroupRegistryComponent } from './admin/people/people-groups/group-registry/group-registry.component';
 import { VisitorProfileComponent } from './admin/people/people-visitors/visitor-profile/visitor-profile.component';
 import { VisitorsFormComponent } from './admin/people/people-visitors/visitors-form/visitors-form.component';
 import { NgModule } from '@angular/core';
@@ -18,6 +19,7 @@ import { AuthenticationLayoutComponent } from './layouts/authentication-layout/a
 import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.component';
 import { GivingFormComponent } from './admin/people/people-giving/giving-form/giving-form.component';
 import { VisitorsRegistryComponent } from './admin/people/people-visitors/visitors-registry/visitors-registry.component';
+import { GroupFormComponent } from './admin/people/people-groups/group-form/group-form.component';
 
 const routes: Routes = [
   {
@@ -72,6 +74,12 @@ const routes: Routes = [
       }, {
         path: 'visitor-profile/:id',
         component: VisitorProfileComponent
+      }, {
+        path: 'groups',
+        component: GroupRegistryComponent
+      }, {
+        path: 'group-registration',
+        component: GroupFormComponent
       }, {
         path: 'giving-categories',
         component: GivingCategoriesComponent

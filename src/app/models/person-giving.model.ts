@@ -7,7 +7,7 @@ export interface GivingBatch {
 }
 
 interface Records {
-    personId?: string;
+    person?: string;
     category?: string;
     amount?: number;
     notes?: string;
@@ -16,5 +16,8 @@ interface Records {
 export interface Giving {
     Id?: string;
     batch?: string;
-    records?: Records;
+    givingDate?: Date; // date of transaction
+    qryGivingDate?: number;
+    data?: Records;
+    updatedAt?: any; // date of giving
 }

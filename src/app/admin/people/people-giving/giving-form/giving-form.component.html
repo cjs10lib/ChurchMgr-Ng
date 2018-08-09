@@ -20,7 +20,7 @@
           Expected Total: {{ givingBatch?.batch.amount | number:'' }} <br>
           Date Recieved: {{ givingBatch?.batch.recieved?.toDate() | date:'longDate' }} <br>
         </div>
-
+        
         <div class="spc-10"></div>
 
         <button mat-raised-button color="primary" (click)="openDialog()">Choose a Batch (Optional)</button>

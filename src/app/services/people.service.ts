@@ -20,8 +20,10 @@ export class PeopleService {
     this.people$ = this.peopleCollection.snapshotChanges().pipe(
       map(change => {
         return change.map(a => {
-          const data = a.payload.doc.data() as Person;
+          const data = a.payload.doc.data() as any;
+          // const data = Object.assign(a.payload.doc.data(), { date: a.payload.doc.data().dob.toDateString() });
           data.id = a.payload.doc.id;
+
 
           // const datePipe = new DatePipe('en-US');
           // const myFormattedDate = datePipe.transform(a.payload.doc.data().dob, 'MM, dd, yyyy');

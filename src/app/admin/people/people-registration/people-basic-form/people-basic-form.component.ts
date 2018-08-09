@@ -1,19 +1,13 @@
-import { UploadService } from './../../../../services/upload.service';
-import { SweetAlertService } from '../../../../services/sweet-alert.service';
-import { PeopleService } from '../../../../services/people.service';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import {
-  trigger,
-  style,
-  transition,
-  animate,
-  keyframes,
-  query,
-  stagger
-} from '@angular/animations';
-import { Person } from '../../../../models/person.model';
+import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+
+import { Person } from '../../../../models/person.model';
+import { PeopleService } from '../../../../services/people.service';
+import { SweetAlertService } from '../../../../services/sweet-alert.service';
+import { UploadService } from './../../../../services/upload.service';
+import { ConvertTimestampService } from '../../../../custom-functions/convert-timestamp.service';
 
 @Component({
   selector: 'app-people-basic-form',
@@ -59,7 +53,7 @@ export class PeopleBasicFormComponent implements OnInit, OnDestroy {
 
   constructor(private peopleService: PeopleService,
     private sweetAlertService: SweetAlertService, private route: ActivatedRoute,
-    private router: Router, private uploadService: UploadService) { }
+    private router: Router, private uploadService: UploadService, private timestampService: ConvertTimestampService) { }
 
   ngOnInit() {
 
@@ -67,13 +61,15 @@ export class PeopleBasicFormComponent implements OnInit, OnDestroy {
 
     if (this.personId) {
 
-      this.subscription = this.peopleService.getPerson(this.personId).subscribe((resp: Person) => {
+      this.subscription = this.peopleService.getPerson(this.personId).subscribe(resp => {
         this.person = resp;
-        this.person.dob = resp.dob;
+
+        this.person.dob = this.timestampService.timestampToDate(resp.dob); // convert from timestamp
         this.person.education = resp.education;
         this.person.occupation = resp.occupation;
         this.person.contact = resp.contact;
         this.person.home = resp.home;
+
       });
     }
   }

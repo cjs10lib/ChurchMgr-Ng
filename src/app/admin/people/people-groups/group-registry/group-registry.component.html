@@ -11,7 +11,7 @@
           <span matPrefix>
             <mat-icon>search</mat-icon> &nbsp;
           </span>
-          <input matInput #query (keyup)="search(query.value)" [(ngModel)]="searchQry" name="searchQuery" placeholder="Search People...">
+          <input matInput #query (keyup)="search(query.value)" [(ngModel)]="searchQry" name="searchQuery" placeholder="Search Group...">
           <button mat-button *ngIf="searchQry" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchField()">
             <mat-icon>close</mat-icon>
           </button>
@@ -24,9 +24,9 @@
 
         <section>
           <div class="add-new">
-            <a mat-raised-button color="primary" routerLink="/people-registration">
-              <mat-icon>person_add</mat-icon> &nbsp;
-              Add New Record
+            <a mat-raised-button color="primary" routerLink="/group-registration">
+              <mat-icon>group_add</mat-icon> &nbsp;
+              Add Group
             </a>
           </div>
         </section>
@@ -45,16 +45,16 @@
 
           <mat-list-item *ngFor="let people of filteredPeople" routerLink="/people-profile/{{ people.data?.id }}" >
             <mat-divider></mat-divider>
-            <img *ngIf="people.avatar; else noImageAvatar" matListAvatar [src]="people.avatar?.url" [alt]="people.data.firstname">
-            <!-- <img matListAvatar src="../../../../assets/avatars/avatar4.png" alt="..."> -->
+            <!-- <img *ngIf="people.avatar; else noImageAvatar" matListAvatar [src]="people.avatar?.url" [alt]="people.data.firstname"> -->
+            <img matListAvatar src="../../../../assets/avatars/avatar4.png" alt="...">
             <h3 matLine> 
               <strong>                  
-                {{ people.data.surname }} 
-                {{ people.data.firstname }}                
+                <!-- {{ people.data.surname }} 
+                {{ people.data.firstname }}                 -->
               </strong>
             </h3>
             <p matLine>
-              {{ people.data.othernames }} 
+              <!-- {{ people.data.othernames }}  -->
             </p>
 
             <button mat-icon-button>
@@ -100,4 +100,3 @@
   </div> 
   
 </mat-card>
-  

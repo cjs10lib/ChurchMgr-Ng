@@ -1,21 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { PeopleService } from './../../../../services/people.service';
+import { Person } from './../../../../models/person.model';
+import { Subscription, Observable } from 'rxjs';
+import { ConvertTimestampService } from './../../../../custom-functions/convert-timestamp.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { SweetAlertService } from '../../../../services/sweet-alert.service';
 import { Visitor } from './../../../../models/person-visitor.model';
 import { PeopleVisitorService } from './../../../../services/people-visitor.service';
+import { FormControl } from '../../../../../../node_modules/@angular/forms';
+import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
 
 @Component({
   selector: 'app-visitors-form',
   templateUrl: './visitors-form.component.html',
   styleUrls: ['./visitors-form.component.scss']
 })
-export class VisitorsFormComponent implements OnInit {
+export class VisitorsFormComponent implements OnInit, OnDestroy {
 
   pageTitle = 'Visitors';
   pageIcon = '';
 
   step = 0;
+
+  myPersonControl = new FormControl;
 
   visitorId: string;
   visitor: Visitor = {
@@ -26,16 +34,76 @@ export class VisitorsFormComponent implements OnInit {
     followUp: {}
   };
 
+  people: Person[];
+  filteredOptions: Observable<Person[]>;
+
+  visitorSubscription: Subscription;
+  peopleSubscription: Subscription;
+
   constructor(private visitorService: PeopleVisitorService, private alertService: SweetAlertService,
-    private router: Router, private route: ActivatedRoute) { }
+    private router: Router, private route: ActivatedRoute,
+    private timestampService: ConvertTimestampService,
+    private peopleService: PeopleService) {
+
+
+    // get people and initialize autocomplete. Initialised in the constructor to get people before the form loads
+    this.peopleSubscription = this.peopleService.getPeople().subscribe(resp => {
+      this.people = resp;
+
+      this.filteredOptions = this.myPersonControl.valueChanges
+        .pipe(
+        startWith<string | Person>(''),
+        map(value => typeof value === 'string' ? value : value.fullname),
+        map(name => name ? this._filter(name) : this.people.slice())
+      );
+    });
+
+    }
 
   ngOnInit() {
     this.visitorId = this.route.snapshot.paramMap.get('id');
 
     if (this.visitorId) {
-      this.visitorService.getVisitor(this.visitorId).subscribe(resp => {
+      // get visitor
+      this.visitorSubscription = this.visitorService.getVisitor(this.visitorId).subscribe(resp => {
         this.visitor = resp;
+        this.visitor.dob = this.timestampService.timestampToDate(resp.dob);
+        this.visitor.beliefs.bornAgainDate = this.timestampService.timestampToDate(resp.beliefs.bornAgainDate);
+
+        this.myPersonControl.setValue(resp.invitee.personId);
       });
+    }
+
+  }
+
+  ngOnDestroy(): void {
+    if (this.visitorSubscription) {
+      this.visitorSubscription.unsubscribe();
+    }
+
+    if (this.peopleSubscription) {
+      this.peopleSubscription.unsubscribe();
+    }
+  }
+
+  private _filter(name: string): Person[] {
+    const filterValue = name.toLowerCase();
+
+    return this.people.filter(option => option.fullname.toLowerCase().includes(filterValue));
+    // return this.people.filter(option => option.fullname.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  displayFn(personId) {
+    // I want to get the full object and display the name
+    if (!personId) {
+      return '';
+    }
+
+    this.visitor.invitee.personId = personId; // assign selected invitee id to model
+
+    if (this.people) {
+      const index = this.people.findIndex(p => p.id === personId);
+      return this.people[index].fullname;
     }
   }
 
