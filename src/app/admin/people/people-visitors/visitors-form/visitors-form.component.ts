@@ -1,7 +1,7 @@
 import { PeopleService } from './../../../../services/people.service';
 import { Person } from './../../../../models/person.model';
 import { Subscription, Observable } from 'rxjs';
-import { ConvertTimestampService } from './../../../../custom-functions/convert-timestamp.service';
+import { ConvertTimestampService } from '../../../../services/convert-timestamp.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -103,7 +103,7 @@ export class VisitorsFormComponent implements OnInit, OnDestroy {
 
     if (this.people) {
       const index = this.people.findIndex(p => p.id === personId);
-      return this.people[index].fullname;
+      return index ? this.people[index].fullname : null;
     }
   }
 

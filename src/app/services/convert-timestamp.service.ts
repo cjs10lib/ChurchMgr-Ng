@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import Timestamp = require('firebase-firestore-timestamp');
+// import Timestamp = require('firebase-firestore-timestamp');
 import * as firebase from 'firebase';
 
 @Injectable({
@@ -14,6 +14,7 @@ export class ConvertTimestampService {
   }
 
   timestampToDate(tstamp) {
+    const Timestamp = require('firebase-firestore-timestamp');
     const stamp = new Timestamp(tstamp).seconds * 1000;
     return new Date(stamp);
   }

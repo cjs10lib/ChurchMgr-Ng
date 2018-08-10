@@ -1,18 +1,17 @@
-import { ConvertTimestampService } from './../../../../../custom-functions/convert-timestamp.service';
-import { GivingCategory } from './../../../../../models/giving-category.model';
-import { Giving } from './../../../../../models/person-giving.model';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '../../../../../../../node_modules/@angular/forms';
+import { FormBuilder, FormControl } from '../../../../../../../node_modules/@angular/forms';
+import { MatDatepickerInputEvent } from '../../../../../../../node_modules/@angular/material';
 import { map, startWith } from '../../../../../../../node_modules/rxjs/operators';
 import { PersonGivingService } from '../../../../../services/person-giving.service';
+import { ConvertTimestampService } from '../../../../../services/convert-timestamp.service';
+import { GivingCategory } from './../../../../../models/giving-category.model';
+import { Giving } from './../../../../../models/person-giving.model';
 import { Person } from './../../../../../models/person.model';
 import { PeopleService } from './../../../../../services/people.service';
 import { PersonGivingCategoryService } from './../../../../../services/person-giving-category.service';
 import { SweetAlertService } from './../../../../../services/sweet-alert.service';
-import { MatDatepickerInputEvent } from '../../../../../../../node_modules/@angular/material';
-import firebase = require('../../../../../../../node_modules/firebase');
 
 @Component({
   selector: 'app-giving-form-fields',
@@ -39,7 +38,7 @@ export class GivingFormFieldsComponent implements OnInit, OnDestroy {
   categorySubscription: Subscription;
   peopleSubscription: Subscription;
 
-  constructor(private fb: FormBuilder, private givingCategoryService: PersonGivingCategoryService,
+  constructor(private givingCategoryService: PersonGivingCategoryService,
     private alertService: SweetAlertService, private givingService: PersonGivingService,
     private peopleService: PeopleService, private timestampService: ConvertTimestampService) {
   }
@@ -127,7 +126,7 @@ export class GivingFormFieldsComponent implements OnInit, OnDestroy {
     this.giving.data.person = personId; // assign selected person id to model
 
     const index = this.people.findIndex(p => p.id === personId);
-    return this.people[index].fullname;
+    return index ? this.people[index].fullname : null;
   }
 
   resetInput() {

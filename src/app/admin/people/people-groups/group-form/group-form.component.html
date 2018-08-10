@@ -1,10 +1,11 @@
+<app-breadcrum [pageTitle]="pageTitle" [pageIcon]="pageIcon"></app-breadcrum>
 
 <mat-card class="card-wrapper">
   <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
 
     <div fxFlex fxFlexOrder.xs="1">
 
-      <pre>{{ f.value | json }}</pre>
+      <pre>{{ group | json }}</pre>
 
       <form #f="ngForm">
 
@@ -36,14 +37,23 @@
                   Group Name is <strong>required</strong>
                 </mat-error>        
               </mat-form-field>
-      
+
               <mat-form-field>
-                <input matInput [(ngModel)]="group.leader" name="leader" #leader placeholder="Leader" required>
+                <input type="text" placeholder="Search Group Leader..." aria-label="Number" matInput [formControl]="myPersonControl" name="leader" [matAutocomplete]="auto" required>
+                <button type="button" mat-button *ngIf="myPersonControl" matSuffix mat-icon-button aria-label="Clear" (click)="clearAutoCompleteField()">
+                  <mat-icon>close</mat-icon>
+                </button>
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
+                  <mat-option *ngFor="let p of filteredOptions | async" [value]="p.id">
+                    {{p.fullname}}
+                  </mat-option>
+                </mat-autocomplete>
+    
                 <mat-error>
                   Leader is <strong>required</strong>
                 </mat-error>
-              </mat-form-field>       
-      
+              </mat-form-field>
+            
               <mat-form-field>
                 <textarea matInput [(ngModel)]="group.description" name="description" #description placeholder="Description"></textarea>
               </mat-form-field>
@@ -54,9 +64,38 @@
               <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
             </mat-action-row>
       
-          </mat-expansion-panel>
+          </mat-expansion-panel>  
   
           <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Schedules
+              </mat-panel-title>
+              <mat-panel-description>
+                Meeting Information
+                <mat-icon>person</mat-icon>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+  
+            <div class="form-field-container">
+  
+              <mat-form-field>
+                <input matInput [(ngModel)]="group.schedule.meetingDays" name="meetingDays" #meetingDays placeholder="Meeting Days">
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput [(ngModel)]="group.schedule.meetingTime" name="meetingTime" #meetingTime placeholder="Meeting Time">
+              </mat-form-field>
+  
+            </div>
+       
+            <mat-action-row>
+              <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
+            </mat-action-row>
+      
+          </mat-expansion-panel>
+  
+          <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Contact Info

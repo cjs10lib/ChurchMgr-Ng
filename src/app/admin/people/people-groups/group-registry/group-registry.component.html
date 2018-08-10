@@ -32,39 +32,60 @@
         </section>
 
         <mat-nav-list>
-          <mat-list-item *ngIf="filteredPeople">
+          <mat-list-item *ngIf="filteredGroups">
             <mat-divider></mat-divider>
             <h3 matLine>  
               <strong>                  
-                {{ filteredPeople?.length }} record(s) found.
+                {{ filteredGroups?.length }} record(s) found.
               </strong>
             </h3>
           </mat-list-item>
 
           <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
 
-          <mat-list-item *ngFor="let people of filteredPeople" routerLink="/people-profile/{{ people.data?.id }}" >
+          <mat-list-item *ngFor="let group of filteredGroups">
             <mat-divider></mat-divider>
             <!-- <img *ngIf="people.avatar; else noImageAvatar" matListAvatar [src]="people.avatar?.url" [alt]="people.data.firstname"> -->
             <img matListAvatar src="../../../../assets/avatars/avatar4.png" alt="...">
             <h3 matLine> 
               <strong>                  
-                <!-- {{ people.data.surname }} 
-                {{ people.data.firstname }}                 -->
+                {{ group.name }}               
               </strong>
             </h3>
             <p matLine>
-              <!-- {{ people.data.othernames }}  -->
+              Leader - {{ getGroupLeader(group.leader) }} 
             </p>
 
-            <button mat-icon-button>
-              <mat-icon color="primary">search</mat-icon>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon color="primary">more_vert</mat-icon>
             </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item routerLink="/group-registration/{{ group.Id }}">
+                <mat-icon color="primary">edit</mat-icon>
+                <span>Edit Group</span>
+              </button>
+
+              <button mat-menu-item>
+                <mat-icon color="primary">person_add</mat-icon>
+                <span>Add Members</span>
+              </button>
+              <button mat-menu-item routerLink="/group-members/{{ group.Id }}">
+                <mat-icon color="primary">search</mat-icon>
+                <span>View Members</span>
+              </button>
+
+              <mat-divider></mat-divider>
+
+              <button mat-menu-item (click)="deleteGroup(group.Id)">
+                <mat-icon color="warn">delete</mat-icon>
+                <span>Delete Group</span>
+              </button>
+            </mat-menu>
 
           </mat-list-item>
         </mat-nav-list>
 
-        <div *ngIf="filteredPeople?.length < 1"> 
+        <div *ngIf="filteredGroups?.length < 1"> 
           <p>
             No record found :(
           </p>

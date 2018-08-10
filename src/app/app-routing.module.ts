@@ -20,6 +20,7 @@ import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.
 import { GivingFormComponent } from './admin/people/people-giving/giving-form/giving-form.component';
 import { VisitorsRegistryComponent } from './admin/people/people-visitors/visitors-registry/visitors-registry.component';
 import { GroupFormComponent } from './admin/people/people-groups/group-form/group-form.component';
+import { GroupMembersComponent } from './admin/people/people-groups/group-members/group-members.component';
 
 const routes: Routes = [
   {
@@ -80,6 +81,12 @@ const routes: Routes = [
       }, {
         path: 'group-registration',
         component: GroupFormComponent
+      }, {
+        path: 'group-registration/:id',
+        component: GroupFormComponent
+      }, {
+        path: 'group-members/:id',
+        component: GroupMembersComponent
       }, {
         path: 'giving-categories',
         component: GivingCategoriesComponent

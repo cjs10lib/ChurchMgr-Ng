@@ -7,7 +7,7 @@ import { Person } from '../../../../models/person.model';
 import { PeopleService } from '../../../../services/people.service';
 import { SweetAlertService } from '../../../../services/sweet-alert.service';
 import { UploadService } from './../../../../services/upload.service';
-import { ConvertTimestampService } from '../../../../custom-functions/convert-timestamp.service';
+import { ConvertTimestampService } from '../../../../services/convert-timestamp.service';
 
 @Component({
   selector: 'app-people-basic-form',

@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 import { Injectable } from '@angular/core';
 import { Giving } from '../models/person-giving.model';
 // import firebase = require('../../../node_modules/firebase');
-import { ConvertTimestampService } from '../custom-functions/convert-timestamp.service';
+import { ConvertTimestampService } from './convert-timestamp.service';
 
 
 @Injectable({
