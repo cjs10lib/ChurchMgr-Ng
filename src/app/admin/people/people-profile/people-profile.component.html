@@ -6,100 +6,15 @@
 </mat-card>
 
 <mat-card>
-  <mat-tab-group>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>person</mat-icon> &nbsp;
-        <span>Bio Information</span>
-      </ng-template>
-
-      <div class="spc-10"></div>
-
-      <!-- PROFILE BIO -->
-      <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
-        <div fxFlex="35"  fxFlexOrder.xs="1">
-          
-         <app-profile-bio [person]="person"></app-profile-bio>
-
-        </div>
-
-        <div fxFlex="65" fxFlexOrder.xs="2">
-          
-         <app-profile-bio-ext></app-profile-bio-ext>
-
-        </div>
-      </div>    
-      <!-- END OF PROFILE BIO -->
-      
-    </mat-tab>
-
-    <!-- EDIT PROFILE-->
-    <mat-tab>
-
-      <ng-template mat-tab-label>
-        <mat-icon>border_color</mat-icon> &nbsp;
-        <span>Edit</span>
-      </ng-template>
-      
-      <app-profile-edit></app-profile-edit>
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link
+       *ngFor="let link of navLinks"
+       [routerLink]="link.path"
+       routerLinkActive #rla="routerLinkActive"
+       [active]="rla.isActive">
+      {{link.label}}
+    </a>
+  </nav>
   
-    </mat-tab>
-    <!-- END OF EDIT PROFILE -->
-
-    <!-- GALLERY -->
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>photo_size_select_actual</mat-icon> &nbsp;
-        <span>Gallery</span>
-      </ng-template>
-      
-      <app-people-gallery [personId]="personId"></app-people-gallery>
-
-    </mat-tab>
-    <!-- END OF GALLERY -->
-   
-    <!-- FAMILY -->
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>people</mat-icon> &nbsp;
-        <span>Family</span>
-      </ng-template>
-
-      <h2 subHeader>
-        Family members
-      </h2>
-        
-      <app-family-members-registry ></app-family-members-registry>
-
-    </mat-tab>
-    <!-- END OF FAMILY -->
-
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>date_range</mat-icon> &nbsp;
-        <span>Attendance</span>
-      </ng-template>
-      <p>The wizard will guide you through the extended form information requirements.</p>
-  
-    </mat-tab>
-
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>monetization_on</mat-icon> &nbsp;
-        <span>Giving</span>
-      </ng-template>
-      
-      <app-giving-form></app-giving-form>
-    </mat-tab>
-
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>account_circle</mat-icon> &nbsp;
-        <span>Account</span>
-      </ng-template>
-      <p>The wizard will guide you through the extended form information requirements.</p>
-  
-    </mat-tab>
-
-  </mat-tab-group>
+  <router-outlet></router-outlet>
 </mat-card>

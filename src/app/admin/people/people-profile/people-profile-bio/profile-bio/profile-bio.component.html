@@ -1,0 +1,76 @@
+<ng-container *ngIf="personData | async as person">
+
+  <mat-list>
+  
+    <mat-list-item>
+      <mat-icon matListIcon color="primary">person</mat-icon>
+      <span matLine>
+        <strong>
+          Gender
+        </strong>
+      </span>
+  
+      <span>{{ person.gender }}</span>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  
+    <h2 mat-header>Phones</h2>
+    <mat-list-item>
+      <mat-icon matListIcon color="primary">phone_iphone</mat-icon>
+      <h3 matLine>
+        <strong>
+          Mobile
+        </strong>
+      </h3>
+  
+      <span>{{ person.contact?.mobilePhone1 }} <br> {{ person.contact?.mobilePhone2 }}</span>
+    </mat-list-item>
+  
+    <mat-list-item>
+      <mat-icon matListIcon color="primary">phone</mat-icon>
+      <h3 matLine>
+        <strong>
+          Home
+        </strong>
+      </h3>
+  
+      <span>{{ person.contact?.homePhone }}</span>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  
+  
+    <h2 mat-header>Email</h2>
+    <mat-list-item>
+      <mat-icon matListIcon color="primary">email</mat-icon>
+      <h3 matLine>
+        <strong>
+          <a class="email-address" href="{{ person.contact?.email }}" target="_blank"> {{ person.contact?.email }} </a>
+        </strong>
+      </h3>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  
+    <h2 mat-header>Dates</h2>
+    <mat-list-item>
+      <mat-icon matListIcon color="primary">cake</mat-icon>
+      <h3 matLine>
+        <strong>
+          {{ person.dob?.toDate() | date: 'longDate' }}
+        </strong>
+      </h3>
+  
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  
+    <h2 mat-header>Address</h2>
+    <mat-list-item>
+      <mat-icon matListIcon color="primary">location_on</mat-icon>
+      <h3 matLine>
+        <p>{{ person.contact?.residentialAddress }}</p>
+      </h3>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  
+  </mat-list>
+
+</ng-container>

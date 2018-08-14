@@ -17,6 +17,12 @@ export class PeopleProfileComponent implements OnInit, OnDestroy {
   personId: string;
   showSpinner = true;
 
+  navLinks = [
+    { path: 'people-profile-bio', label: 'Bio Information' },
+    { path: 'people-profile-Edit', label: 'Edit' },
+    { path: 'people-profile-bio', label: 'Bio Information' }
+  ];
+
   subscription: Subscription;
 
   constructor(private peopleService: PeopleService, private uploadService: UploadService, private route: ActivatedRoute) {}

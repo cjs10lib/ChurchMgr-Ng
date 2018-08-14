@@ -75,9 +75,9 @@ import {
 import { GivingFormComponent } from './admin/people/people-giving/giving-form/giving-form.component';
 import { PeopleGivingComponent } from './admin/people/people-giving/people-giving.component';
 import { PeopleProfileComponent } from './admin/people/people-profile/people-profile.component';
-import { ProfileBioExtComponent } from './admin/people/people-profile/profile-bio-ext/profile-bio-ext.component';
-import { ProfileBioComponent } from './admin/people/people-profile/profile-bio/profile-bio.component';
-import { ProfileEditComponent } from './admin/people/people-profile/profile-edit/profile-edit.component';
+import { ProfileBioExtComponent } from './admin/people/people-profile/people-profile-bio/profile-bio-ext/profile-bio-ext.component';
+import { ProfileBioComponent } from './admin/people/people-profile/people-profile-bio/profile-bio/profile-bio.component';
+import { ProfileEditComponent } from './admin/people/people-profile/people-profile-edit/profile-edit.component';
 import { ProfileIntroComponent } from './admin/people/people-profile/profile-intro/profile-intro.component';
 import { PeopleBasicFormComponent } from './admin/people/people-registration/people-basic-form/people-basic-form.component';
 import {
@@ -123,6 +123,7 @@ import { GroupRegistrationComponent } from './admin/people/people-groups/group-r
 import { GroupFormComponent } from './admin/people/people-groups/group-form/group-form.component';
 import { GroupMembersComponent } from './admin/people/people-groups/group-members/group-members.component';
 import { GroupMembersAddComponent } from './admin/people/people-groups/group-members-add/group-members-add.component';
+import { PeopleProfileBioComponent } from './admin/people/people-profile/people-profile-bio/people-profile-bio.component';
 
 
 keyboardEventKeyPolyfill();
@@ -183,7 +184,8 @@ keyboardEventKeyPolyfill();
     GroupRegistrationComponent,
     GroupFormComponent,
     GroupMembersComponent,
-    GroupMembersAddComponent
+    GroupMembersAddComponent,
+    PeopleProfileBioComponent
   ],
   imports: [
     AngularFireStorageModule,

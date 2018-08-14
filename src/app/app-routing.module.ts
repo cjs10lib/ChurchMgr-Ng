@@ -1,3 +1,4 @@
+import { PeopleProfileBioComponent } from './admin/people/people-profile/people-profile-bio/people-profile-bio.component';
 import { GroupRegistryComponent } from './admin/people/people-groups/group-registry/group-registry.component';
 import { VisitorProfileComponent } from './admin/people/people-visitors/visitor-profile/visitor-profile.component';
 import { VisitorsFormComponent } from './admin/people/people-visitors/visitors-form/visitors-form.component';
@@ -50,7 +51,13 @@ const routes: Routes = [
         component: DashboardComponent
       }, {
         path: 'people-profile/:id',
-        component: PeopleProfileComponent
+        component: PeopleProfileComponent,
+        children: [
+          {
+            path: 'people-profile-bio',
+            component: PeopleProfileBioComponent
+          },
+        ]
       }, {
         path: 'people',
         component: PeopleRegistryComponent
