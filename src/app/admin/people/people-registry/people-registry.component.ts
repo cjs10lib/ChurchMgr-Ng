@@ -12,13 +12,15 @@ import { UploadService } from '../../../services/upload.service';
 })
 export class PeopleRegistryComponent implements OnInit, OnDestroy {
 
+  // breadcrum
   pageTitle = 'People';
   pageIcon = '';
 
+  // search Qry
   searchQry: string;
 
-  people$ = [];
-  // filteredPeople: Person[];
+  // people
+  people = [];
   filteredPeople = [];
 
   showSpinner = true;
@@ -33,16 +35,12 @@ export class PeopleRegistryComponent implements OnInit, OnDestroy {
       resp.forEach(object => {
         this.uploadService.getProfileImage(object.profileImage).pipe(take(1)).subscribe(result => {
 
-
-          this.filteredPeople.push({ // for each people record, set person data and avatar
+          this.people.push({ // for each people record, set person data and avatar
             avatar: result,
             data: object
           });
 
-          this.people$.push({
-            avatar: result,
-            data: object
-          });
+          this.filteredPeople = this.people;
 
         });
       });
@@ -58,8 +56,8 @@ export class PeopleRegistryComponent implements OnInit, OnDestroy {
   search(qry: string) {
 
     this.filteredPeople = qry ?
-    this.people$.filter(
-      p => p.data.fullname.toLowerCase().includes(qry.toLowerCase())) : this.people$;
+    this.people.filter(
+      p => p.data.fullname.toLowerCase().includes(qry.toLowerCase())) : this.people;
   }
 
   clearSearchField() {

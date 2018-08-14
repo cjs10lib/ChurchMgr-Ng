@@ -1,5 +1,5 @@
 
-<form #f="ngForm" [@listStagger]> 
+<form #f="ngForm"> 
 
   <div class="submit-button">
     <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!f.valid"> 
@@ -92,10 +92,11 @@
         </mat-form-field>
 
         <mat-form-field>
-          <span matPrefix> <mat-icon>date_range</mat-icon> &nbsp; </span>
-          <input matInput [matDatepicker]="DOB" [(ngModel)]="person.dob" name="dob" #dob placeholder="Date Of Birth" required>
+          <!-- <span matSuffix> <mat-icon>date_range</mat-icon> &nbsp; </span> -->
+          <input matInput [matDatepicker]="DOB" [(ngModel)]="person.dob" name="dob" #dob placeholder="Date Of Birth" required disabled>
+          <mat-datepicker-toggle matPrefix [for]="DOB"></mat-datepicker-toggle>
           <mat-datepicker-toggle matSuffix [for]="DOB"></mat-datepicker-toggle>
-          <mat-datepicker #DOB touchUi="true"></mat-datepicker>
+          <mat-datepicker #DOB touchUi="true" disabled="false"></mat-datepicker>
           <mat-hint>Birth Date Format: mm/dd/yyyy</mat-hint>
           <mat-hint align="end">Click toggle button to select date!</mat-hint>
 
@@ -103,19 +104,6 @@
             A valid <strong>Date of Birth</strong> is <strong>required</strong>
           </mat-error>
         </mat-form-field>
-
-        <!-- <div *ngIf="personId">
-          <mat-nav-list>
-            <h3 matSubHeader>Date of birth</h3>
-            <mat-list-item matTooltip="click to select date" mat-datepicker-toggle="DOB">
-              <h3 matLine>
-                <strong>
-                  {{ person.dob?.toDate() | date: 'longDate' }}
-                </strong>
-              </h3>
-            </mat-list-item>
-          </mat-nav-list>
-        </div> -->
 
         <mat-form-field>
             <input matInput [(ngModel)]="person.ethnicity" name="ethnicity" #ethnicity placeholder="Ethnicity/Race">

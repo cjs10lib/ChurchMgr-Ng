@@ -47,16 +47,20 @@ export class PeopleService {
     person.fullname = person.surname + ' ' + person.firstname + ' ' + person.othernames;
     person.lastUpdate = new Date().getTime();
 
-    const profileImgId = this.db.createId(); // generates an Id to save into people and set into gallery
-    person.profileImage = profileImgId;
+    // generates an Id to save into people and set into gallery
+    const profileAvatarId = this.db.createId();
+    person.profileImage = profileAvatarId;
 
+    // saves person data
+    const personData = this.peopleCollection.add(person);
 
-    return { personData: this.peopleCollection.add(person), profileImgId: profileImgId };
+    return { personData, profileAvatarId };
   }
 
   updatePerson(personId: string, person: Person) {
     person.fullname = person.surname + ' ' + person.firstname + ' ' + person.othernames;
     person.lastUpdate = new Date().getTime();
+
     return this.db.doc(`people/${personId}`).update(person);
   }
 

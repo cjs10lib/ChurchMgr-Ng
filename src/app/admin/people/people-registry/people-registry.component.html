@@ -32,7 +32,7 @@
         </section>
 
         <mat-nav-list>
-          <mat-list-item *ngIf="filteredPeople">
+          <mat-list-item *ngIf="filteredPeople?.length > 0">
             <mat-divider></mat-divider>
             <h3 matLine>  
               <strong>                  
@@ -43,7 +43,7 @@
 
           <div *ngIf="filteredPeople?.length < 1"> 
             <p>
-              No record found :(
+              No record(s) found :(
             </p>
           </div>
 
@@ -52,7 +52,6 @@
           <mat-list-item *ngFor="let people of filteredPeople" routerLink="/people-profile/{{ people.data?.id }}" >
             <mat-divider></mat-divider>
             <img *ngIf="people.avatar; else noImageAvatar" matListAvatar [src]="people.avatar?.url" [alt]="people.data.firstname">
-            <!-- <img matListAvatar src="../../../../assets/avatars/avatar4.png" alt="..."> -->
             <h3 matLine> 
               <strong>                  
                 {{ people.data.surname }} 
@@ -77,8 +76,7 @@
       </div>
     </div>
     
-    <div fxShow.lt-lg="false" fxShow="true" fxFlex="20">
-    <!-- <div fxFlex="20" fxFlexOrder.xs="3"> -->
+    <!-- <div fxShow.lt-lg="false" fxShow="true" fxFlex="20">
       <div class="flex-details">
 
         <div style="background-color: #e6e6e6e6">
@@ -95,7 +93,7 @@
         </div>
 
       </div>  
-    </div>
+    </div> -->
 
   </div> 
   

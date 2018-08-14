@@ -1,37 +1,21 @@
-import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Person } from '../../../../models/person.model';
+import { ConvertTimestampService } from '../../../../services/convert-timestamp.service';
 import { PeopleService } from '../../../../services/people.service';
 import { SweetAlertService } from '../../../../services/sweet-alert.service';
 import { UploadService } from './../../../../services/upload.service';
-import { ConvertTimestampService } from '../../../../services/convert-timestamp.service';
 
 @Component({
   selector: 'app-people-basic-form',
   templateUrl: './people-basic-form.component.html',
-  styleUrls: ['./people-basic-form.component.scss'],
-  animations: [
-    trigger('listStagger', [
-      transition('* <=> *', [
-        query(':enter',
-        [
-          style({opacity: 0, transform: ' translateY(-15px)' }),
-          stagger('50ms',
-          animate('550ms ease-out',
-          style({ opacity: 1, transform: 'translateY(0px)' })))
-        ], { optional: true }),
-        query(':leave', animate('50ms', style({ opacity: 0 })), {
-          optional: true
-        })
-      ])
-    ])
-  ]
+  styleUrls: ['./people-basic-form.component.scss']
 })
 export class PeopleBasicFormComponent implements OnInit, OnDestroy {
 
+  // person model
   person: Person = {
     education: {},
     occupation: {},
@@ -52,8 +36,10 @@ export class PeopleBasicFormComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor(private peopleService: PeopleService,
-    private sweetAlertService: SweetAlertService, private route: ActivatedRoute,
-    private router: Router, private uploadService: UploadService, private timestampService: ConvertTimestampService) { }
+    private alertService: SweetAlertService,
+    private route: ActivatedRoute, private router: Router,
+    private uploadService: UploadService,
+    private timestampService: ConvertTimestampService) { }
 
   ngOnInit() {
 
@@ -64,12 +50,8 @@ export class PeopleBasicFormComponent implements OnInit, OnDestroy {
       this.subscription = this.peopleService.getPerson(this.personId).subscribe(resp => {
         this.person = resp;
 
-        this.person.dob = this.timestampService.timestampToDate(resp.dob); // convert from timestamp
-        this.person.education = resp.education;
-        this.person.occupation = resp.occupation;
-        this.person.contact = resp.contact;
-        this.person.home = resp.home;
-
+        // convert from timestamp
+        this.person.dob = this.timestampService.timestampToDate(resp.dob);
       });
     }
   }
@@ -80,27 +62,27 @@ export class PeopleBasicFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit() {
-    this.sweetAlertService.confirmUpdate().then(async result => {
-      if (result.value) {
+  async onSubmit() {
 
-        if (this.personId) {
+    const confirm = await this.alertService.confirmUpdate();
 
-          await this.peopleService.updatePerson(this.personId, this.person);
+    if (confirm.value) {
+      if (this.personId) {
 
-        } else {
-          const data = this.peopleService.addPerson(this.person);
+         await this.peopleService.updatePerson(this.personId, this.person);
 
-          this.personId = (await data.personData).id;
-          const profileImgId = data.profileImgId; // get profile image id from people service
+      } else {
 
-          this.uploadService.pushUpload(this.fileToUpload, this.basePath, this.personId, profileImgId);
-        }
+        const data = this.peopleService.addPerson(this.person);
+        const personId = (await data.personData).id;
+        const profileAvatarId = data.profileAvatarId; // get profile image id from people service
 
-        this.sweetAlertService.afterUpdateSuccess();
-        this.router.navigate(['people-profile', this.personId]);
+        this.uploadService.pushUpload(this.fileToUpload, this.basePath, personId, profileAvatarId);
       }
-    });
+
+      this.alertService.afterUpdateSuccess();
+      this.router.navigate(['people-profile', this.personId]);
+    }
   }
 
   toggleHover($event: boolean) {
