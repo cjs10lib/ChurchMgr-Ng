@@ -15,6 +15,7 @@ export class ConvertTimestampService {
 
   timestampToDate(tstamp) {
     const Timestamp = require('firebase-firestore-timestamp');
+    // const Timestamp = firebase.firestore.Timestamp;
     const stamp = new Timestamp(tstamp).seconds * 1000;
     return new Date(stamp);
   }

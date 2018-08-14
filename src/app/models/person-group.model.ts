@@ -8,6 +8,13 @@ export interface PersonGroup {
     updatedAt?: any;
 }
 
+export interface GroupMember {
+    Id?: string;
+    personId?: string;
+    groupId?: string;
+    updatedAt?: any;
+}
+
 interface Contact {
     address?: string;
     city?: string;

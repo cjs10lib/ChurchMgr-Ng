@@ -122,6 +122,7 @@ import { GroupRegistryComponent } from './admin/people/people-groups/group-regis
 import { GroupRegistrationComponent } from './admin/people/people-groups/group-registration/group-registration.component';
 import { GroupFormComponent } from './admin/people/people-groups/group-form/group-form.component';
 import { GroupMembersComponent } from './admin/people/people-groups/group-members/group-members.component';
+import { GroupMembersAddComponent } from './admin/people/people-groups/group-members-add/group-members-add.component';
 
 
 keyboardEventKeyPolyfill();
@@ -181,7 +182,8 @@ keyboardEventKeyPolyfill();
     GroupRegistryComponent,
     GroupRegistrationComponent,
     GroupFormComponent,
-    GroupMembersComponent
+    GroupMembersComponent,
+    GroupMembersAddComponent
   ],
   imports: [
     AngularFireStorageModule,
@@ -237,6 +239,7 @@ keyboardEventKeyPolyfill();
     FamilyFormAddComponent,
     GivingCategoryFormComponent,
     GivingBatchComponent,
+    GroupMembersAddComponent,
     VisitorsFormComponent
   ],
   providers: [],

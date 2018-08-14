@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-import { Person } from '../../../models/person.model';
 import { PeopleService } from '../../../services/people.service';
 import { UploadService } from '../../../services/upload.service';
 
@@ -51,7 +50,9 @@ export class PeopleRegistryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   search(qry: string) {

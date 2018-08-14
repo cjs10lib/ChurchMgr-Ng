@@ -1,6 +1,7 @@
+import { PeopleService } from './people.service';
 import { ConvertTimestampService } from './convert-timestamp.service';
 import { Observable } from 'rxjs';
-import { PersonGroup } from './../models/person-group.model';
+import { PersonGroup, GroupMember } from './../models/person-group.model';
 import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
 import { map } from '../../../node_modules/rxjs/operators';
@@ -48,6 +49,26 @@ export class PeopleGroupService {
 
   deleteGroup(groupId: string) {
     return this.db.doc(`groups/${groupId}`).delete();
+  }
+
+  // group members
+
+  addMembersToGroup(groupMember: GroupMember) {
+    groupMember.updatedAt = this.timestampService.getTimestamp;
+    return this.db.collection('group-members').add(groupMember);
+  }
+
+  getGroupMembers(groupId: string) {
+    return this.db.collection('group-members', ref => ref.where('groupId', '==', groupId)).snapshotChanges().pipe(
+      map(change => {
+        return change.map(a => {
+          const data = a.payload.doc.data() as GroupMember;
+          data.Id = a.payload.doc.id;
+
+          return data;
+        });
+      })
+    );
   }
 
 }
