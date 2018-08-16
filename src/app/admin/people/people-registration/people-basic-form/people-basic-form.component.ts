@@ -43,7 +43,7 @@ export class PeopleBasicFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.personId = this.route.snapshot.paramMap.get('id');
+    this.personId = this.route.parent.snapshot.paramMap.get('id');
 
     if (this.personId) {
 
@@ -69,7 +69,7 @@ export class PeopleBasicFormComponent implements OnInit, OnDestroy {
     if (confirm.value) {
       if (this.personId) {
 
-         await this.peopleService.updatePerson(this.personId, this.person);
+        await this.peopleService.updatePerson(this.personId, this.person);
 
       } else {
 

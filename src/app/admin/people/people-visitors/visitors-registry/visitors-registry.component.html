@@ -33,7 +33,7 @@
         </section>
 
         <mat-nav-list>
-          <mat-list-item *ngIf="filteredVisitors$">
+          <mat-list-item *ngIf="filteredVisitors$?.length > 0">
             <mat-divider></mat-divider>
             <h3 matLine>  
               <strong>                  
@@ -41,6 +41,15 @@
               </strong>
             </h3>
           </mat-list-item>
+
+          <div *ngIf="filteredVisitors$?.length < 1"> 
+            <p>
+              No record(s) found :(
+            </p>
+          </div>
+
+          <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
+
           <mat-list-item *ngFor="let visitor of filteredVisitors$" routerLink="/visitor-profile/{{ visitor.Id }}" >
             <mat-divider></mat-divider>
             <img matListAvatar src="../../../../../assets/avatars/avatar4.png" alt="...">
@@ -59,9 +68,7 @@
             </button>
 
           </mat-list-item>
-        </mat-nav-list>
-
-        <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
+        </mat-nav-list>      
 
 <!-- 
         <ng-template #noImageAvatar>
@@ -70,9 +77,8 @@
 
       </div>
     </div>
-    
+<!--     
     <div fxShow.lt-lg="false" fxShow="true" fxFlex="20">
-    <!-- <div fxFlex="20" fxFlexOrder.xs="3"> -->
       <div class="flex-details">
 
         <div style="background-color: #e6e6e6e6">
@@ -89,7 +95,7 @@
         </div>
 
       </div>  
-    </div>
+    </div> -->
 
   </div> 
   

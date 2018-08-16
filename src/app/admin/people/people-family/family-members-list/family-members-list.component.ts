@@ -37,12 +37,16 @@ export class FamilyMembersListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.routeId = this.route.snapshot.paramMap.get('id');
-
     if (this.parentComponent === 'people-profile') {
+
+      this.routeId = this.route.parent.snapshot.paramMap.get('id');
       return this.getFamilyMembersFromPeopleProfile();
-    } else if (this.parentComponent === 'family-profile') {
+
+    } else {
+
+      this.routeId = this.route.snapshot.paramMap.get('id');
       return this.getFamilyMembersFromFamilyProfile();
+
     }
   }
 
@@ -68,6 +72,8 @@ export class FamilyMembersListComponent implements OnInit, OnDestroy {
        })).
         subscribe(resp => {
 
+          this.people$ = this.filteredPeople$ = [];
+
           if (resp) {
 
               resp.forEach(doc => {
@@ -82,9 +88,7 @@ export class FamilyMembersListComponent implements OnInit, OnDestroy {
                       personId: personId, data: data, avatar: avatar
                     });
 
-                    this.filteredPeople$.push({
-                      personId: personId, data: data, avatar: avatar
-                    });
+                    this.filteredPeople$ = this.people$;
 
                   });
               });
@@ -101,6 +105,7 @@ export class FamilyMembersListComponent implements OnInit, OnDestroy {
     this.familySubscription = this.personFamilyService.getFamilyMembers(this.routeId).subscribe(resp => {
 
       this.showSpinner = false;
+      this.people$ = this.filteredPeople$ = [];
 
       resp.forEach(person => {
 
@@ -119,9 +124,7 @@ export class FamilyMembersListComponent implements OnInit, OnDestroy {
               personId: personId, data: data, avatar: avatar
             });
 
-            this.filteredPeople$.push({
-              personId: personId, data: data, avatar: avatar
-            });
+            this.filteredPeople$ = this.people$;
 
           });
 

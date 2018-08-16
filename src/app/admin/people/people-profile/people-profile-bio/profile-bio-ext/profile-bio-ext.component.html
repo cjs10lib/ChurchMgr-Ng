@@ -10,7 +10,15 @@
   </mat-card>
   
   <mat-card class="bio-info-card">
-    <mat-nav-list>
+
+    <h2 mat-header>Groups</h2>
+
+    <mat-divider></mat-divider>
+
+    <app-group-registry [parentComponent]="parentComponent" [showControls]='showControls'></app-group-registry>
+
+
+    <!-- <mat-nav-list>
   
       <h2 mat-header>Groups</h2>
       <mat-list-item>
@@ -31,7 +39,7 @@
         <mat-divider></mat-divider>
       </mat-list-item>
   
-    </mat-nav-list> 
+    </mat-nav-list>  -->
   </mat-card>
   
   <mat-card class="bio-info-card">

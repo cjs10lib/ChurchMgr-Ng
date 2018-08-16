@@ -1,10 +1,10 @@
-
-import { SweetAlertService } from '../../../../../services/sweet-alert.service';
-import { Baptism } from '../../../../../models/person-baptism.model';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { PeopleBaptismService } from '../../../../../services/people-baptism.service';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+
+import { Baptism } from '../../../../../models/person-baptism.model';
+import { PeopleBaptismService } from '../../../../../services/people-baptism.service';
+import { SweetAlertService } from '../../../../../services/sweet-alert.service';
+import { ConvertTimestampService } from './../../../../../services/convert-timestamp.service';
 
 @Component({
   selector: 'app-baptismal-form',
@@ -24,40 +24,43 @@ export class BaptismalFormComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor(private peopleBaptismService: PeopleBaptismService,
-    private route: ActivatedRoute, private sweetAlertService: SweetAlertService) { }
+    private alertService: SweetAlertService,
+    private timestampService: ConvertTimestampService) { }
 
   ngOnInit() {
 
     if (this.personId) {
       this.subscription = this.peopleBaptismService.getPersonBaptism(this.personId)
         .subscribe(resp => {
-          // tslint:disable-next-line:curly
-          if (resp)
-            return this.baptism = resp;
-
+          if (resp) {
+            this.baptism = resp;
+            this.baptism.baptismalDate = this.timestampService.timestampToDate(resp.baptismalDate);
+          }
         });
     }
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
-  onSubmit() {
-    this.sweetAlertService.confirmUpdate().then(resp => {
-      if (resp.value) {
+  async onSubmit() {
+    const confirm = await this.alertService.confirmUpdate();
+      if (confirm.value) {
 
-        this.peopleBaptismService.updatePersonBaptism(this.personId, this.baptism);
-        this.sweetAlertService.afterUpdateSuccess();
+        await this.peopleBaptismService.updatePersonBaptism(this.personId, this.baptism);
+        this.alertService.afterUpdateSuccess();
       }
-    });
   }
 
   clearBaptismFields() {
-    this.baptism.baptisedBy = '';
-    this.baptism.baptismalDate = null;
-    this.baptism.churchBaptised = '';
-    this.baptism.extraNotes = '';
+    this.baptism = {};
+    // this.baptism.baptisedBy = '';
+    // this.baptism.baptismalDate = null;
+    // this.baptism.churchBaptised = '';
+    // this.baptism.extraNotes = '';
   }
 
 }

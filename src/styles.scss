@@ -54,6 +54,9 @@ body {
     color: mat-color($warn);
 }
 
+.spc-5 {
+    padding: 5px;
+}
 .spc-10 {
     padding: 10px;
 }
@@ -86,7 +89,7 @@ body {
 
 // LOADING SPINNER
 .spinner {
-    margin: 100px auto;
+    margin: 0 auto 100px;
     width: 50px;
     height: 40px;
     text-align: center;
@@ -95,6 +98,7 @@ body {
 }
   
 .spinner > div {
+    // color: url('/src/assets/banners/banner1.jpg');
     background-color: #333;
     height: 100%;
     width: 6px;

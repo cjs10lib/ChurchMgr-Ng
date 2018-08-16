@@ -12,6 +12,7 @@ export interface GroupMember {
     Id?: string;
     personId?: string;
     groupId?: string;
+    role?: string;
     updatedAt?: any;
 }
 

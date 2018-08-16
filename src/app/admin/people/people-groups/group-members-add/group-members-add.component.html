@@ -26,7 +26,7 @@
               <mat-icon>refresh</mat-icon> &nbsp;
               Load People
             </button>
-            <button mat-raised-button color="primary" (click)="addToGroup()" disabled="!selectedPeopleChecked">
+            <button mat-raised-button color="primary" (click)="addToGroup()" [disabled]="selectedPeopleChecked?.length < 1">
               <mat-icon>add</mat-icon> &nbsp;
               Add To Group
             </button>

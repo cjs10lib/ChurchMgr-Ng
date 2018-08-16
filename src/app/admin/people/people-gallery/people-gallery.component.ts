@@ -1,9 +1,9 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-
-import { AngularFireStorage } from 'angularfire2/storage';
 import { map } from 'rxjs/operators';
+
 import { UploadService } from '../../../services/upload.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { UploadService } from '../../../services/upload.service';
 })
 export class PeopleGalleryComponent implements OnInit {
 
-  @Input() personId: string;
+  personId: string;
   isHovering: boolean;
 
   gallery = [];
@@ -27,13 +27,17 @@ export class PeopleGalleryComponent implements OnInit {
     map(result => result.matches)
   );
 
-  isPhablet$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Small)
-  .pipe(
-    map(result => result.matches)
-  );
+  constructor(private uploadService: UploadService, private route: ActivatedRoute, private breakpointObserver: BreakpointObserver) {}
 
+  ngOnInit() {
+    this.personId = this.route.parent.snapshot.paramMap.get('id');
 
-  constructor(private storage: AngularFireStorage, private uploadService: UploadService, private breakpointObserver: BreakpointObserver) {}
+    if (this.personId) {
+      this.uploadService.getPersonGallery(this.personId).subscribe(resp => {
+        this.gallery = resp;
+      });
+    }
+  }
 
   toggleHover(event: boolean) {
     this.isHovering = event;
@@ -46,11 +50,4 @@ export class PeopleGalleryComponent implements OnInit {
   isActive(snapshot) {
     return snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
   }
-
-  ngOnInit() {
-    this.uploadService.getPersonGallery(this.personId).subscribe(resp => {
-      this.gallery = resp;
-    });
-  }
-
 }

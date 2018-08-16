@@ -1,27 +1,32 @@
-import { PeopleProfileBioComponent } from './admin/people/people-profile/people-profile-bio/people-profile-bio.component';
-import { GroupRegistryComponent } from './admin/people/people-groups/group-registry/group-registry.component';
-import { VisitorProfileComponent } from './admin/people/people-visitors/visitor-profile/visitor-profile.component';
-import { VisitorsFormComponent } from './admin/people/people-visitors/visitors-form/visitors-form.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LoginFormComponent } from './admin/authentication/login-form/login-form.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import {
+  FamilyMembersRegistryComponent,
+} from './admin/people/people-family/family-members-registry/family-members-registry.component';
 import { FamilyProfileComponent } from './admin/people/people-family/family-profile/family-profile.component';
 import { FamilyRegistryComponent } from './admin/people/people-family/family-registry/family-registry.component';
+import { PeopleGalleryComponent } from './admin/people/people-gallery/people-gallery.component';
 import { GivingCategoriesComponent } from './admin/people/people-giving/giving-categories/giving-categories.component';
+import { GivingFormComponent } from './admin/people/people-giving/giving-form/giving-form.component';
+import { GroupFormComponent } from './admin/people/people-groups/group-form/group-form.component';
+import { GroupMembersComponent } from './admin/people/people-groups/group-members/group-members.component';
+import { GroupRegistryListComponent } from './admin/people/people-groups/group-registry-list/group-registry-list.component';
+import { PeopleProfileBioComponent } from './admin/people/people-profile/people-profile-bio/people-profile-bio.component';
 import { PeopleProfileComponent } from './admin/people/people-profile/people-profile.component';
+import { ProfileEditComponent } from './admin/people/people-profile/profile-edit/profile-edit.component';
 import { PeopleRegistrationComponent } from './admin/people/people-registration/people-registration.component';
 import { PeopleRegistryComponent } from './admin/people/people-registry/people-registry.component';
+import { VisitorProfileComponent } from './admin/people/people-visitors/visitor-profile/visitor-profile.component';
+import { VisitorsFormComponent } from './admin/people/people-visitors/visitors-form/visitors-form.component';
+import { VisitorsRegistryComponent } from './admin/people/people-visitors/visitors-registry/visitors-registry.component';
 import { TransactionsComponent } from './admin/transactions/transactions.component';
 import { HomeComponent } from './general/home/home.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthenticationLayoutComponent } from './layouts/authentication-layout/authentication-layout.component';
 import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.component';
-import { GivingFormComponent } from './admin/people/people-giving/giving-form/giving-form.component';
-import { VisitorsRegistryComponent } from './admin/people/people-visitors/visitors-registry/visitors-registry.component';
-import { GroupFormComponent } from './admin/people/people-groups/group-form/group-form.component';
-import { GroupMembersComponent } from './admin/people/people-groups/group-members/group-members.component';
 
 const routes: Routes = [
   {
@@ -54,9 +59,25 @@ const routes: Routes = [
         component: PeopleProfileComponent,
         children: [
           {
-            path: 'people-profile-bio',
+            path: 'profile-bio',
             component: PeopleProfileBioComponent
           },
+          {
+            path: 'profile-Edit',
+            component: ProfileEditComponent
+          },
+          {
+            path: 'profile-gallery',
+            component: PeopleGalleryComponent
+          },
+          {
+            path: 'family-members',
+            component: FamilyMembersRegistryComponent
+          },
+          {
+            path: 'profile-giving',
+            component: GivingFormComponent
+          }
         ]
       }, {
         path: 'people',
@@ -84,7 +105,7 @@ const routes: Routes = [
         component: VisitorProfileComponent
       }, {
         path: 'groups',
-        component: GroupRegistryComponent
+        component: GroupRegistryListComponent
       }, {
         path: 'group-registration',
         component: GroupFormComponent

@@ -49,7 +49,7 @@
 
           <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
 
-          <mat-list-item *ngFor="let people of filteredPeople" routerLink="/people-profile/{{ people.data?.id }}" >
+          <mat-list-item *ngFor="let people of filteredPeople" routerLink="/people-profile/{{ people.data?.id }}/profile-bio" >
             <mat-divider></mat-divider>
             <img *ngIf="people.avatar; else noImageAvatar" matListAvatar [src]="people.avatar?.url" [alt]="people.data.firstname">
             <h3 matLine> 

@@ -16,13 +16,12 @@ export class FamilyFormComponent implements OnInit, OnDestroy {
 
   @Input() personId: string;
 
-  personFamily: PersonFamily = {};
-
+  personFamily: Family = {};
   addFamilyDialog: Family = {};
 
   families$;
 
-  searchQuery;
+  searchQuery: string;
 
   tags = [
     'None',
@@ -33,18 +32,22 @@ export class FamilyFormComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  constructor(private dialog: MatDialog, private personFamilyService: PersonFamilyService, private sweetAlertService: SweetAlertService) { }
+  constructor(private dialog: MatDialog,
+    private personFamilyService: PersonFamilyService,
+    private alertService: SweetAlertService) { }
 
   ngOnInit() {
     this.families$ = this.personFamilyService.getFamilies();
 
-    this.subscription = this.personFamilyService.getPersonFamily(this.personId)
-      .subscribe(resp => {
+    if (this.personId) {
+      this.subscription = this.personFamilyService.getPersonFamily(this.personId)
+        .subscribe(resp => {
+          if (resp) {
+            this.personFamily = resp;
+          }
+        });
+    }
 
-        if (resp) {
-          this.personFamily = resp;
-        }
-      });
   }
 
   ngOnDestroy() {
@@ -53,13 +56,13 @@ export class FamilyFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  onAddPersonFamily() {
-    this.sweetAlertService.confirmUpdate().then(resp => {
-      if (resp.value) {
-        this.personFamilyService.updatePersonFamily(this.personId, this.personFamily);
-        this.sweetAlertService.afterUpdateSuccess();
-      }
-    });
+  async onAddPersonFamily() {
+    const confirm = await this.alertService.confirmUpdate();
+    if (confirm.value) {
+
+      await this.personFamilyService.updatePersonFamily(this.personId, this.personFamily);
+      this.alertService.afterUpdateSuccess();
+    }
   }
 
   openDialog() {
@@ -71,8 +74,8 @@ export class FamilyFormComponent implements OnInit, OnDestroy {
       });
   }
 
-  addFamily() {
-    this.personFamilyService.addFamily(this.addFamilyDialog);
+  async addFamily() {
+    await this.personFamilyService.addFamily(this.addFamilyDialog);
   }
 
   clearFamilySearchField() {

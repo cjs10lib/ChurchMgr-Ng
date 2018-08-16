@@ -74,10 +74,19 @@ import {
 } from './admin/people/people-giving/giving-form/giving-form-intro/giving-form-intro.component';
 import { GivingFormComponent } from './admin/people/people-giving/giving-form/giving-form.component';
 import { PeopleGivingComponent } from './admin/people/people-giving/people-giving.component';
-import { PeopleProfileComponent } from './admin/people/people-profile/people-profile.component';
-import { ProfileBioExtComponent } from './admin/people/people-profile/people-profile-bio/profile-bio-ext/profile-bio-ext.component';
+import { GroupFormComponent } from './admin/people/people-groups/group-form/group-form.component';
+import { GroupMembersAddComponent } from './admin/people/people-groups/group-members-add/group-members-add.component';
+import { GroupMembersComponent } from './admin/people/people-groups/group-members/group-members.component';
+import { GroupRegistrationComponent } from './admin/people/people-groups/group-registration/group-registration.component';
+import { GroupRegistryComponent } from './admin/people/people-groups/group-registry/group-registry.component';
+import { PeopleGroupsComponent } from './admin/people/people-groups/people-groups.component';
+import { PeopleProfileBioComponent } from './admin/people/people-profile/people-profile-bio/people-profile-bio.component';
+import {
+  ProfileBioExtComponent,
+} from './admin/people/people-profile/people-profile-bio/profile-bio-ext/profile-bio-ext.component';
 import { ProfileBioComponent } from './admin/people/people-profile/people-profile-bio/profile-bio/profile-bio.component';
-import { ProfileEditComponent } from './admin/people/people-profile/people-profile-edit/profile-edit.component';
+import { ProfileEditComponent } from './admin/people/people-profile/profile-edit/profile-edit.component';
+import { PeopleProfileComponent } from './admin/people/people-profile/people-profile.component';
 import { ProfileIntroComponent } from './admin/people/people-profile/profile-intro/profile-intro.component';
 import { PeopleBasicFormComponent } from './admin/people/people-registration/people-basic-form/people-basic-form.component';
 import {
@@ -117,13 +126,7 @@ import { BreadcrumComponent } from './layouts/breadcrum/breadcrum.component';
 import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.component';
 import { FileSizePipe } from './pipes/file-size.pipe';
 import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.component';
-import { PeopleGroupsComponent } from './admin/people/people-groups/people-groups.component';
-import { GroupRegistryComponent } from './admin/people/people-groups/group-registry/group-registry.component';
-import { GroupRegistrationComponent } from './admin/people/people-groups/group-registration/group-registration.component';
-import { GroupFormComponent } from './admin/people/people-groups/group-form/group-form.component';
-import { GroupMembersComponent } from './admin/people/people-groups/group-members/group-members.component';
-import { GroupMembersAddComponent } from './admin/people/people-groups/group-members-add/group-members-add.component';
-import { PeopleProfileBioComponent } from './admin/people/people-profile/people-profile-bio/people-profile-bio.component';
+import { GroupRegistryListComponent } from './admin/people/people-groups/group-registry-list/group-registry-list.component';
 
 
 keyboardEventKeyPolyfill();
@@ -185,7 +188,8 @@ keyboardEventKeyPolyfill();
     GroupFormComponent,
     GroupMembersComponent,
     GroupMembersAddComponent,
-    PeopleProfileBioComponent
+    PeopleProfileBioComponent,
+    GroupRegistryListComponent
   ],
   imports: [
     AngularFireStorageModule,

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -24,23 +24,27 @@ export class ProfileIntroComponent implements OnInit, OnDestroy {
     private router: Router, private sweetAlertService: SweetAlertService) { }
 
   ngOnInit() {
-    const personId = this.route.snapshot.paramMap.get('id');
 
-    this.subscription = this.peopleService.getPerson(personId).pipe(switchMap(resp => {
+    this.subscription = this.route.paramMap.pipe(switchMap(params => {
+      const personId = params.get('id');
+      return this.peopleService.getPerson(personId);
+    })).pipe(switchMap(object => {
 
-      this.person = resp;
-      return this.uploadService.getProfileImage(resp.profileImage);
+      this.person = object;
+      return this.uploadService.getProfileImage(this.person.profileImage);
 
-    })).subscribe(img => {
+    })).subscribe(avatar => {
+      if (avatar) {
+        this.profileImage = avatar.url;
+      }
+    });
 
-        if (img) {
-          this.profileImage = img.url;
-        }
-      });
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   deleteProfile() {

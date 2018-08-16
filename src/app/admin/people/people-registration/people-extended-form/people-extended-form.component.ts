@@ -10,10 +10,11 @@ export class PeopleExtendedFormComponent implements OnInit {
 
   personId: string;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
-    this.personId = this.route.snapshot.paramMap.get('id');
+    this.personId = this.route.parent.snapshot.paramMap.get('id');
   }
 
 }

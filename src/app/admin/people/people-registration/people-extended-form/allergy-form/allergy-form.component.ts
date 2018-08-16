@@ -37,7 +37,9 @@ export class AllergyFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   async addAllegy(event: MatChipInputEvent) {

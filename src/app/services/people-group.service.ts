@@ -1,6 +1,6 @@
 import { PeopleService } from './people.service';
 import { ConvertTimestampService } from './convert-timestamp.service';
-import { Observable } from 'rxjs';
+import { Observable, merge } from 'rxjs';
 import { PersonGroup, GroupMember } from './../models/person-group.model';
 import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
@@ -53,13 +53,9 @@ export class PeopleGroupService {
 
   // group members
 
-  addMembersToGroup(groupMember: GroupMember) {
-    groupMember.updatedAt = this.timestampService.getTimestamp;
-    return this.db.collection('group-members').add(groupMember);
-  }
-
   getGroupMembers(groupId: string) {
-    return this.db.collection('group-members', ref => ref.where('groupId', '==', groupId)).snapshotChanges().pipe(
+    const groupMembers = this.db.collection('group-members', ref => ref.where('groupId', '==', groupId));
+    return groupMembers.snapshotChanges().pipe(
       map(change => {
         return change.map(a => {
           const data = a.payload.doc.data() as GroupMember;
@@ -69,6 +65,42 @@ export class PeopleGroupService {
         });
       })
     );
+  }
+
+  getGroupsByMember(personId: string) {
+    const groups = this.db.collection('group-members', ref => ref.where('personId', '==', personId));
+    return groups.snapshotChanges().pipe(
+      map(change => {
+        return change.map(a => {
+          const data = a.payload.doc.data() as GroupMember;
+          data.Id = a.payload.doc.id;
+
+          return data;
+        });
+      })
+    );
+  }
+
+  addMembersToGroup(groupMember: GroupMember) {
+    // generate custom groupMemberId for easy querying
+    const cusGroupMemberId = groupMember.groupId + '_' + groupMember.personId;
+
+    groupMember.role = 'MEMBER';
+    groupMember.updatedAt = this.timestampService.getTimestamp;
+    return this.db.collection('group-members').doc(cusGroupMemberId).set(groupMember);
+  }
+
+  updateGroupMember(groupMember, groupId: string) {
+    const groupMemberId = groupId + '_' + groupMember.id;
+
+    groupMember.updatedAt = this.timestampService.getTimestamp;
+    return this.db.collection('group-members').doc(groupMemberId).set({ role: groupMember.role }, { merge: true });
+  }
+
+  deleteGroupMember(personId: string, groupId: string) {
+    // custom generated id during adding to group
+    const groupMemberId = groupId + '_' + personId;
+    return this.db.doc(`group-members/${groupMemberId}`).delete();
   }
 
 }
