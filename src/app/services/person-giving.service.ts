@@ -1,9 +1,9 @@
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
-import { Giving } from '../models/person-giving.model';
-// import firebase = require('../../../node_modules/firebase');
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { Giving } from './../models/person-giving.model';
 import { ConvertTimestampService } from './convert-timestamp.service';
 
 
@@ -44,6 +44,10 @@ export class PersonGivingService {
     );
   }
 
+  getGivingById(givingId: string) {
+    return this.db.doc(`giving/${givingId}`).valueChanges();
+  }
+
   getGivings() {
     return this.givings;
   }
@@ -55,11 +59,15 @@ export class PersonGivingService {
     return this.givingCollection.add(giving);
   }
 
+  updateGiving(givingId: string, giving: Giving) {
+    giving.updatedAt = this.timestampService.getTimestamp; // sets server timestamp
 
-  // generateQryId() {
+    return this.db.doc(`giving/${givingId}`).set({
+      data: giving.data, updatedAt: giving.updatedAt
+    }, {merge: true});
+  }
 
-
-  //   const date = this.timestampService.timestampToDate(timestamp);
-  //   return console.log(date.getDay);
-  // }
+  deleteGiving(givingId: string) {
+    return this.db.doc(`giving/${givingId}`).delete();
+  }
 }

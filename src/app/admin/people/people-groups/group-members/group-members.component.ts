@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, observable } from 'rxjs';
 
 import { GroupMember } from '../../../../models/person-group.model';
 import { PeopleGroupService } from '../../../../services/people-group.service';
@@ -9,13 +9,15 @@ import { PeopleService } from '../../../../services/people.service';
 import { SweetAlertService } from '../../../../services/sweet-alert.service';
 import { UploadService } from '../../../../services/upload.service';
 import { GroupMembersAddComponent } from './../group-members-add/group-members-add.component';
+import { from, of } from 'rxjs';
+import { map, merge } from 'rxjs/operators';
 
 @Component({
   selector: 'app-group-members',
   templateUrl: './group-members.component.html',
   styleUrls: ['./group-members.component.scss']
 })
-export class GroupMembersComponent implements OnInit, OnDestroy {
+export class GroupMembersComponent implements OnInit, OnDestroy, AfterViewInit {
 
   pageTitle = 'Group Members ';
   pageIcon = '';
@@ -33,9 +35,9 @@ export class GroupMembersComponent implements OnInit, OnDestroy {
 
   groupId: string;
 
-  people = [];
   peopleId = [];
-  filteredPeople = [];
+  people: any[] = [];
+  filteredPeople: any[] = [];
 
   showSpinner = true;
   subscription: Subscription;
@@ -51,36 +53,6 @@ export class GroupMembersComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.groupId = this.route.snapshot.paramMap.get('id');
-
-    this.subscription = this.peopleGroupService.getGroupMembers(this.groupId).subscribe(resp => {
-      this.showSpinner = false;
-      const groupMembers = resp;
-
-      this.people = this.filteredPeople = [];
-
-      groupMembers.forEach(object => {
-
-        // get people object
-        this.peopleSubscription = this.peopleService.getPerson(object.personId).subscribe(person => {
-
-          // get people avatar
-          this.avatarSubscription = this.uploadService.getProfileImage(person.profileImage).subscribe(result => {
-
-            this.people.push({ // for each people record, set person data and avatar
-              id: object.personId,
-              role:  object.role,
-              avatar: result,
-              data: person
-            });
-
-            this.filteredPeople = this.people;
-
-          });
-
-        });
-
-      });
-    });
 
   }
 
@@ -98,7 +70,56 @@ export class GroupMembersComponent implements OnInit, OnDestroy {
     }
   }
 
+  ngAfterViewInit() {
+    this.getPeople();
+  }
+
+  getPeople() {
+    this.subscription = this.peopleGroupService.getGroupMembers(this.groupId).subscribe(resp => {
+      this.showSpinner = false;
+
+      this.people = [];
+      this.filteredPeople = [];
+
+      const temp = [];
+
+      // const newwList =  Array.from(new Set(resp));
+
+      resp.forEach(object => {
+
+        // if (temp.indexOf(object) === -1) {
+        //   temp.push(object);
+        // }
+
+        // console.log(temp);
+
+        // get people object
+        this.peopleSubscription = this.peopleService.getPerson(object.personId).subscribe(person => {
+
+          // get people avatar
+          this.avatarSubscription = this.uploadService.getProfileImage(person.profileImage).subscribe(result => {
+
+            // for each people record, set person data and avatar
+            this.people.push({
+              id: object.personId,
+              role:  object.role,
+              avatar: result,
+              data: person
+            });
+
+            this.filteredPeople = this.people;
+
+          });
+
+        });
+
+      });
+    });
+  }
+
   addGroupMembers() {
+
+    // return this.ngOnInit();
 
     this.dialog.open(GroupMembersAddComponent, {
       height: '800px',
@@ -107,6 +128,8 @@ export class GroupMembersComponent implements OnInit, OnDestroy {
         groupId: this.groupId,
         people: this.people
       }
+    }).afterClosed().subscribe(resp => {
+      return this.ngOnInit();
     });
   }
 
@@ -134,7 +157,9 @@ export class GroupMembersComponent implements OnInit, OnDestroy {
     const confirm = await this.alertService.confirmDelete();
     if (confirm.value) {
       await this.peopleGroupService.deleteGroupMember(personId, this.groupId);
+
       this.alertService.afterDeleteSuccess();
+      this.clearEditState();
     }
   }
 

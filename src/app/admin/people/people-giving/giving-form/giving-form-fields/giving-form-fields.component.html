@@ -30,15 +30,19 @@
 
     <div fxFlex fxShow.lt-sm="false" fxShow="true" fxFlexOrder.xs="1">
       <mat-card> 
-        <h3 mat-subheader>Giving Record</h3>
+        <!-- <h3 mat-subheader>Giving Record</h3> -->
+
+        <mat-card-actions>
+          <button type="button" mat-raised-button color="primary" (click)="onSubmit()">Add Record</button>
+        </mat-card-actions> 
 
         <div>
 
           <mat-form-field>
             <input type="text" placeholder="Search..." aria-label="Number" matInput [formControl]="myPersonControl" name="person" [matAutocomplete]="auto" required>
-            <button type="button" mat-button *ngIf="myPersonControl" matSuffix mat-icon-button aria-label="Clear" (click)="clearAutoCompleteField()">
+            <!-- <button type="button" mat-button *ngIf="myPersonControl" matSuffix mat-icon-button aria-label="Clear" (click)="clearAutoCompleteField()">
               <mat-icon>close</mat-icon>
-            </button>
+            </button> -->
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
               <mat-option *ngFor="let p of filteredOptions | async" [value]="p.id">
                 {{p.fullname}}
@@ -82,12 +86,10 @@
   
           <mat-divider></mat-divider> 
           
-          <mat-card-actions>
-            <button type="button" mat-raised-button color="primary" (click)="onSubmit()">Add Record</button>
-          </mat-card-actions> 
+          
           
           <mat-list>
-            <mat-list-item *ngFor="let giving of peopleGivings | async">
+            <mat-list-item *ngFor="let giving of peopleGivings">
               <!-- <h3 matLine> {{ giving.data.person }} </h3> -->
               <h3 matLine> 
                 <strong>{{ getPersonDetails(giving.data.person) }}</strong>  
@@ -95,18 +97,51 @@
               <p matLine>
                 <span> {{ getCategoryDetails(giving.data.category) }} </span>
                 <span class="demo-2"> -- {{ giving.givingDate.toDate() | date:'longDate' }} </span>
+              </p>      
+              <p matLine>                
+                Amount --<strong> {{ giving.data.amount | currency }}</strong> 
               </p>
               
-              <span> 
-                <strong>{{ giving.data.amount }}</strong> 
-              </span>
+              <button type="button" mat-icon-button color="primary" matTooltip="Edit record" (click)="editGivingRecord(giving.Id)">
+                <mat-icon>border_color</mat-icon>
+              </button>
+
+              <button type="button" mat-icon-button color="warn" matTooltip="delete record" (click)="deleteGivingRecord(giving.Id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+
               <mat-divider></mat-divider> 
             </mat-list-item>
           </mat-list>
 
-        </div>        
-       
+          <p mat-subheader *ngIf="sumTotalAmount < givingBatch.amount; else sumTotalEqualsBatch">
+            <mat-icon color="warn">report</mat-icon> &nbsp;
+            The total, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; do not equal the batch total.
+          </p>
 
+          <ng-template #sumTotalEqualsBatch>
+            <p mat-subheader *ngIf="sumTotalAmount == givingBatch.amount">
+              <mat-icon color="primary">check</mat-icon> &nbsp;
+              The subtotal, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; <strong>equals</strong> &nbsp; the batch total.
+            </p>
+          </ng-template>
+
+          <!-- <ng-template #sumTotalEqualsBatch>
+            <p mat-subheader>
+              <mat-icon color="primary">check</mat-icon> &nbsp;
+              The subtotal, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; <strong>equals</strong> &nbsp; the batch total.
+            </p>
+          </ng-template> -->
+          
+          <ul style="margin-top: 0;">
+            <li *ngFor="let sum of peopleGivingSummary">
+              {{ getCategoryDetails(sum.category) }}: &ngsp;
+              <strong>{{ sum.totalAmount | currency }}</strong> 
+            </li>
+          </ul>
+          
+
+        </div>    
       </mat-card>   
     </div>
 

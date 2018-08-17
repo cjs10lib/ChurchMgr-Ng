@@ -93,6 +93,8 @@
             <div matLine *ngIf="editState && roleToEdit.id == person.id">
               <div class="spc-5"></div>
               <form #f="ngForm">
+
+                <div class="example-container">
                   <mat-form-field>
                     <mat-select placeholder="Member Role" [(ngModel)]="roleToEdit.role" name="role">
                       <mat-option *ngFor="let role of roles" [value]="role.value">
@@ -100,8 +102,10 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
+                </div>
+                
+                <button mat-raised-button color="primary" (click)="updateMemberRole()">Update</button>
 
-                  <button mat-raised-button color="primary" (click)="updateMemberRole()">Update</button>
               </form>
             </div>
           </mat-list-item>

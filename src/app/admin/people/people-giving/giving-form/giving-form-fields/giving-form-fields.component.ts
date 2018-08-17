@@ -1,17 +1,18 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
-import { FormBuilder, FormControl } from '../../../../../../../node_modules/@angular/forms';
+import { FormControl } from '../../../../../../../node_modules/@angular/forms';
 import { MatDatepickerInputEvent } from '../../../../../../../node_modules/@angular/material';
-import { map, startWith } from '../../../../../../../node_modules/rxjs/operators';
-import { PersonGivingService } from '../../../../../services/person-giving.service';
+import { map, startWith, take } from '../../../../../../../node_modules/rxjs/operators';
 import { ConvertTimestampService } from '../../../../../services/convert-timestamp.service';
+import { PersonGivingService } from '../../../../../services/person-giving.service';
 import { GivingCategory } from './../../../../../models/giving-category.model';
 import { Giving } from './../../../../../models/person-giving.model';
 import { Person } from './../../../../../models/person.model';
 import { PeopleService } from './../../../../../services/people.service';
 import { PersonGivingCategoryService } from './../../../../../services/person-giving-category.service';
 import { SweetAlertService } from './../../../../../services/sweet-alert.service';
+import { GivingFunctionsService } from '../../../../../custom-functions/giving.functions.service';
 
 @Component({
   selector: 'app-giving-form-fields',
@@ -30,17 +31,21 @@ export class GivingFormFieldsComponent implements OnInit, OnDestroy {
     data: {}
   };
 
-  peopleGivings: Observable<Giving[]>; // giving records
+  peopleGivings = []; // giving records
+  peopleGivingSummary;
+  sumTotalAmount;
 
   people: Person[];
   filteredOptions: Observable<Person[]>;
 
   categorySubscription: Subscription;
   peopleSubscription: Subscription;
+  givingSubscription: Subscription;
 
   constructor(private givingCategoryService: PersonGivingCategoryService,
     private alertService: SweetAlertService, private givingService: PersonGivingService,
-    private peopleService: PeopleService, private timestampService: ConvertTimestampService) {
+    private peopleService: PeopleService,
+    private timestampService: ConvertTimestampService, private givingFunction: GivingFunctionsService) {
   }
 
   ngOnInit() {
@@ -70,23 +75,65 @@ export class GivingFormFieldsComponent implements OnInit, OnDestroy {
     if (this.peopleSubscription) {
       this.peopleSubscription.unsubscribe();
     }
+
+    if (this.givingSubscription) {
+      this.givingSubscription.unsubscribe();
+    }
+  }
+
+  async onSubmit() {
+    const confirm = await this.alertService.confirmUpdate();
+      if (confirm.value) {
+
+        if (this.giving.updatedAt) {
+          // update record
+          await this.givingService.updateGiving(this.giving.Id, this.giving);
+
+        } else {
+          // save record
+          this.giving.batch = this.givingBatch ? this.givingBatch.batchId : null ; // set giving batch if it is supplied
+          await this.givingService.addGiving(this.giving);
+        }
+
+        this.alertService.afterUpdateSuccess();
+        this.resetInput();
+      }
+  }
+
+  async deleteGivingRecord(givingId: string) {
+    const confirm = await this.alertService.confirmDelete();
+    if (confirm.value) {
+      await this.givingService.deleteGiving(givingId);
+      this.alertService.afterDeleteSuccess();
+    }
+  }
+
+  editGivingRecord(givingId: string) {
+   this.givingService.getGivingById(givingId).pipe(take(1)).subscribe(resp => {
+
+     this.giving = resp;
+     this.giving.Id = givingId;
+     this.myPersonControl.setValue(this.giving.data.person);
+
+     const givingDate = this.timestampService.timestampToDate(this.giving.updatedAt);
+     this.giving.givingDate = givingDate;
+   });
+  }
+
+  getCategorySummary() {
+    const data = this.peopleGivings;
+
+    this.peopleGivingSummary = this.givingFunction.getArrayDistinctSumary(data);
+    this.sumTotalAmount = this.givingFunction.getTotalAmount(data);
   }
 
   givingDateEvent(event: MatDatepickerInputEvent<Date>) {
     const givingDate = this.timestampService.dateToTimestamp(event.value);
 
     // coverts selected date to timestamp for easy querying to the qryGivingDate field
-    this.peopleGivings = this.givingService.getGivingByDate(givingDate);
-  }
-
-  onSubmit() {
-    this.alertService.confirmUpdate().then(resp => {
-      if (resp.value) {
-        this.giving.batch = this.givingBatch ? this.givingBatch : null ; // set giving batch if it is supplied
-
-        this.givingService.addGiving(this.giving);
-        this.alertService.afterUpdateSuccess();
-      }
+    this.givingSubscription = this.givingService.getGivingByDate(givingDate).subscribe(resp => {
+      this.peopleGivings =  resp;
+      this.getCategorySummary(); // get giving summary
     });
   }
 
@@ -126,12 +173,15 @@ export class GivingFormFieldsComponent implements OnInit, OnDestroy {
     this.giving.data.person = personId; // assign selected person id to model
 
     const index = this.people.findIndex(p => p.id === personId);
-    return index ? this.people[index].fullname : null;
+
+    return this.people[index].fullname;
+    // return index ? this.people[index].fullname : null;
   }
 
   resetInput() {
-    this.myPersonControl.value(''); // clears auto complete
-    this.giving = null; // clears giving input
+    // this.giving = {};
+    // this.myPersonControl.reset();
+    this.giving.data = {}; // clears giving input
   }
 
 }

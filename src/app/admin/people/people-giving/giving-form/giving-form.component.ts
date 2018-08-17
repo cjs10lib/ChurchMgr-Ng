@@ -29,7 +29,6 @@ export class GivingFormComponent implements OnInit {
 
         this.givingBatch = resp;
 
-        console.log(this.givingBatch);
         this.showGivingBatch = true; // if batch is generated, show it
       }
     });

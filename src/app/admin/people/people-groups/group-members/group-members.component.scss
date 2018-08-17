@@ -16,6 +16,25 @@
     flex-direction: column;
 }
 
-mat-nav-list mat-list-item {
-    max-height: 100px;
+// .people-list {
+//     height: 100px;
+// }
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.example-container > * {
+    width: 100%;
+}
+
+// mat list
+.mat-list .mat-list-item.mat-3-line, 
+.mat-list .mat-list-option.mat-3-line, 
+.mat-nav-list .mat-list-item.mat-3-line, 
+.mat-nav-list .mat-list-option.mat-3-line, 
+.mat-selection-list .mat-list-item.mat-3-line, 
+.mat-selection-list .mat-list-option.mat-3-line {
+    height: 200px;
 }
