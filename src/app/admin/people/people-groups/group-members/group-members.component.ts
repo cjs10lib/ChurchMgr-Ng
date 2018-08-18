@@ -87,12 +87,6 @@ export class GroupMembersComponent implements OnInit, OnDestroy, AfterViewInit {
 
       resp.forEach(object => {
 
-        // if (temp.indexOf(object) === -1) {
-        //   temp.push(object);
-        // }
-
-        // console.log(temp);
-
         // get people object
         this.peopleSubscription = this.peopleService.getPerson(object.personId).subscribe(person => {
 

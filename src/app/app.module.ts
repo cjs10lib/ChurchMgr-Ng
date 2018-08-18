@@ -127,6 +127,8 @@ import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.
 import { FileSizePipe } from './pipes/file-size.pipe';
 import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.component';
 import { GroupRegistryListComponent } from './admin/people/people-groups/group-registry-list/group-registry-list.component';
+import { GivingReportGeneralComponent } from './admin/people/people-giving/giving-report-general/giving-report-general.component';
+import { GivingReportPersonComponent } from './admin/people/people-giving/giving-report-person/giving-report-person.component';
 
 
 keyboardEventKeyPolyfill();
@@ -189,7 +191,9 @@ keyboardEventKeyPolyfill();
     GroupMembersComponent,
     GroupMembersAddComponent,
     PeopleProfileBioComponent,
-    GroupRegistryListComponent
+    GroupRegistryListComponent,
+    GivingReportGeneralComponent,
+    GivingReportPersonComponent
   ],
   imports: [
     AngularFireStorageModule,

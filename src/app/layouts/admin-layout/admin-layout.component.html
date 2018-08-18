@@ -122,6 +122,34 @@
                         <strong>Giving</strong>
                     </a>
                 </mat-expansion-panel>
+                
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <strong> Reports </strong>
+                        </mat-panel-title>                           
+                    </mat-expansion-panel-header>
+
+                    <a mat-list-item>
+                        <mat-icon>account_balance_wallet</mat-icon> &nbsp;
+                        <strong>Overview</strong>
+                    </a>
+
+                    <a mat-list-item>
+                        <mat-icon>date_range</mat-icon> &nbsp;
+                        <strong>Attendance</strong>
+                    </a>
+
+                    <a mat-list-item>
+                        <mat-icon>person</mat-icon> &nbsp;
+                        <strong>Membership</strong>
+                    </a>
+
+                    <a mat-list-item routerLink="/giving-report" [class.activated]="currentUrl == '/giving-report'">
+                        <mat-icon>monetization_on</mat-icon> &nbsp;
+                        <strong>Giving</strong>
+                    </a>
+                </mat-expansion-panel>
 
             </mat-accordion>
         </mat-nav-list>

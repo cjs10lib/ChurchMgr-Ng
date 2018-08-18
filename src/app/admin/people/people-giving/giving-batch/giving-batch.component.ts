@@ -13,7 +13,7 @@ import { GivingBatchFormComponent } from '../giving-batch-form/giving-batch-form
 })
 export class GivingBatchComponent implements OnInit, OnDestroy {
 
-  addBatchSwith = false;
+  addBatchSwitch = false;
   givingBatchId: string;
 
   givingBatches = [];
@@ -66,7 +66,7 @@ export class GivingBatchComponent implements OnInit, OnDestroy {
   }
 
   addBatch() {
-    this.addBatchSwith = !this.addBatchSwith;
+    this.addBatchSwitch = !this.addBatchSwitch;
   }
 
   onCreateBatch(batchId:  string) {

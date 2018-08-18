@@ -45,7 +45,6 @@ export class GroupMembersAddComponent implements OnInit, OnDestroy {
       resp.forEach(object => {
         this.uploadService.getProfileImage(object.profileImage).pipe(take(1)).subscribe(result => {
 
-
           this.people.push({ // for each people record, set person data and avatar
             id: object.id,
             avatar: result,

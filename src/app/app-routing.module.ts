@@ -1,3 +1,4 @@
+import { GivingReportGeneralComponent } from './admin/people/people-giving/giving-report-general/giving-report-general.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -121,6 +122,9 @@ const routes: Routes = [
       }, {
         path: 'giving',
         component: GivingFormComponent
+      }, {
+        path: 'giving-report',
+        component: GivingReportGeneralComponent
       }, {
         path: 'transaction',
         component: TransactionsComponent

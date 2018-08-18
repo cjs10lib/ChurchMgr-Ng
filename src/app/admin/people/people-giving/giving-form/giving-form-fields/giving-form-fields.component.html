@@ -78,9 +78,9 @@
             <mat-hint>Cheque number or 'CASH'</mat-hint>
           </mat-form-field>
 
-          <button type="button" mat-icon-button color="warn" (click)="resetInput()">
+          <!-- <button type="button" mat-icon-button color="warn" (click)="resetInput()">
             <mat-icon>cancel</mat-icon>
-          </button>
+          </button> -->
 
           <div class="spc-10"></div>
   
@@ -114,24 +114,24 @@
             </mat-list-item>
           </mat-list>
 
-          <p mat-subheader *ngIf="sumTotalAmount < givingBatch.amount; else sumTotalEqualsBatch">
-            <mat-icon color="warn">report</mat-icon> &nbsp;
-            The total, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; do not equal the batch total.
+          <!-- <p mat-subheader *ngIf="sumTotalAmount && givingBatch">
+            <mat-icon color="primary">warning</mat-icon> &nbsp;
+            Note: Always verify that the subtotal, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; <strong>equals</strong> &nbsp; the batch total &nbsp; <strong>({{ givingBatch.batch.amount }})</strong>.
+          </p> -->
+          <p mat-subheader *ngIf="givingBatch?.batch?.amount &&  (sumTotalAmount == givingBatch?.batch?.amount)">
+            <mat-icon color="primary">check</mat-icon> &nbsp;
+            the subtotal, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; <strong>equals</strong> &nbsp; the batch total &nbsp; <strong>({{ givingBatch?.batch?.amount | currency }})</strong>.
+          </p>
+          
+          <p mat-subheader *ngIf="givingBatch && (sumTotalAmount < givingBatch?.batch?.amount)">
+            <mat-icon color="accent">report</mat-icon> &nbsp;
+            The subtotal, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; <strong>is lesser</strong> &nbsp; than the batch total &nbsp; <strong>({{ givingBatch?.batch?.amount | currency }})</strong>.
           </p>
 
-          <ng-template #sumTotalEqualsBatch>
-            <p mat-subheader *ngIf="sumTotalAmount == givingBatch.amount">
-              <mat-icon color="primary">check</mat-icon> &nbsp;
-              The subtotal, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; <strong>equals</strong> &nbsp; the batch total.
-            </p>
-          </ng-template>
-
-          <!-- <ng-template #sumTotalEqualsBatch>
-            <p mat-subheader>
-              <mat-icon color="primary">check</mat-icon> &nbsp;
-              The subtotal, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; <strong>equals</strong> &nbsp; the batch total.
-            </p>
-          </ng-template> -->
+          <p mat-subheader *ngIf="givingBatch && (sumTotalAmount > givingBatch?.batch?.amount)">
+            <mat-icon color="warn">warning</mat-icon> &nbsp;
+            The subtotal, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; <strong>is greater</strong> &nbsp; than the batch total &nbsp; <strong>({{ givingBatch?.batch?.amount | currency }})</strong>.
+          </p>
           
           <ul style="margin-top: 0;">
             <li *ngFor="let sum of peopleGivingSummary">

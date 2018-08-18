@@ -13,13 +13,20 @@
 
       <div>
         <div *ngIf="showGivingBatch">
-          <h3 mat-header>
-            Batch
-          </h3>            
+          <button mat-raised-button color="warn" *ngIf="givingBatch?.batch" (click)="clearBatch()">
+              <mat-icon>cancel</mat-icon> &nbsp;
+            <span>Clear Batch</span>
+          </button>
+
+          <div class="spc-10"></div>
+
+          <h3 mat-header>Batch</h3>            
           <strong>{{ givingBatch?.batch.name }} - {{ givingBatch?.batch?.created?.toDate() | date:'longDate' }}</strong> <br>
           Expected Total: {{ givingBatch?.batch.amount | number:'' }} <br>
           Date Recieved: {{ givingBatch?.batch.recieved?.toDate() | date:'longDate' }} <br>
+                    
         </div>
+        
         
         <div class="spc-10"></div>
 

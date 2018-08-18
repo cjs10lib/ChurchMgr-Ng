@@ -44,6 +44,20 @@ export class PersonGivingService {
     );
   }
 
+  getGivingByPerson(personId: string) {
+    return this.db.collection('giving', ref => ref.where('data.person', '==', personId))
+      .snapshotChanges().pipe(
+      map(change => {
+        return change.map(a => {
+          const data = a.payload.doc.data() as Giving;
+          data.Id = a.payload.doc.id;
+
+          return data;
+        });
+      })
+    );
+  }
+
   getGivingById(givingId: string) {
     return this.db.doc(`giving/${givingId}`).valueChanges();
   }

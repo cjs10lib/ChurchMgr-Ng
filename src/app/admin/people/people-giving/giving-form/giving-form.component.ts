@@ -34,4 +34,9 @@ export class GivingFormComponent implements OnInit {
     });
   }
 
+  clearBatch() {
+    this.givingBatch = {};
+    this.showGivingBatch = false;
+  }
+
 }

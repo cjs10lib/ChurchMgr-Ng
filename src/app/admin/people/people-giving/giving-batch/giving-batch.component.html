@@ -7,13 +7,13 @@
   <!-- <perfect-scrollbar style="max-width: 100%; height: 100%;" [config]="config"> -->
 
     <div class="add-batch">
-      <button mat-raised-button color="primary" (click)="addBatch()">
+      <button mat-raised-button color="warn" (click)="addBatch()">
         <mat-icon>add</mat-icon>
         <span>Add a Batch</span>
       </button>
     </div>
 
-   <app-giving-batch-form *ngIf="addBatchSwith" (ngSubmit)="onCreateBatch($event)"></app-giving-batch-form>
+   <app-giving-batch-form *ngIf="addBatchSwitch" (ngSubmit)="onCreateBatch($event)"></app-giving-batch-form>
     
     <!-- <mat-divider></mat-divider> -->
 
