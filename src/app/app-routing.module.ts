@@ -28,6 +28,7 @@ import { HomeComponent } from './general/home/home.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthenticationLayoutComponent } from './layouts/authentication-layout/authentication-layout.component';
 import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.component';
+import { GivingReportPersonComponent } from './admin/people/people-giving/giving-report-person/giving-report-person.component';
 
 const routes: Routes = [
   {
@@ -77,7 +78,7 @@ const routes: Routes = [
           },
           {
             path: 'profile-giving',
-            component: GivingFormComponent
+            component: GivingReportPersonComponent
           }
         ]
       }, {

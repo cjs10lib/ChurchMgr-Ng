@@ -43,6 +43,7 @@ export class GroupMembersComponent implements OnInit, OnDestroy, AfterViewInit {
   subscription: Subscription;
   peopleSubscription: Subscription;
   avatarSubscription: Subscription;
+  addGroupMembersSubscription: Subscription;
 
   constructor(private peopleGroupService: PeopleGroupService,
     private peopleService: PeopleService,
@@ -67,6 +68,10 @@ export class GroupMembersComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.avatarSubscription) {
       this.avatarSubscription.unsubscribe();
+    }
+
+    if (this.addGroupMembersSubscription) {
+      this.addGroupMembersSubscription.unsubscribe();
     }
   }
 
@@ -115,7 +120,7 @@ export class GroupMembersComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // return this.ngOnInit();
 
-    this.dialog.open(GroupMembersAddComponent, {
+    this.addGroupMembersSubscription = this.dialog.open(GroupMembersAddComponent, {
       height: '800px',
       width: '1000px',
       data: {

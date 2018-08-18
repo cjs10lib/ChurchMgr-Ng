@@ -9,8 +9,8 @@ import { map } from 'rxjs/operators';
 })
 export class PersonGivingCategoryService {
 
-  givingCategoriesCollection: AngularFirestoreCollection<GivingCategory>;
-  givingCategories: Observable<GivingCategory[]>;
+  private givingCategoriesCollection: AngularFirestoreCollection<GivingCategory>;
+  private givingCategories: Observable<GivingCategory[]>;
 
   constructor(private db: AngularFirestore) {
     this.givingCategoriesCollection = db.collection('giving-category');

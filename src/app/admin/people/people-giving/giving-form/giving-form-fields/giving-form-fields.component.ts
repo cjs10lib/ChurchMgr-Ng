@@ -45,7 +45,8 @@ export class GivingFormFieldsComponent implements OnInit, OnDestroy {
   constructor(private givingCategoryService: PersonGivingCategoryService,
     private alertService: SweetAlertService, private givingService: PersonGivingService,
     private peopleService: PeopleService,
-    private timestampService: ConvertTimestampService, private givingFunction: GivingFunctionsService) {
+    private timestampService: ConvertTimestampService,
+    private givingFunction: GivingFunctionsService) {
   }
 
   ngOnInit() {

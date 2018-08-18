@@ -37,12 +37,12 @@ export class PeopleProfileComponent implements OnInit, OnDestroy {
     this.personId = this.route.snapshot.paramMap.get('id');
 
     // get tab index from storage
-    this.selectedTab = localStorage.getItem(this.tabIndex);
+    this.selectedTab = this.tabIndexFromStorage;
   }
 
   ngOnDestroy() {
    // reset tab index
-   localStorage.setItem(this.tabIndex, '0');
+  //  localStorage.setItem(this.tabIndex, '0');
   }
 
   onLinkClick(event: MatTabChangeEvent) {
@@ -55,6 +55,10 @@ export class PeopleProfileComponent implements OnInit, OnDestroy {
     const parentUrl = `people-profile/${this.personId}`;
 
     this.router.navigate([parentUrl, routerLink]);
+  }
+
+  get tabIndexFromStorage() {
+    return localStorage.getItem(this.tabIndex);
   }
 
 }
