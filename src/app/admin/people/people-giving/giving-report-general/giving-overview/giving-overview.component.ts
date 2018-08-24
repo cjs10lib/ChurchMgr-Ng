@@ -17,8 +17,8 @@ import { fadeIn, fadeInDown } from 'ng-animate';
   templateUrl: './giving-overview.component.html',
   styleUrls: ['./giving-overview.component.scss'],
   animations: [
-    trigger('fadeInDown', [transition('* => *', useAnimation(fadeInDown))]),
-    trigger('fadeIn', [transition('* => *', useAnimation(fadeIn))])
+    trigger('fadeIn', [transition('* => *', useAnimation(fadeIn))]),
+    trigger('fadeInDown', [transition('* => *', useAnimation(fadeInDown))])
   ],
 })
 export class GivingOverviewComponent implements OnInit {

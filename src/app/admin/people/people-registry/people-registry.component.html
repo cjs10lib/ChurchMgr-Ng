@@ -5,7 +5,7 @@
   <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
 
     <div fxFlex="24" fxFlexOrder.xs="1">
-      <div class="flex-details">
+      <div [@fadeIn]="fadeIn" class="flex-details">
         <h3>Filter by Name</h3>
         <mat-form-field fxFlex.sm="style='font-size:10px;'">
           <span matPrefix>
@@ -23,7 +23,7 @@
       <div class="flex-details margin-20">
 
         <section>
-          <div class="add-new">
+          <div [@fadeInDown]="fadeInDown" class="add-new">
             <a mat-raised-button color="primary" routerLink="/people-registration">
               <mat-icon>person_add</mat-icon> &nbsp;
               Add New Record
@@ -47,19 +47,25 @@
             </p>
           </div>
 
-          <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
+          <!-- <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner> -->
+          <ngx-spinner 
+            bdColor="#fff"
+            size="medium"
+            color="#555"
+            type="line-scale-pulse-out">
+          </ngx-spinner>
 
-          <mat-list-item *ngFor="let people of filteredPeople" routerLink="/people-profile/{{ people.data?.id }}/profile-bio" >
+          <mat-list-item [@fadeIn]="fadeIn" *ngFor="let people of filteredPeople" routerLink="/people-profile/{{ people.id }}/profile-bio" >
             <mat-divider></mat-divider>
-            <img *ngIf="people.avatar; else noImageAvatar" matListAvatar [src]="people.avatar?.url" [alt]="people.data.firstname">
+            <img *ngIf="people.profileImage; else noImageAvatar" matListAvatar [src]="getPeopleAvatar(people.profileImage)" [alt]="people.firstname">
             <h3 matLine> 
               <strong>                  
-                {{ people.data.surname }} 
-                {{ people.data.firstname }}                
+                {{ people.surname }} 
+                {{ people.firstname }}                
               </strong>
             </h3>
             <p matLine>
-              {{ people.data.othernames }} 
+              {{ people.othernames }} 
             </p>
 
             <button mat-icon-button>

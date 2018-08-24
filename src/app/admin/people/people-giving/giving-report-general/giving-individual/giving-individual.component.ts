@@ -36,7 +36,7 @@ export class GivingIndividualComponent implements OnInit, OnDestroy {
   // giving
   peopleGallery: Upload[] = [];
 
-  showSpinner = true;
+  // showSpinner = true;
   subscription: Subscription;
   givingSubscription: Subscription;
 
@@ -52,8 +52,7 @@ export class GivingIndividualComponent implements OnInit, OnDestroy {
       this.peopleService.getPeople(), 
       this.givingService.getGivings(),
       this.uploadService.getAllGallery()
-    )
-      .subscribe(resp => {
+    ).subscribe(resp => {
       this.spinner.hide();
       
       this.people = resp[0];

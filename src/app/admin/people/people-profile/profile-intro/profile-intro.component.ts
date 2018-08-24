@@ -1,61 +1,94 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { combineLatest, Subscription } from 'rxjs';
 
 import { Person } from '../../../../models/person.model';
 import { PeopleService } from '../../../../services/people.service';
 import { SweetAlertService } from '../../../../services/sweet-alert.service';
 import { UploadService } from '../../../../services/upload.service';
+import { Upload } from './../../../../models/upload.model';
+import { trigger, transition, useAnimation } from '@angular/animations';
+import { fadeIn, fadeInDown } from 'ng-animate';
 
 @Component({
   selector: 'app-profile-intro',
   templateUrl: './profile-intro.component.html',
-  styleUrls: ['./profile-intro.component.scss']
+  styleUrls: ['./profile-intro.component.scss'],
+  animations: [
+    trigger('fadeIn', [transition('* => *', useAnimation(fadeIn))]),
+    trigger('fadeInDown', [transition('* => *', useAnimation(fadeInDown))])
+  ],
 })
 export class ProfileIntroComponent implements OnInit, OnDestroy {
 
+  fadeIn: any;
+  fadeInDown: any;
+
+  personId: string;
   person: Person = {};
-  profileImage: string;
+  personGallery: Upload[] = [];
 
   subscription: Subscription;
+  paramSubscription: Subscription;
 
-  constructor(private peopleService: PeopleService, private uploadService: UploadService, private route: ActivatedRoute,
-    private router: Router, private sweetAlertService: SweetAlertService) { }
+  constructor(private peopleService: PeopleService, 
+    private uploadService: UploadService, 
+    private route: ActivatedRoute,
+    private router: Router, 
+    private sweetAlertService: SweetAlertService,
+    private spinner: NgxSpinnerService) {
+
+    this.paramSubscription = this.route.paramMap.subscribe(params => {
+      this.personId = params.get('id');
+    });
+  }
 
   ngOnInit() {
+    this.spinner.show();
 
-    this.subscription = this.route.paramMap.pipe(switchMap(params => {
-      const personId = params.get('id');
-      return this.peopleService.getPerson(personId);
-    })).pipe(switchMap(object => {
+    this.subscription = combineLatest(this.peopleService.getPerson(this.personId), 
+      this.uploadService.getPersonGallery(this.personId)
+    ).subscribe(resp => {
+      this.spinner.hide();
 
-      this.person = object;
-      return this.uploadService.getProfileImage(this.person.profileImage);
+      this.person = resp[0];
+      this.personGallery = resp[1];
 
-    })).subscribe(avatar => {
-      if (avatar) {
-        this.profileImage = avatar.url;
-      }
     });
-
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+
+    if (this.paramSubscription) {
+      this.paramSubscription.unsubscribe();
+    }
   }
 
-  deleteProfile() {
-    this.sweetAlertService.confirmDelete().then(resp => {
-      if (resp.value) {
-        this.peopleService.deletePerson(this.person.id);
+  getPersonAvatar(avaterId: string) {
+    if (!avaterId) {
+      return;
+    }
 
-        this.sweetAlertService.afterDeleteSuccess();
-        this.router.navigate(['people']);
-      }
-    });
+    const index = this.personGallery.findIndex(g => g.Id === avaterId);
+    return this.personGallery[index].url;
+  }
+
+  editProfile() {
+    this.router.navigate(['people-profile', this.personId, 'profile-Edit']);
+  }
+
+  async deleteProfile() {
+    const confirm = await this.sweetAlertService.confirmDelete();
+    if (confirm.value) {
+      this.peopleService.deletePerson(this.person.id);
+
+      this.sweetAlertService.afterDeleteSuccess();
+      this.router.navigate(['people']);
+    }   
   }
 
 }

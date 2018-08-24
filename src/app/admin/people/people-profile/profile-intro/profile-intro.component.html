@@ -1,18 +1,25 @@
 <div style="text-align: center;">
   <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
     
-    <div fxFlexOrder.xs="1">
-      <img *ngIf="profileImage; else noImageAvatar" class="avatar" [src]="profileImage" alt="...">       
+    <div [@fadeIn]="fadeIn" fxFlexOrder.xs="1">
+      <img *ngIf="person?.profileImage; else noImageAvatar" class="avatar" [src]="getPersonAvatar(person?.profileImage)" alt="person.firstname">       
     </div>
 
     <ng-template #noImageAvatar>
       <img class="avatar" src="../../../../assets/avatars/avatar4.png" alt="...">
     </ng-template>
 
-    <div fxFlex="50" fxFlexOrder.xs="2" style="padding: 20px 20px 0 5px ;">
-      <mat-list>
+    <ngx-spinner 
+      bdColor="#fff"
+      size="medium"
+      color="#555"
+      type="line-scale-pulse-out">
+    </ngx-spinner>
 
-        <mat-list-item>
+    <div fxFlex="50" fxFlexOrder.xs="2" style="padding: 20px 20px 0 5px ;">
+      <mat-list [@fadeIn]="fadeIn">      
+
+        <mat-list-item >
           <h2>
             {{ person?.surname }}
             {{ person?.firstname }}
@@ -45,12 +52,12 @@
 
         
         <div>
-          <button mat-raised-button color="primary" (click)="editProfile()">
-            <mat-icon>edit</mat-icon>
+          <button [@fadeInDown]="fadeInDown" mat-raised-button color="primary" (click)="editProfile()">
+            <mat-icon>border_color</mat-icon>
             <span>Edit Profile</span>
           </button> &nbsp;
 
-          <button mat-raised-button color="warn" (click)="deleteProfile()">
+          <button [@fadeInDown]="fadeInDown" mat-raised-button color="warn" (click)="deleteProfile()">
             <mat-icon>delete</mat-icon>
             <span>Delete Record</span>  
           </button>

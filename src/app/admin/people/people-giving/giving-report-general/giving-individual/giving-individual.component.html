@@ -42,7 +42,6 @@
             size="medium"
             color="#555"
             type="line-scale-pulse-out">
-            <!-- <p style="font-size: 20px; color: white">Loading...</p> -->
           </ngx-spinner>
 
           <mat-list-item [@fadeIn]="fadeIn" *ngFor="let people of filteredPeople" routerLink="/people-profile/{{ people.id }}/profile-giving" >
