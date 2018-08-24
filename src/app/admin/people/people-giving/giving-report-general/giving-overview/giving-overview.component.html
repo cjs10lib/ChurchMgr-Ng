@@ -1,0 +1,98 @@
+<mat-card-content>
+
+  <mat-card class="chart-container">
+
+    <mat-card-actions>
+
+      <button [@fadeInDown]="fadeInDown" mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon> &nbsp;
+        <span>Actions</span>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>search</mat-icon>
+          <span>Filter</span>
+        </button> 
+  
+        <button mat-menu-item routerLink="/giving">
+          <mat-icon>add</mat-icon>
+          <span>Add Giving Record</span>
+        </button>        
+  
+        <button mat-menu-item>
+          <mat-icon>print</mat-icon>
+          <span>Print</span>
+        </button>
+      </mat-menu>
+  
+    </mat-card-actions>
+
+    <mat-card-content>
+
+      <div style="width:100%; display:block">
+        <canvas *ngIf="loaded" baseChart 
+          width="500" height="100"
+          [datasets]="barChartData" 
+          [labels]="barChartLabels"
+          [options]="barChartOptions" 
+          [legend]="barChartLegend" 
+          [chartType]="barChartType">
+        </canvas>
+        <!-- (chartHover)="chartHovered($event)" 
+        (chartClick)="chartClicked($event)" -->
+      </div>
+  
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-content>
+      
+      <div fxLayout="row" fxLayout.lt-sm="column" fxFlexAlign.lt-sm="center center">
+        <div fxFlex fxFlexOrder.xs="1">        
+  
+          <ng-template #noRecordFound> 
+            <p>
+              No record(s) found :(
+            </p>
+          </ng-template>
+  
+          <div *ngIf="peopleGivings?.length > 0; else noRecordFound">
+            
+            <mat-list>
+              <mat-list-item>
+                <mat-divider></mat-divider>
+    
+                <h3 matLine>
+                  <strong>Total</strong>              
+                </h3>
+    
+                <span>
+                  <strong>({{ givingTotalAmount | number }})</strong>
+                </span>
+    
+              </mat-list-item>
+            </mat-list>
+    
+            <mat-list>
+              <mat-list-item [@fadeIn]="fadeIn" *ngFor="let sum of givingSummary">
+                <mat-divider></mat-divider>
+                <h3 matLine>  
+                  {{ getCategoryDetails(sum.category) }} 
+                </h3>
+    
+                <span>
+                  <strong>{{ sum.totalAmount | number }}</strong>
+                </span>
+              </mat-list-item>
+            </mat-list>
+  
+          </div>
+  
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+</mat-card-content>

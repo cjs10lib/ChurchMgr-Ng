@@ -1,3 +1,6 @@
+import { GivingDemographicsComponent } from './admin/people/people-giving/giving-report-general/giving-demographics/giving-demographics.component';
+import { GivingBatchesComponent } from './admin/people/people-giving/giving-report-general/giving-batches/giving-batches.component';
+import { GivingIndividualComponent } from './admin/people/people-giving/giving-report-general/giving-individual/giving-individual.component';
 import { GivingReportGeneralComponent } from './admin/people/people-giving/giving-report-general/giving-report-general.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -29,6 +32,8 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { AuthenticationLayoutComponent } from './layouts/authentication-layout/authentication-layout.component';
 import { GeneralLayoutComponent } from './layouts/general-layout/general-layout.component';
 import { GivingReportPersonComponent } from './admin/people/people-giving/giving-report-person/giving-report-person.component';
+import { GivingOverviewComponent } from './admin/people/people-giving/giving-report-general/giving-overview/giving-overview.component';
+import { GivingAnonymousComponent } from './admin/people/people-giving/giving-report-general/giving-anonymous/giving-anonymous.component';
 
 const routes: Routes = [
   {
@@ -125,7 +130,25 @@ const routes: Routes = [
         component: GivingFormComponent
       }, {
         path: 'giving-report',
-        component: GivingReportGeneralComponent
+        component: GivingReportGeneralComponent,
+        children: [
+          {
+            path: 'overview',
+            component: GivingOverviewComponent
+          }, {
+            path: 'individual',
+            component: GivingIndividualComponent
+          }, {
+            path: 'anonymous',
+            component: GivingAnonymousComponent
+          }, {
+            path: 'batches',
+            component: GivingBatchesComponent
+          }, {
+            path: 'demographics',
+            component: GivingDemographicsComponent
+          }
+        ]
       }, {
         path: 'transaction',
         component: TransactionsComponent

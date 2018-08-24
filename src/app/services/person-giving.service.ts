@@ -16,7 +16,7 @@ export class PersonGivingService {
   private givings: Observable<Giving[]>;
 
   constructor(private db: AngularFirestore, private timestampService: ConvertTimestampService) {
-    this.givingCollection = db.collection('giving');
+    this.givingCollection = db.collection('giving', ref => ref.orderBy('givingDate', 'asc'));
 
     this.givings = this.givingCollection.snapshotChanges().pipe(
       map(change => {
@@ -32,6 +32,20 @@ export class PersonGivingService {
 
   getGivingByDate(givingDate) {
     return this.db.collection('giving', ref => ref.where('qryGivingDate', '==', givingDate))
+      .snapshotChanges().pipe(
+      map(change => {
+        return change.map(a => {
+          const data = a.payload.doc.data() as Giving;
+          data.Id = a.payload.doc.id;
+
+          return data;
+        });
+      })
+    );
+  }
+
+  getGivingByDateAndPerson(givingDate, personId: string) {
+    return this.db.collection('giving', ref => ref.where('qryGivingDate', '==', givingDate).where('data.person', '==', personId))
       .snapshotChanges().pipe(
       map(change => {
         return change.map(a => {

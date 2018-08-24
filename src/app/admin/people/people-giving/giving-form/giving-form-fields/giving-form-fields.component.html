@@ -9,7 +9,7 @@
       <span matPrefix> <mat-icon>date_range</mat-icon> &nbsp; </span>
       
       <input matInput [matDatepicker]="picker" [(ngModel)]="giving.givingDate" name="givingDate" placeholder="Giving Date"
-        (dateChange)="givingDateEvent($event)" disabled>
+        (dateChange)="givingDateEvent($event)" disabled required>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker touchUi="true" disabled="false"></mat-datepicker>
       
@@ -33,16 +33,17 @@
         <!-- <h3 mat-subheader>Giving Record</h3> -->
 
         <mat-card-actions>
-          <button type="button" mat-raised-button color="primary" (click)="onSubmit()">Add Record</button>
+          <button type="button" mat-icon-button color="warn" matTooltip="Clear edit-record" (click)="resetInput()" [disabled]="!givingAmountB4Update">
+            <mat-icon>cancel</mat-icon>
+          </button> &nbsp;
+          <button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!f.valid">Add Record</button>
         </mat-card-actions> 
 
         <div>
 
           <mat-form-field>
-            <input type="text" placeholder="Search..." aria-label="Number" matInput [formControl]="myPersonControl" name="person" [matAutocomplete]="auto" required>
-            <!-- <button type="button" mat-button *ngIf="myPersonControl" matSuffix mat-icon-button aria-label="Clear" (click)="clearAutoCompleteField()">
-              <mat-icon>close</mat-icon>
-            </button> -->
+            <input type="text" placeholder="Search..." aria-label="Number" matInput [formControl]="myPersonControl" name="person" [matAutocomplete]="auto" [hidden]="myPersonControl.value=='true'" required>
+           
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
               <mat-option *ngFor="let p of filteredOptions | async" [value]="p.id">
                 {{p.fullname}}
@@ -89,7 +90,7 @@
           <mat-list>
             <mat-list-item *ngFor="let giving of peopleGivings">
               <!-- <h3 matLine> {{ giving.data.person }} </h3> -->
-              <h3 matLine> 
+              <h3 matLine *ngIf="!personId"> 
                 <strong>{{ getPersonDetails(giving.data.person) }}</strong>  
               </h3>
               <p matLine>
@@ -112,24 +113,31 @@
             </mat-list-item>
           </mat-list>
 
-          <!-- <p mat-subheader *ngIf="sumTotalAmount && givingBatch">
-            <mat-icon color="primary">warning</mat-icon> &nbsp;
-            Note: Always verify that the subtotal, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; <strong>equals</strong> &nbsp; the batch total &nbsp; <strong>({{ givingBatch.batch.amount }})</strong>.
-          </p> -->
-          <p mat-subheader *ngIf="givingBatch?.batch?.amount &&  (sumTotalAmount == givingBatch?.batch?.amount)">
-            <mat-icon color="primary">check</mat-icon> &nbsp;
-            the subtotal, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; <strong>equals</strong> &nbsp; the batch total &nbsp; <strong>({{ givingBatch?.batch?.amount | currency }})</strong>.
-          </p>
-          
-          <p mat-subheader *ngIf="givingBatch && (sumTotalAmount < givingBatch?.batch?.amount)">
-            <mat-icon color="accent">report</mat-icon> &nbsp;
-            The subtotal, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; <strong>is lesser</strong> &nbsp; than the batch total &nbsp; <strong>({{ givingBatch?.batch?.amount | currency }})</strong>.
-          </p>
+          <ng-container *ngIf="givingBatch?.batch?.amount; else totalGiving">
 
-          <p mat-subheader *ngIf="givingBatch && (sumTotalAmount > givingBatch?.batch?.amount)">
-            <mat-icon color="warn">warning</mat-icon> &nbsp;
-            The subtotal, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; <strong>is greater</strong> &nbsp; than the batch total &nbsp; <strong>({{ givingBatch?.batch?.amount | currency }})</strong>.
-          </p>
+            <p mat-subheader *ngIf="givingBatch?.batch?.amount &&  (sumTotalAmount == givingBatch?.batch?.amount)">
+              <mat-icon color="primary">check</mat-icon> &nbsp;
+              the subtotal, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; <strong>equals</strong> &nbsp; the batch total &nbsp; <strong>({{ givingBatch?.batch?.amount | currency }})</strong>.
+            </p>
+            
+            <p mat-subheader *ngIf="givingBatch && (sumTotalAmount < givingBatch?.batch?.amount)">
+              <mat-icon color="accent">report</mat-icon> &nbsp;
+              The subtotal, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; <strong>is lesser</strong> &nbsp; than the batch total &nbsp; <strong>({{ givingBatch?.batch?.amount | currency }})</strong>.
+            </p>
+  
+            <p mat-subheader *ngIf="givingBatch && (sumTotalAmount > givingBatch?.batch?.amount)">
+              <mat-icon color="warn">warning</mat-icon> &nbsp;
+              The subtotal, &nbsp; <strong>{{ sumTotalAmount | currency }}</strong> &nbsp; <strong>is greater</strong> &nbsp; than the batch total &nbsp; <strong>({{ givingBatch?.batch?.amount | currency }})</strong>.
+            </p>
+
+          </ng-container>
+
+          <ng-template #totalGiving>
+            <p mat-subheader *ngIf="sumTotalAmount">
+              <mat-icon color="primary">report</mat-icon> &nbsp;
+              Total amount &nbsp; <strong>({{ sumTotalAmount | currency }})</strong>.
+            </p>
+          </ng-template>
           
           <ul style="margin-top: 0;">
             <li *ngFor="let sum of peopleGivingSummary">

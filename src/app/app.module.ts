@@ -35,6 +35,7 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
+  MAT_DIALOG_DATA,
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -129,7 +130,13 @@ import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.co
 import { GroupRegistryListComponent } from './admin/people/people-groups/group-registry-list/group-registry-list.component';
 import { GivingReportGeneralComponent } from './admin/people/people-giving/giving-report-general/giving-report-general.component';
 import { GivingReportPersonComponent } from './admin/people/people-giving/giving-report-person/giving-report-person.component';
-
+import { ChartsModule } from 'ng2-charts';
+import 'chart.js';
+import { GivingOverviewComponent } from './admin/people/people-giving/giving-report-general/giving-overview/giving-overview.component';
+import { GivingAnonymousComponent } from './admin/people/people-giving/giving-report-general/giving-anonymous/giving-anonymous.component';
+import { GivingBatchesComponent } from './admin/people/people-giving/giving-report-general/giving-batches/giving-batches.component';
+import { GivingIndividualComponent } from './admin/people/people-giving/giving-report-general/giving-individual/giving-individual.component';
+import { GivingDemographicsComponent } from './admin/people/people-giving/giving-report-general/giving-demographics/giving-demographics.component';
 
 keyboardEventKeyPolyfill();
 
@@ -193,7 +200,12 @@ keyboardEventKeyPolyfill();
     PeopleProfileBioComponent,
     GroupRegistryListComponent,
     GivingReportGeneralComponent,
-    GivingReportPersonComponent
+    GivingReportPersonComponent,
+    GivingOverviewComponent,
+    GivingAnonymousComponent,
+    GivingBatchesComponent,
+    GivingIndividualComponent,
+    GivingDemographicsComponent,
   ],
   imports: [
     AngularFireStorageModule,
@@ -203,6 +215,7 @@ keyboardEventKeyPolyfill();
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    ChartsModule,
     FormsModule,
     FlexLayoutModule,
     LayoutModule,
@@ -249,10 +262,14 @@ keyboardEventKeyPolyfill();
     FamilyFormAddComponent,
     GivingCategoryFormComponent,
     GivingBatchComponent,
+    GivingFormComponent,
+    GivingFormFieldsComponent,
     GroupMembersAddComponent,
     VisitorsFormComponent
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DIALOG_DATA, useValue: [] },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

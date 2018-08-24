@@ -1,5 +1,5 @@
 
-<app-breadcrum [pageTitle]="pageTitle" [pageIcon]="pageIcon"></app-breadcrum>
+<app-breadcrum *ngIf="!personId" [pageTitle]="pageTitle" [pageIcon]="pageIcon"></app-breadcrum>
 
 <mat-card>
   
@@ -11,7 +11,7 @@
 
     <div fxFlex fxShow.lt-sm="false" fxShow="true">
 
-      <div>
+      <div *ngIf="!personId">
         <div *ngIf="showGivingBatch">
           <button mat-raised-button color="warn" *ngIf="givingBatch?.batch" (click)="clearBatch()">
               <mat-icon>cancel</mat-icon> &nbsp;
@@ -38,7 +38,7 @@
 
   <div class="spc-20"></div>
 
-  <app-giving-form-fields [givingBatch]="givingBatch"></app-giving-form-fields>
+  <app-giving-form-fields [givingBatch]="givingBatch" [personId]="personId"></app-giving-form-fields>
 
 </mat-card>
 

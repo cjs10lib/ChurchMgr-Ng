@@ -1,13 +1,40 @@
 
 <mat-card>
 
-  <!-- <mat-card-header>
-    <h3 sub-header>Giving Records</h3>
-  </mat-card-header> -->
+  <mat-card-actions>
+
+    <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+      <mat-icon>settings</mat-icon> &nbsp;
+      <span>Actions</span>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon color="primary">search</mat-icon>
+        <span>Filter</span>
+      </button> 
+
+      <button mat-menu-item (click)=addNewGiving()>
+        <mat-icon color="primary">add</mat-icon>
+        <span>Add Entry</span>
+      </button>        
+
+      <button mat-menu-item>
+        <mat-icon color="primary">print</mat-icon>
+        <span>Print</span>
+      </button>
+    </mat-menu>
+
+  </mat-card-actions>
 
   <mat-card-content>
+
+    <ng-template #noRecordFound> 
+      <p>
+        No record(s) found :(
+      </p>
+    </ng-template>
   
-    <div class="form-field-container">
+    <div class="form-field-container" *ngIf="personGiving?.length > 0; else noRecordFound">
       <!-- Data Table -->
       <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Record Search...">
@@ -20,32 +47,32 @@
           <!-- Amount Column -->
           <ng-container matColumnDef="amount">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
-            <td mat-cell *matCellDef="let row"> {{row.data.amount | number}} </td>
+            <td mat-cell *matCellDef="let row"> {{row.amount | number}} </td>
           </ng-container>
       
           <!-- Date Column -->
           <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-            <td mat-cell *matCellDef="let row"> {{row.givingDate.toDate() | date: 'mediumDate'}} </td>
+            <td mat-cell *matCellDef="let row"> {{row.givingDate?.toDate() | date: 'mediumDate'}} </td>
           </ng-container>
       
           <!-- Category Column -->
           <ng-container matColumnDef="category">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
-            <td mat-cell *matCellDef="let row"> {{getCategoryDetails(row.data.category)}} </td>
+            <td mat-cell *matCellDef="let row"> {{row.category}} </td>
           </ng-container>
     
           <!-- Notes Column -->
           <ng-container matColumnDef="notes">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Details </th>
-            <td mat-cell *matCellDef="let row"> {{row.data.notes}} </td>
+            <td mat-cell *matCellDef="let row"> {{row.notes}} </td>
           </ng-container>
     
           <!-- Created Column -->
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
             <td mat-cell *matCellDef="let row"> 
-              <button mat-icon-button color="primary" (click)="viewGiving(row.Id)">
+              <button mat-icon-button color="primary" (click)="viewGiving(row.id)">
                 <mat-icon>search</mat-icon> &nbsp;
                 <!-- <span>View</span> -->
               </button>
@@ -70,13 +97,13 @@
 
     <p mat-subheader>
       <mat-icon color="primary">report</mat-icon> &nbsp;
-      Total amount &nbsp; <strong>({{ givingTotalAmount | currency }})</strong>.
+      Total amount &nbsp; <strong>({{ givingTotalAmount | number }})</strong>.
     </p>
     
     <ul>
       <li *ngFor="let sum of givingSummary">
         {{ getCategoryDetails(sum.category) }}: &nbsp;
-        <strong>{{ sum.totalAmount | currency }}</strong> 
+        <strong>{{ sum.totalAmount | number }}</strong> 
       </li>
     </ul>
 

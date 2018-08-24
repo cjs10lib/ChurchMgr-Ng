@@ -61,4 +61,8 @@ export class SweetAlertService {
       title: 'Record deleted successfully'
     });
   }
+
+  appError() {
+
+  }
 }

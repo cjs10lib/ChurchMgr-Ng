@@ -31,7 +31,7 @@ export class GivingFunctionsService {
       };
     });
   }
-
+  
   getTotalAmount(arrayData) {
     // + operator for casting to Number
     return arrayData.reduce((a, b) => +a + +b.data.amount, 0);
