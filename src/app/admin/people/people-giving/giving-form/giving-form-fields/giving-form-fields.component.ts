@@ -114,7 +114,6 @@ export class GivingFormFieldsComponent implements OnInit, OnDestroy {
 
           // update record
           await this.givingService.updateGiving(this.giving.Id, this.giving);
-
           // update giving-monthly-summary
           await this.summaryService.addOrUpdateSummary(this.giving.givingDate, amountToUpdate);
 

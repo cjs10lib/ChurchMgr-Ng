@@ -29,7 +29,15 @@
 
     <mat-card-content>
 
-      <div style="width:100%; display:block">
+      <ngx-spinner 
+        bdColor="#fff"
+        size="medium"
+        color="#555"
+        type="line-scale-pulse-out">
+        <!-- <p style="font-size: 20px; color: white">Loading...</p> -->
+      </ngx-spinner>
+
+      <div [@fadeIn]="fadeIn" style="width:100%; display:block">
         <canvas *ngIf="loaded" baseChart 
           width="500" height="100"
           [datasets]="barChartData" 
@@ -56,6 +64,14 @@
               No record(s) found :(
             </p>
           </ng-template>
+
+          <ngx-spinner 
+            bdColor="#fff"
+            size="medium"
+            color="#555"
+            type="line-scale-pulse-out">
+            <!-- <p style="font-size: 20px; color: white">Loading...</p> -->
+          </ngx-spinner>
   
           <div *ngIf="peopleGivings?.length > 0; else noRecordFound">
             

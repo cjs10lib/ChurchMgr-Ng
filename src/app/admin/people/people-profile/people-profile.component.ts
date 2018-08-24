@@ -12,7 +12,7 @@ import { MatTabChangeEvent } from '../../../../../node_modules/@angular/material
   templateUrl: './people-profile.component.html',
   styleUrls: ['./people-profile.component.scss']
 })
-export class PeopleProfileComponent implements OnInit, OnDestroy {
+export class PeopleProfileComponent implements OnInit {
 
   navLinks = [
     { path: 'profile-bio', label: 'Bio Information', icon: 'person' },
@@ -38,13 +38,24 @@ export class PeopleProfileComponent implements OnInit, OnDestroy {
     this.personId = this.route.snapshot.paramMap.get('id');
     this.parentUrl = `people-profile/${this.personId}`;
 
-    // navigate to profile bio
-    this.router.navigate([this.parentUrl, this.navLinks[0].path]);
+    this.getSourceLoaded();
   }
 
-  ngOnDestroy() {
-    // reset tab index
-    localStorage.setItem(this.tabIndex, '0');
+  getSourceLoaded() {
+    const url = this.router.url;
+
+    if (url.includes('/profile-bio')) {
+      // reset tab index
+      localStorage.setItem(this.tabIndex, '0');
+      this.selectedTab = this.tabIndexFromStorage;
+
+      return;
+    }
+
+    // else
+    const navIndex = this.navLinks.findIndex(nav => url.includes(nav.path));
+    localStorage.setItem(this.tabIndex, navIndex.toString());
+    this.selectedTab = this.tabIndexFromStorage;
   }
 
   onLinkClick(event: MatTabChangeEvent) {

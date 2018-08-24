@@ -137,6 +137,7 @@ import { GivingAnonymousComponent } from './admin/people/people-giving/giving-re
 import { GivingBatchesComponent } from './admin/people/people-giving/giving-report-general/giving-batches/giving-batches.component';
 import { GivingIndividualComponent } from './admin/people/people-giving/giving-report-general/giving-individual/giving-individual.component';
 import { GivingDemographicsComponent } from './admin/people/people-giving/giving-report-general/giving-demographics/giving-demographics.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 keyboardEventKeyPolyfill();
 
@@ -221,6 +222,7 @@ keyboardEventKeyPolyfill();
     LayoutModule,
     PerfectScrollbarModule,
     ModalGalleryModule,
+    NgxSpinnerModule,
     ReactiveFormsModule,
 
     TextInputAutocompleteModule,

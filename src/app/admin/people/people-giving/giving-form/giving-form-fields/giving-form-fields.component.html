@@ -45,6 +45,9 @@
             <input type="text" placeholder="Search..." aria-label="Number" matInput [formControl]="myPersonControl" name="person" [matAutocomplete]="auto" [hidden]="myPersonControl.value=='true'" required>
            
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
+              <mat-option value="general">General</mat-option>
+              <mat-option value="anonymous">Anonymous</mat-option>
+              <mat-divider></mat-divider>
               <mat-option *ngFor="let p of filteredOptions | async" [value]="p.id">
                 {{p.fullname}}
               </mat-option>

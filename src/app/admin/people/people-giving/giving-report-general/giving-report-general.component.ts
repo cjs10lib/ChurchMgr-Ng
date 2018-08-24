@@ -7,7 +7,7 @@ import { MatTabChangeEvent } from '@angular/material';
   templateUrl: './giving-report-general.component.html',
   styleUrls: ['./giving-report-general.component.scss']
 })
-export class GivingReportGeneralComponent implements OnInit, OnDestroy {
+export class GivingReportGeneralComponent implements OnInit {
 
   pageTitle = 'Reports-Giving ';
   pageIcon = '';
@@ -16,23 +16,36 @@ export class GivingReportGeneralComponent implements OnInit, OnDestroy {
     { path: 'overview', label: 'Overview', icon: 'list' },
     { path: 'individual', label: 'By Individual', icon: 'person' },
     { path: 'anonymous', label: 'By Anonymous', icon: 'device_unknown' },
+    { path: 'general', label: 'General', icon: 'how_to_vote' },
     { path: 'batches', label: 'Batches', icon: 'category' },
     { path: 'demographics', label: 'Demographics', icon: 'notes' }
   ];
 
+  selectedTab: string;
   tabIndex = 'givingGeneralReport';
   parenRoute = 'giving-report';
 
   constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    // navigate to profile bio
-    this.router.navigate([this.parenRoute, this.navLinks[0].path]);
+    this.getSourceLoaded();
   }
   
-  ngOnDestroy(): void {
-    // reset tab index
-    localStorage.setItem(this.tabIndex, '0');
+  getSourceLoaded() {
+    const url = this.router.url;
+
+    if (url.includes('/overview')) {
+      // reset tab index
+      localStorage.setItem(this.tabIndex, '0');
+      this.selectedTab = this.tabIndexFromStorage;
+
+      return;
+    }
+
+    // else
+    const navIndex = this.navLinks.findIndex(nav => url.includes(nav.path));
+    localStorage.setItem(this.tabIndex, navIndex.toString());
+    this.selectedTab = this.tabIndexFromStorage;
   }
  
   onLinkClick(event: MatTabChangeEvent) {
@@ -44,6 +57,10 @@ export class GivingReportGeneralComponent implements OnInit, OnDestroy {
     localStorage.setItem(this.tabIndex, event.index.toString());
 
     this.router.navigate([this.parenRoute, routerLink]);
+  }
+
+  get tabIndexFromStorage() {
+    return localStorage.getItem(this.tabIndex);
   }
   
 }

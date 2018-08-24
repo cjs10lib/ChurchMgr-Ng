@@ -1,5 +1,6 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, combineLatest } from 'rxjs';
 
 import { GivingFunctionsService } from '../../../../../custom-functions/giving.functions.service';
 import { GivingCategory } from '../../../../../models/giving-category.model';
@@ -22,8 +23,8 @@ import { fadeIn, fadeInDown } from 'ng-animate';
 })
 export class GivingOverviewComponent implements OnInit {
 
-  fadeInDown: any;
   fadeIn: any;
+  fadeInDown: any;
 
   givingSummary = [];
   givingTotalAmount;
@@ -31,9 +32,8 @@ export class GivingOverviewComponent implements OnInit {
   peopleGivings = [];
   givingCategories: GivingCategory[] = [];
 
-  givingSubscription: Subscription;
+  subscription: Subscription;
   categorySubscription: Subscription;
-  givingSummarySubscription: Subscription;
 
   barChartOptions: any = {
     scaleShowVerticalLines: false,
@@ -71,40 +71,44 @@ export class GivingOverviewComponent implements OnInit {
   constructor(private givingFunction: GivingFunctionsService,
     private givingService: PersonGivingService,
     private categoryService: PersonGivingCategoryService,
-    private givingSummaryService: MonthlySummaryService) {
+    private givingSummaryService: MonthlySummaryService,
+    private spinner: NgxSpinnerService) {
     this.categorySubscription = this.categoryService.getGivingCategories().subscribe(resp => {
       this.givingCategories = resp;
     });
   }
 
   ngOnInit() {
-    this.getPeopleGiving();
-    this.getGivingSummary();
+
+    this.spinner.show();
+
+    this.subscription = combineLatest(this.givingService.getGivings(),
+      this.givingSummaryService.getGivingSummary()
+    ).subscribe(resp => {
+
+      this.spinner.hide();
+
+      const givings = resp[0];
+      const givingSummary = resp[1];
+
+      this.peopleGivings = givings;
+      this.givingSummary = this.givingFunction.getArrayDistinctSumary(givings);
+      this.givingTotalAmount = this.givingFunction.getTotalAmount(givings);
+
+      this.populateChart(givingSummary);
+
+    });
   }
 
   ngOnDestroy(): void {
-    if (this.givingSubscription) {
-      this.givingSubscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
 
     if (this.categorySubscription) {
       this.categorySubscription.unsubscribe();
     }
-
-    if (this.givingSummarySubscription) {
-      this.givingSummarySubscription.unsubscribe();
-    }
   }
-
-  getPeopleGiving() {
-    this.givingSubscription = this.givingService.getGivings().subscribe(resp => {
-      this.peopleGivings = resp;
-
-      this.givingSummary = this.givingFunction.getArrayDistinctSumary(resp);
-      this.givingTotalAmount = this.givingFunction.getTotalAmount(resp);
-
-    })
-  }  
 
   sortChartLabels(chartLabels: MonthlySummary[]) {
     let order = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -113,12 +117,6 @@ export class GivingOverviewComponent implements OnInit {
       return order.indexOf( a.month ) - order.indexOf( b.month );
     });
 
-  }
-
-  getGivingSummary() {
-    this.givingSummarySubscription = this.givingSummaryService.getGivingSummary().subscribe(resp => {
-      this.populateChart(resp);
-    });
   }
 
   populateChart(chartObj: MonthlySummary[]) { 

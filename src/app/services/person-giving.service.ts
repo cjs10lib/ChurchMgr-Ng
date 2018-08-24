@@ -84,6 +84,12 @@ export class PersonGivingService {
     giving.updatedAt = this.timestampService.getTimestamp; // sets server timestamp
     giving.qryGivingDate = this.timestampService.dateToTimestamp(giving.givingDate); // converted giving date to timestamp for easy querying
 
+    if (giving.data.person !== 'general' || 'anonymous') {
+      giving.data.tag = 'person';
+    } else {
+      giving.data.tag = giving.data.person.toLowerCase();
+    }
+
     return this.givingCollection.add(giving);
   }
 

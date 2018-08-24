@@ -7,6 +7,7 @@ export interface GivingBatch {
 }
 
 interface Records {
+    tag?: string;
     person?: string;
     category?: string;
     amount?: number;
