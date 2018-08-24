@@ -1,7 +1,15 @@
-<ng-container *ngIf="personData | async as person">
+<ngx-spinner 
+  bdColor="#fff"
+  size="medium"
+  color="#555"
+  type="line-scale-pulse-out">
+</ngx-spinner>
 
-  <mat-list>
-  
+<mat-list>
+
+  <div class="spc-10"></div>
+
+  <mat-card [@zoomIn]="zoomIn">
     <mat-list-item>
       <mat-icon matListIcon color="primary">person</mat-icon>
       <span matLine>
@@ -13,7 +21,11 @@
       <span>{{ person.gender }}</span>
       <mat-divider></mat-divider>
     </mat-list-item>
-  
+  </mat-card>
+
+  <div class="spc-10"></div>
+
+  <mat-card [@zoomIn]="zoomIn">
     <h2 mat-header>Phones</h2>
     <mat-list-item>
       <mat-icon matListIcon color="primary">phone_iphone</mat-icon>
@@ -25,7 +37,11 @@
   
       <span>{{ person.contact?.mobilePhone1 }} <br> {{ person.contact?.mobilePhone2 }}</span>
     </mat-list-item>
-  
+  </mat-card>
+
+  <div class="spc-10"></div>
+
+  <mat-card [@zoomIn]="zoomIn">
     <mat-list-item>
       <mat-icon matListIcon color="primary">phone</mat-icon>
       <h3 matLine>
@@ -37,8 +53,11 @@
       <span>{{ person.contact?.homePhone }}</span>
       <mat-divider></mat-divider>
     </mat-list-item>
-  
-  
+  </mat-card>
+
+  <div class="spc-10"></div>
+
+  <mat-card [@zoomIn]="zoomIn">
     <h2 mat-header>Email</h2>
     <mat-list-item>
       <mat-icon matListIcon color="primary">email</mat-icon>
@@ -49,7 +68,11 @@
       </h3>
       <mat-divider></mat-divider>
     </mat-list-item>
-  
+  </mat-card>
+
+  <div class="spc-10"></div>
+
+  <mat-card [@zoomIn]="zoomIn">
     <h2 mat-header>Dates</h2>
     <mat-list-item>
       <mat-icon matListIcon color="primary">cake</mat-icon>
@@ -61,7 +84,11 @@
   
       <mat-divider></mat-divider>
     </mat-list-item>
+  </mat-card>
+
+  <div class="spc-10"></div>
   
+  <mat-card [@zoomIn]="zoomIn">
     <h2 mat-header>Address</h2>
     <mat-list-item>
       <mat-icon matListIcon color="primary">location_on</mat-icon>
@@ -70,7 +97,8 @@
       </h3>
       <mat-divider></mat-divider>
     </mat-list-item>
-  
-  </mat-list>
+  </mat-card>
 
-</ng-container>
+</mat-list>
+
+

@@ -1,5 +1,8 @@
+import { transition, trigger, useAnimation } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { zoomIn } from 'ng-animate';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 
 import { PeopleService } from './../../../../../services/people.service';
@@ -7,28 +10,49 @@ import { PeopleService } from './../../../../../services/people.service';
 @Component({
   selector: 'app-profile-bio',
   templateUrl: './profile-bio.component.html',
-  styleUrls: ['./profile-bio.component.scss']
+  styleUrls: ['./profile-bio.component.scss'],
+  animations: [
+    trigger('zoomIn', [transition('* => *', useAnimation(zoomIn, {
+      params: { timing: 0.5, delay: 0 }
+    }))])
+  ],
 })
 export class ProfileBioComponent implements OnInit, OnDestroy {
 
-  personData;
+  zoomIn: any;
+
+  person = {};
 
   subscription: Subscription;
+  personSubscription: Subscription;
 
-  constructor(private peopleService: PeopleService, private route: ActivatedRoute) { }
+  constructor(private peopleService: PeopleService, 
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
-    // const personId = this.route.parent.snapshot.paramMap.get('id');
-    this.subscription = this.route.parent.paramMap.subscribe(prams => {
+    this.spinner.show();
 
-      const personId = prams.get('id');
-      this.personData = this.peopleService.getPerson(personId);
+    let personId;
+    this.subscription = this.route.parent.paramMap.subscribe(prams => {
+      this.spinner.hide();
+
+      personId = prams.get('id');
+      
+      this.peopleService.getPerson(personId).subscribe(resp => {
+        this.person = resp;
+      });
     });
+
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+
+    if (this.personSubscription) {
+      this.personSubscription.unsubscribe();
     }
   }
 

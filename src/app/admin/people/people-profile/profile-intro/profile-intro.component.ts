@@ -1,3 +1,4 @@
+import { switchMap } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -37,32 +38,25 @@ export class ProfileIntroComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router, 
     private sweetAlertService: SweetAlertService,
-    private spinner: NgxSpinnerService) {
-
-    this.paramSubscription = this.route.paramMap.subscribe(params => {
-      this.personId = params.get('id');
-    });
-  }
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.spinner.show();
 
-    this.subscription = combineLatest(this.peopleService.getPerson(this.personId), 
-      this.uploadService.getPersonGallery(this.personId)
-    ).subscribe(resp => {
+    this.paramSubscription = this.route.paramMap.pipe(switchMap(params => {
+      const personId = params.get('id');
+
+      return combineLatest(this.peopleService.getPerson(personId), 
+        this.uploadService.getPersonGallery(personId));
+    })).subscribe(resp => {
       this.spinner.hide();
 
       this.person = resp[0];
       this.personGallery = resp[1];
-
     });
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-
     if (this.paramSubscription) {
       this.paramSubscription.unsubscribe();
     }

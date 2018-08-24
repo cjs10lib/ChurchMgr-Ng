@@ -6,18 +6,6 @@
 </mat-card>
 
 <mat-card>
-  <!-- <nav mat-tab-nav-bar>
-    <a mat-tab-link
-      *ngFor="let link of navLinks"
-      [routerLink]="link.path"
-      routerLinkActive #rla="routerLinkActive"
-      [active]="rla.isActive">
-
-      <mat-icon color="primary">{{ link.icon }}</mat-icon> &nbsp;       
-      {{ link.label }}
-    </a>
-  </nav>  -->
-
   <mat-tab-group 
     (selectedTabChange)="onLinkClick($event)" 
     [selectedIndex]="selectedTab" 

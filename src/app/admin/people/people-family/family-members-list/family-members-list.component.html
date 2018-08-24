@@ -4,7 +4,7 @@
   <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
 
     <div class="flex-details">
-      <div *ngIf="showControls" fxFlex="24" fxFlexOrder.xs="1">
+      <div [@fadeIn]="fadeIn" *ngIf="showControls" fxFlex="24" fxFlexOrder.xs="1">
         
         <!-- <h3>Filter by Name</h3> -->
         <mat-form-field fxFlex.sm="style='font-size:10px;'">
@@ -24,7 +24,7 @@
       <div class="flex-details margin-20">
         
         <mat-nav-list>
-          <mat-list-item *ngIf="filteredPeople$?.length > 0 && showControls">
+          <mat-list-item [@fadeInDown]="fadeInDown" *ngIf="filteredPeople$?.length > 0 && showControls">
             <mat-divider></mat-divider>
             <h3 matLine>  
               <strong>                  
@@ -39,20 +39,26 @@
             </p>
           </div>
           
-          <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
+          <!-- <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner> -->
+          <ngx-spinner 
+            bdColor="#fff"
+            size="medium"
+            color="#555"
+            type="line-scale-pulse-out">
+          </ngx-spinner>
         
-          <a mat-list-item *ngFor="let people of filteredPeople$" routerLink="/people-profile/{{ people.personId }}/profile-bio">
+          <a mat-list-item [@fadeIn]="fadeIn" *ngFor="let people of filteredPeople$" routerLink="/people-profile/{{ people.id }}/profile-bio">
             <mat-divider></mat-divider>
-            <img *ngIf="people.avatar; else noImageAvatar" matListAvatar [src]="people.avatar?.url" [alt]="people.data.firstname">
+            <img *ngIf="people.data?.profileImage; else noImageAvatar" matListAvatar [src]="getPersonAvatar(people.data?.profileImage)" [alt]="people.data?.firstname">
             <!-- <img matListAvatar src="../../../../assets/avatars/avatar4.png" alt="..."> -->
             <h3 matLine> 
               <strong>                  
-                {{ people.data.surname }} 
-                {{ people.data.firstname }}                
+                {{ people.data?.surname }} 
+                {{ people.data?.firstname }}                
               </strong>
             </h3>
             <p matLine>
-              {{ people.data.othernames }} 
+              {{ people.data?.othernames }} 
             </p>
 
             <button *ngIf="showControls" mat-icon-button>
@@ -69,25 +75,6 @@
       </div>
     </div>
     
-    <!-- <div *ngIf="showControls" fxShow.lt-lg="false" fxShow="true" fxFlex="20">
-      <div class="flex-details">
-
-        <div style="background-color: #e6e6e6e6">
-          <mat-list dense>
-            <mat-list-item>
-              <mat-icon matListIcon>mail_outline</mat-icon>             
-              <h3 matLine> Email People </h3>
-            </mat-list-item>         
-            <mat-list-item>
-              <mat-icon matListIcon>import_export</mat-icon>
-              <h3 matLine> Export </h3>
-            </mat-list-item>         
-          </mat-list>
-        </div>
-
-      </div>  
-    </div> -->
-
   </div> 
 </div>
   

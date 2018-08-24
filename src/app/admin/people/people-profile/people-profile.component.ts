@@ -1,10 +1,8 @@
+import { switchMap } from 'rxjs/operators';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { Person } from '../../../models/person.model';
-import { PeopleService } from '../../../services/people.service';
-import { UploadService } from './../../../services/upload.service';
 import { MatTabChangeEvent } from '../../../../../node_modules/@angular/material';
 
 @Component({
@@ -12,7 +10,7 @@ import { MatTabChangeEvent } from '../../../../../node_modules/@angular/material
   templateUrl: './people-profile.component.html',
   styleUrls: ['./people-profile.component.scss']
 })
-export class PeopleProfileComponent implements OnInit {
+export class PeopleProfileComponent implements OnInit, OnDestroy {
 
   navLinks = [
     { path: 'profile-bio', label: 'Bio Information', icon: 'person' },
@@ -35,10 +33,19 @@ export class PeopleProfileComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.personId = this.route.snapshot.paramMap.get('id');
-    this.parentUrl = `people-profile/${this.personId}`;
+    this.subscription = this.route.paramMap.subscribe(params => {
+      const personId = params.get('id');
+
+      this.parentUrl = `people-profile/${personId}`;
+    });
 
     this.getSourceLoaded();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
   }
 
   getSourceLoaded() {

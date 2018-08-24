@@ -1,8 +1,8 @@
 <div style="text-align: center;">
   <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
     
-    <div [@fadeIn]="fadeIn" fxFlexOrder.xs="1">
-      <img *ngIf="person?.profileImage; else noImageAvatar" class="avatar" [src]="getPersonAvatar(person?.profileImage)" alt="person.firstname">       
+    <div fxFlexOrder.xs="1">
+      <img [@fadeIn]="fadeIn" *ngIf="person?.profileImage; else noImageAvatar" class="avatar" [src]="getPersonAvatar(person?.profileImage)" alt="person.firstname">       
     </div>
 
     <ng-template #noImageAvatar>
