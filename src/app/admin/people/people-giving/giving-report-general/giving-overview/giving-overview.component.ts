@@ -10,21 +10,21 @@ import { PersonGivingCategoryService } from '../../../../../services/person-givi
 import { PersonGivingService } from '../../../../../services/person-giving.service';
 
 import { trigger, transition, useAnimation } from '@angular/animations';
-import { fadeIn, fadeInDown } from 'ng-animate';
+import { fadeIn, zoomIn, fadeInLeft } from 'ng-animate';
 
 @Component({
   selector: 'app-giving-overview',
   templateUrl: './giving-overview.component.html',
   styleUrls: ['./giving-overview.component.scss'],
   animations: [
-    trigger('fadeIn', [transition('* => *', useAnimation(fadeIn))]),
-    trigger('fadeInDown', [transition('* => *', useAnimation(fadeInDown))])
+    trigger('fadeIn', [transition('* => *', useAnimation(fadeIn, {params: { timing: 0.25, delay: 0 }}))]),
+    trigger('fadeInLeft', [transition('* => *', useAnimation(fadeInLeft, {params: { timing: 0.20, delay: 0 }}))]),
   ],
 })
 export class GivingOverviewComponent implements OnInit {
 
   fadeIn: any;
-  fadeInDown: any;
+  fadeInLeft: any;
 
   givingSummary = [];
   givingTotalAmount;
@@ -32,6 +32,7 @@ export class GivingOverviewComponent implements OnInit {
   peopleGivings = [];
   givingCategories: GivingCategory[] = [];
 
+  showSpinner = true;
   subscription: Subscription;
   categorySubscription: Subscription;
 
@@ -71,22 +72,18 @@ export class GivingOverviewComponent implements OnInit {
   constructor(private givingFunction: GivingFunctionsService,
     private givingService: PersonGivingService,
     private categoryService: PersonGivingCategoryService,
-    private givingSummaryService: MonthlySummaryService,
-    private spinner: NgxSpinnerService) {
+    private givingSummaryService: MonthlySummaryService) {
     this.categorySubscription = this.categoryService.getGivingCategories().subscribe(resp => {
       this.givingCategories = resp;
     });
   }
 
   ngOnInit() {
-
-    this.spinner.show();
-
     this.subscription = combineLatest(this.givingService.getGivings(),
       this.givingSummaryService.getGivingSummary()
     ).subscribe(resp => {
 
-      this.spinner.hide();
+      this.showSpinner = false;
 
       const givings = resp[0];
       const givingSummary = resp[1];

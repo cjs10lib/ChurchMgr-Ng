@@ -7,338 +7,342 @@
 
   <form #f="ngForm">
 
-    <div class="submit-button">
+    <div [@fadeInRight]="fadeInRight" class="submit-button">
       <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!f.valid"> 
         <mat-icon>save</mat-icon> 
         <span>Save Record</span> 
       </button>    
     </div>
 
-    <mat-accordion class="example-headers-align">
+    <div [@zoomIn]="zoomIn">
 
-      <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Bio Info
-          </mat-panel-title>
-          <mat-panel-description>
-            Personnel Information
-            <mat-icon>person</mat-icon>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
-        <div class="form-field-container">
-      
-          <mat-form-field>
-            <input matInput [(ngModel)]="visitor.title" name="title" #title placeholder="Title">
-            <mat-hint>Eg. Dr., Engr., Mr., Mrs</mat-hint>         
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput [(ngModel)]="visitor.surname" name="surname" #surname placeholder="Surname" required>
-            <mat-error>
-              Surname is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>       
-
-          <mat-form-field>
-            <input matInput [(ngModel)]="visitor.firstname" name="firstname" #firstname placeholder="First name" required>
-            <mat-error>
-                Firstname is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput [(ngModel)]="visitor.othernames" name="othernames" #otherNames placeholder="Other names">
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-select [(ngModel)]="visitor.gender" name="gender" #gender placeholder="Gender" required>
-              <mat-option value=""></mat-option>
-              <mat-option value="Male">Male</mat-option>
-              <mat-option value="Female">Female</mat-option>
-            </mat-select>
-            <mat-error>
-              Gender is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <span matPrefix> <mat-icon>date_range</mat-icon> &nbsp; </span>
-            <input matInput [matDatepicker]="DB" [(ngModel)]="visitor.dob" name="dob" #dob placeholder="Date Of Birth" required>
-            <mat-datepicker-toggle matSuffix [for]="DB"></mat-datepicker-toggle>
-            <mat-datepicker #DB touchUi="true"></mat-datepicker>
-            <mat-hint>Birth Date Format: mm/dd/yyyy</mat-hint>
-            <mat-hint align="end">Click toggle button to select date!</mat-hint>
+      <mat-accordion class="example-headers-align">
   
-            <mat-error>
-              A valid <strong>Date of Birth</strong> is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-      
-          <mat-form-field>
-            <mat-select [(ngModel)]="visitor.maritalStatus" name="maritalStatus" placeholder="Marital Status">
-              <mat-option value=""></mat-option>
-              <mat-option value="Single">Single</mat-option>
-              <mat-option value="Divorced">Divorced</mat-option>
-              <mat-option value="Married">Married</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div> 
-
-        <mat-action-row>
-          <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
-        </mat-action-row>
-
-      </mat-expansion-panel>
-
-      <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Contacts
-          </mat-panel-title>
-          <mat-panel-description>
-            Contact Information
-            <mat-icon>person</mat-icon>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
-        <div class="form-field-container">
-
-          <mat-form-field>
-            <span matPrefix> <mat-icon>phone</mat-icon> &nbsp; </span>
-            <input matInput type="tel" [(ngModel)]="visitor.contact.mobilePhone" name="mobilePhone" placeholder="Mobile Phone" required>
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Bio Info
+            </mat-panel-title>
+            <mat-panel-description>
+              Personnel Information
+              <mat-icon>person</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+  
+          <div class="form-field-container">
+        
+            <mat-form-field>
+              <input matInput [(ngModel)]="visitor.title" name="title" #title placeholder="Title">
+              <mat-hint>Eg. Dr., Engr., Mr., Mrs</mat-hint>         
+            </mat-form-field>
+  
+            <mat-form-field>
+              <input matInput [(ngModel)]="visitor.surname" name="surname" #surname placeholder="Surname" required>
+              <mat-error>
+                Surname is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>       
+  
+            <mat-form-field>
+              <input matInput [(ngModel)]="visitor.firstname" name="firstname" #firstname placeholder="First name" required>
+              <mat-error>
+                  Firstname is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field>
+              <input matInput [(ngModel)]="visitor.othernames" name="othernames" #otherNames placeholder="Other names">
+            </mat-form-field>
+  
+            <mat-form-field>
+              <mat-select [(ngModel)]="visitor.gender" name="gender" #gender placeholder="Gender" required>
+                <mat-option value=""></mat-option>
+                <mat-option value="Male">Male</mat-option>
+                <mat-option value="Female">Female</mat-option>
+              </mat-select>
+              <mat-error>
+                Gender is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field>
+              <span matPrefix> <mat-icon>date_range</mat-icon> &nbsp; </span>
+              <input matInput [matDatepicker]="DB" [(ngModel)]="visitor.dob" name="dob" #dob placeholder="Date Of Birth" required>
+              <mat-datepicker-toggle matSuffix [for]="DB"></mat-datepicker-toggle>
+              <mat-datepicker #DB touchUi="true"></mat-datepicker>
+              <mat-hint>Birth Date Format: mm/dd/yyyy</mat-hint>
+              <mat-hint align="end">Click toggle button to select date!</mat-hint>
+    
+              <mat-error>
+                A valid <strong>Date of Birth</strong> is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+        
+            <mat-form-field>
+              <mat-select [(ngModel)]="visitor.maritalStatus" name="maritalStatus" placeholder="Marital Status">
+                <mat-option value=""></mat-option>
+                <mat-option value="Single">Single</mat-option>
+                <mat-option value="Divorced">Divorced</mat-option>
+                <mat-option value="Married">Married</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div> 
+  
+          <mat-action-row>
+            <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+  
+        </mat-expansion-panel>
+  
+        <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Contacts
+            </mat-panel-title>
+            <mat-panel-description>
+              Contact Information
+              <mat-icon>person</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+  
+          <div class="form-field-container">
+  
+            <mat-form-field>
+              <span matPrefix> <mat-icon>phone</mat-icon> &nbsp; </span>
+              <input matInput type="tel" [(ngModel)]="visitor.contact.mobilePhone" name="mobilePhone" placeholder="Mobile Phone" required>
+              
+              <mat-error>
+                Mobile phone number is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+              
+            <mat-form-field>
+              <span matPrefix> <mat-icon>contact_phone</mat-icon> &nbsp; </span>
+              <input matInput type="tel" [(ngModel)]="visitor.contact.homePhone" name="homePhone" placeholder="Home Phone">
+            </mat-form-field> 
+        
+            <mat-form-field>
+              <span matPrefix> <mat-icon>email</mat-icon> &nbsp; </span>
+              <input matInput type="email" [(ngModel)]="visitor.contact.email" name="email" placeholder="Email Address">
+            </mat-form-field>              
             
-            <mat-error>
-              Mobile phone number is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
+            <mat-form-field>
+              <span matPrefix> <mat-icon>location_city</mat-icon> &nbsp; </span>
+              <input matInput [(ngModel)]="visitor.contact.city" name="city" placeholder="City" required> 
+              
+              <mat-error>
+                Address city is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+        
+            <mat-form-field>
+              <span matPrefix> <mat-icon>location_on</mat-icon> &nbsp; </span>
+              <textarea matInput [(ngModel)]="visitor.contact.residentialAddress" name="residentialAddress" placeholder="Residential Address" required></textarea>
+              
+              <mat-error>
+                Residential address is <strong>required</strong>
+              </mat-error>
+            </mat-form-field> 
+        
+            <mat-form-field>
+              <span matPrefix> <mat-icon>map</mat-icon> &nbsp; </span>
+              <input matInput [(ngModel)]="visitor.contact.landMark" name="landMark" placeholder="Closest Landmark"> 
+            </mat-form-field>
+          </div>
+  
+          <mat-action-row>
+            <button mat-raised-button type="button" (click)="prevStep()">Previous</button>
+            <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+  
+        </mat-expansion-panel>
+  
+        <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Occupation
+            </mat-panel-title>
+            <mat-panel-description>
+              Employment Information
+              <mat-icon>person</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+  
+          <div class="form-field-container">
+            <mat-form-field>
+              <span matPrefix> <mat-icon>location_city</mat-icon> &nbsp; </span>
+              <input matInput [(ngModel)]="visitor.occupation.jobTitle" name="jobTitle" placeholder="Job Title">
+            </mat-form-field>
+        
+            <mat-form-field>
+              <span matPrefix> <mat-icon>phone</mat-icon> &nbsp; </span>
+              <input matInput type="tel" [(ngModel)]="visitor.occupation.OfficePhone" name="officePhone" placeholder="Office Phone">
+            </mat-form-field>
+        
+            <mat-form-field>
+              <span matPrefix> <mat-icon>location_on</mat-icon> &nbsp; </span>
+              <textarea matInput [(ngModel)]="visitor.occupation.officeAddress" name="officeAddress" placeholder="Bussiness Office || School Address"></textarea>
+            </mat-form-field>
+          </div>
+  
+          <mat-action-row>
+            <button mat-raised-button type="button" (click)="prevStep()">Previous</button>
+            <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+  
+        </mat-expansion-panel>
+  
+        <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Invitee
+            </mat-panel-title>
+            <mat-panel-description>
+              Invitee Information
+              <mat-icon>person</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+  
+          <div class="form-field-container">
+  
+            <mat-form-field>
+              <input type="text" placeholder="Search..." aria-label="Number" matInput [formControl]="myPersonControl" name="person" [matAutocomplete]="auto">
+              <button type="button" mat-button *ngIf="myPersonControl" matSuffix mat-icon-button aria-label="Clear" (click)="clearAutoCompleteField()">
+                <mat-icon>close</mat-icon>
+              </button>
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
+                <mat-option *ngFor="let p of filteredOptions | async" [value]="p.id">
+                  {{p.fullname}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+        
+            <mat-form-field>
+              <!-- <span matPrefix> <mat-icon>phone</mat-icon> &nbsp; </span> -->
+              <input matInput [(ngModel)]="visitor.invitee.followshipId" name="followshipId" placeholder="Invitee's Followship">
+            </mat-form-field>
+  
+            <mat-form-field>
+              <mat-select [(ngModel)]="visitor.invitee.inviteMeans" name="inviteMeans" placeholder="Invite Means">
+                <mat-option value=""></mat-option>
+                <mat-option value="PCE">PCE (Cell)</mat-option>
+                <mat-option value="OF">Outreach Fellowship</mat-option>
+                <mat-option value="TVM">TV Ministry</mat-option>
+                <mat-option value="COMO">Came On My Own</mat-option>
+              </mat-select>
+            </mat-form-field>
             
-          <mat-form-field>
-            <span matPrefix> <mat-icon>contact_phone</mat-icon> &nbsp; </span>
-            <input matInput type="tel" [(ngModel)]="visitor.contact.homePhone" name="homePhone" placeholder="Home Phone">
-          </mat-form-field> 
-      
-          <mat-form-field>
-            <span matPrefix> <mat-icon>email</mat-icon> &nbsp; </span>
-            <input matInput type="email" [(ngModel)]="visitor.contact.email" name="email" placeholder="Email Address">
-          </mat-form-field>              
-          
-          <mat-form-field>
-            <span matPrefix> <mat-icon>location_city</mat-icon> &nbsp; </span>
-            <input matInput [(ngModel)]="visitor.contact.city" name="city" placeholder="City" required> 
+          </div>
+  
+          <mat-action-row>
+            <button mat-raised-button type="button" (click)="prevStep()">Previous</button>
+            <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+  
+         <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Beliefs
+            </mat-panel-title>
+            <mat-panel-description>
+              Beliefs Information
+              <mat-icon>person</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+  
+          <div class="form-field-container">
+  
+            <p>Are You Born Again?</p>
+            <mat-radio-group [(ngModel)]="visitor.beliefs.bornAgain" name="bornAgain" required>
+              <mat-radio-button value="Yes">Yes</mat-radio-button>
+              <mat-radio-button value="No">No</mat-radio-button>
+  
+              <mat-hint>
+                Born-again status is <strong>required</strong>
+              </mat-hint>
+            </mat-radio-group>
+  
+            <div class="spc-10"></div>
+        
+            <mat-form-field>
+              <span matPrefix> <mat-icon>date_range</mat-icon> &nbsp; </span>
+              <input matInput [matDatepicker]="BAD" [(ngModel)]="visitor.beliefs.bornAgainDate" name="bornAgainDate" placeholder="Salvation Date">
+              <mat-datepicker-toggle matSuffix [for]="BAD"></mat-datepicker-toggle>
+              <mat-datepicker #BAD touchUi="true"></mat-datepicker>
+              <mat-hint>Birth Date Format: mm/dd/yyyy</mat-hint>
+              <mat-hint align="end">Click toggle button to select date!</mat-hint>      
+            </mat-form-field>
+        
+            <div class="spc-10"></div>
+  
+            <p>Would you like to be a member?</p>
+            <mat-radio-group [(ngModel)]="visitor.beliefs.becomeMember" name="becomeMember">
+              <mat-radio-button value="Yes">Yes</mat-radio-button>
+              <mat-radio-button value="No">No</mat-radio-button>
+            </mat-radio-group>
+        
+          </div>
+  
+          <mat-action-row>
+            <button mat-raised-button type="button" (click)="prevStep()">Previous</button>
+            <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+  
+        <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" hideToggle="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Follow Up
+            </mat-panel-title>
+            <mat-panel-description>
+              Follow Up Information
+              <mat-icon>person</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+  
+          <div class="form-field-container">
+   
+            <p>Would you like us to call or visit?</p>
+            <mat-radio-group [(ngModel)]="visitor.followUp.callVisitYou" name="callVisitYou">
+              <mat-radio-button value="Yes">Yes</mat-radio-button>
+              <mat-radio-button value="No">No</mat-radio-button>
+            </mat-radio-group>
+  
+            <div class="spc-10"></div>      
+        
+            <mat-form-field>
+              <input matInput [(ngModel)]="visitor.followUp.callVisitYouTime" name="callVisitYouTime" placeholder="Time for call or visit">
+              <mat-hint>Free days and time to visit</mat-hint>
+            </mat-form-field>      
+  
+            <div class="spc-10"></div>
             
-            <mat-error>
-              Address city is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-      
-          <mat-form-field>
-            <span matPrefix> <mat-icon>location_on</mat-icon> &nbsp; </span>
-            <textarea matInput [(ngModel)]="visitor.contact.residentialAddress" name="residentialAddress" placeholder="Residential Address" required></textarea>
-            
-            <mat-error>
-              Residential address is <strong>required</strong>
-            </mat-error>
-          </mat-form-field> 
-      
-          <mat-form-field>
-            <span matPrefix> <mat-icon>map</mat-icon> &nbsp; </span>
-            <input matInput [(ngModel)]="visitor.contact.landMark" name="landMark" placeholder="Closest Landmark"> 
-          </mat-form-field>
-        </div>
+            <p>Would you like us to specially counsel or pray with you?</p>
+            <mat-radio-group [(ngModel)]="visitor.followUp.specialCounsel" name="specialCounsel">
+              <mat-radio-button value="Yes">Yes</mat-radio-button>
+              <mat-radio-button value="No">No</mat-radio-button>
+            </mat-radio-group>
+  
+            <div class="spc-10"></div>
+        
+            <mat-form-field>
+              <!-- <span matPrefix> <mat-icon>phone</mat-icon> &nbsp; </span> -->
+              <!-- <input matInput [(ngModel)]="visitor.followUp.prayerRequest" name="prayerRequest" placeholder="Prayer Requests"> -->
+              <textarea matInput [(ngModel)]="visitor.followUp.prayerRequest" name="prayerRequest" placeholder="Prayer Requests"></textarea>
+            </mat-form-field>
+  
+          </div>
+  
+          <mat-action-row>
+            <button mat-raised-button type="button" (click)="prevStep()">Previous</button>
+            <button mat-raised-button type="button" color="primary" (click)="nextStep()">Finish</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+  
+      </mat-accordion>
 
-        <mat-action-row>
-          <button mat-raised-button type="button" (click)="prevStep()">Previous</button>
-          <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
-        </mat-action-row>
-
-      </mat-expansion-panel>
-
-      <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Occupation
-          </mat-panel-title>
-          <mat-panel-description>
-            Employment Information
-            <mat-icon>person</mat-icon>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
-        <div class="form-field-container">
-          <mat-form-field>
-            <span matPrefix> <mat-icon>location_city</mat-icon> &nbsp; </span>
-            <input matInput [(ngModel)]="visitor.occupation.jobTitle" name="jobTitle" placeholder="Job Title">
-          </mat-form-field>
-      
-          <mat-form-field>
-            <span matPrefix> <mat-icon>phone</mat-icon> &nbsp; </span>
-            <input matInput type="tel" [(ngModel)]="visitor.occupation.OfficePhone" name="officePhone" placeholder="Office Phone">
-          </mat-form-field>
-      
-          <mat-form-field>
-            <span matPrefix> <mat-icon>location_on</mat-icon> &nbsp; </span>
-            <textarea matInput [(ngModel)]="visitor.occupation.officeAddress" name="officeAddress" placeholder="Bussiness Office || School Address"></textarea>
-          </mat-form-field>
-        </div>
-
-        <mat-action-row>
-          <button mat-raised-button type="button" (click)="prevStep()">Previous</button>
-          <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
-        </mat-action-row>
-
-      </mat-expansion-panel>
-
-      <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Invitee
-          </mat-panel-title>
-          <mat-panel-description>
-            Invitee Information
-            <mat-icon>person</mat-icon>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
-        <div class="form-field-container">
-
-          <mat-form-field>
-            <input type="text" placeholder="Search..." aria-label="Number" matInput [formControl]="myPersonControl" name="person" [matAutocomplete]="auto">
-            <button type="button" mat-button *ngIf="myPersonControl" matSuffix mat-icon-button aria-label="Clear" (click)="clearAutoCompleteField()">
-              <mat-icon>close</mat-icon>
-            </button>
-            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
-              <mat-option *ngFor="let p of filteredOptions | async" [value]="p.id">
-                {{p.fullname}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-      
-          <mat-form-field>
-            <!-- <span matPrefix> <mat-icon>phone</mat-icon> &nbsp; </span> -->
-            <input matInput [(ngModel)]="visitor.invitee.followshipId" name="followshipId" placeholder="Invitee's Followship">
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-select [(ngModel)]="visitor.invitee.inviteMeans" name="inviteMeans" placeholder="Invite Means">
-              <mat-option value=""></mat-option>
-              <mat-option value="PCE">PCE (Cell)</mat-option>
-              <mat-option value="OF">Outreach Fellowship</mat-option>
-              <mat-option value="TVM">TV Ministry</mat-option>
-              <mat-option value="COMO">Came On My Own</mat-option>
-            </mat-select>
-          </mat-form-field>
-          
-        </div>
-
-        <mat-action-row>
-          <button mat-raised-button type="button" (click)="prevStep()">Previous</button>
-          <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-
-       <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Beliefs
-          </mat-panel-title>
-          <mat-panel-description>
-            Beliefs Information
-            <mat-icon>person</mat-icon>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
-        <div class="form-field-container">
-
-          <p>Are You Born Again?</p>
-          <mat-radio-group [(ngModel)]="visitor.beliefs.bornAgain" name="bornAgain" required>
-            <mat-radio-button value="Yes">Yes</mat-radio-button>
-            <mat-radio-button value="No">No</mat-radio-button>
-
-            <mat-hint>
-              Born-again status is <strong>required</strong>
-            </mat-hint>
-          </mat-radio-group>
-
-          <div class="spc-10"></div>
-      
-          <mat-form-field>
-            <span matPrefix> <mat-icon>date_range</mat-icon> &nbsp; </span>
-            <input matInput [matDatepicker]="BAD" [(ngModel)]="visitor.beliefs.bornAgainDate" name="bornAgainDate" placeholder="Salvation Date">
-            <mat-datepicker-toggle matSuffix [for]="BAD"></mat-datepicker-toggle>
-            <mat-datepicker #BAD touchUi="true"></mat-datepicker>
-            <mat-hint>Birth Date Format: mm/dd/yyyy</mat-hint>
-            <mat-hint align="end">Click toggle button to select date!</mat-hint>      
-          </mat-form-field>
-      
-          <div class="spc-10"></div>
-
-          <p>Would you like to be a member?</p>
-          <mat-radio-group [(ngModel)]="visitor.beliefs.becomeMember" name="becomeMember">
-            <mat-radio-button value="Yes">Yes</mat-radio-button>
-            <mat-radio-button value="No">No</mat-radio-button>
-          </mat-radio-group>
-      
-        </div>
-
-        <mat-action-row>
-          <button mat-raised-button type="button" (click)="prevStep()">Previous</button>
-          <button mat-raised-button type="button" color="primary" (click)="nextStep()">Next</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" hideToggle="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Follow Up
-          </mat-panel-title>
-          <mat-panel-description>
-            Follow Up Information
-            <mat-icon>person</mat-icon>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
-        <div class="form-field-container">
- 
-          <p>Would you like us to call or visit?</p>
-          <mat-radio-group [(ngModel)]="visitor.followUp.callVisitYou" name="callVisitYou">
-            <mat-radio-button value="Yes">Yes</mat-radio-button>
-            <mat-radio-button value="No">No</mat-radio-button>
-          </mat-radio-group>
-
-          <div class="spc-10"></div>      
-      
-          <mat-form-field>
-            <input matInput [(ngModel)]="visitor.followUp.callVisitYouTime" name="callVisitYouTime" placeholder="Time for call or visit">
-            <mat-hint>Free days and time to visit</mat-hint>
-          </mat-form-field>      
-
-          <div class="spc-10"></div>
-          
-          <p>Would you like us to specially counsel or pray with you?</p>
-          <mat-radio-group [(ngModel)]="visitor.followUp.specialCounsel" name="specialCounsel">
-            <mat-radio-button value="Yes">Yes</mat-radio-button>
-            <mat-radio-button value="No">No</mat-radio-button>
-          </mat-radio-group>
-
-          <div class="spc-10"></div>
-      
-          <mat-form-field>
-            <!-- <span matPrefix> <mat-icon>phone</mat-icon> &nbsp; </span> -->
-            <!-- <input matInput [(ngModel)]="visitor.followUp.prayerRequest" name="prayerRequest" placeholder="Prayer Requests"> -->
-            <textarea matInput [(ngModel)]="visitor.followUp.prayerRequest" name="prayerRequest" placeholder="Prayer Requests"></textarea>
-          </mat-form-field>
-
-        </div>
-
-        <mat-action-row>
-          <button mat-raised-button type="button" (click)="prevStep()">Previous</button>
-          <button mat-raised-button type="button" color="primary" (click)="nextStep()">Finish</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-
-    </mat-accordion>
+    </div>
     
   </form>
   

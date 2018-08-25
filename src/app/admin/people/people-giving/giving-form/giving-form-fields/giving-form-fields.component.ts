@@ -1,26 +1,37 @@
-import { MonthlySummaryService } from './../../../../../services/monthly-summary.service';
-import { Component, Input, OnDestroy, OnInit, Inject, AfterViewInit, DoCheck } from '@angular/core';
+import { transition, trigger, useAnimation } from '@angular/animations';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { fadeIn, fadeInLeft, fadeInRight, zoomIn } from 'ng-animate';
 import { Observable, Subscription } from 'rxjs';
 
 import { FormControl } from '../../../../../../../node_modules/@angular/forms';
-import { MatDatepickerInputEvent, MAT_DIALOG_DATA } from '../../../../../../../node_modules/@angular/material';
+import { MatDatepickerInputEvent } from '../../../../../../../node_modules/@angular/material';
 import { map, startWith, take } from '../../../../../../../node_modules/rxjs/operators';
+import { GivingFunctionsService } from '../../../../../custom-functions/giving.functions.service';
 import { ConvertTimestampService } from '../../../../../services/convert-timestamp.service';
 import { PersonGivingService } from '../../../../../services/person-giving.service';
 import { GivingCategory } from './../../../../../models/giving-category.model';
 import { Giving } from './../../../../../models/person-giving.model';
 import { Person } from './../../../../../models/person.model';
+import { MonthlySummaryService } from './../../../../../services/monthly-summary.service';
 import { PeopleService } from './../../../../../services/people.service';
 import { PersonGivingCategoryService } from './../../../../../services/person-giving-category.service';
 import { SweetAlertService } from './../../../../../services/sweet-alert.service';
-import { GivingFunctionsService } from '../../../../../custom-functions/giving.functions.service';
 
 @Component({
   selector: 'app-giving-form-fields',
   templateUrl: './giving-form-fields.component.html',
-  styleUrls: ['./giving-form-fields.component.scss']
+  styleUrls: ['./giving-form-fields.component.scss'],
+  animations: [
+    trigger('fadeIn', [transition('* => *', useAnimation(fadeIn, {params: { timing: 0.75, delay: 0 }}))]),
+    trigger('fadeInRight', [transition('* => *', useAnimation(fadeInRight, {params: { timing: 0.50, delay: 0 }}))]),
+    trigger('zoomIn', [transition('* => *', useAnimation(zoomIn, {params: { timing: 0.25, delay: 0 }}))]),
+  ],
 })
 export class GivingFormFieldsComponent implements OnInit, OnDestroy {
+
+  fadeIn: any;
+  fadeInRight: any;
+  zoomIn: any;
 
   @Input() givingBatch = {
     batchId: ''
@@ -228,6 +239,10 @@ export class GivingFormFieldsComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (personId.toLowerCase() === 'General' || personId.toLowerCase() === 'Anonymous') {
+      return personId;
+    }
+
     const index = this.people.findIndex(p => p.id === personId);
     return this.people[index].fullname;
   }
@@ -246,6 +261,10 @@ export class GivingFormFieldsComponent implements OnInit, OnDestroy {
     // I want to get the full object and display the name
     if (!personId) {
       return '';
+    }
+
+    if (personId.toLowerCase() === 'general' || personId.toLowerCase() === 'anonymous') {
+      return personId;
     }
 
     this.giving.data.person = personId; // assign selected person id to model

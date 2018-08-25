@@ -1,7 +1,8 @@
+import { switchMap } from 'rxjs/operators';
 import { transition, trigger, useAnimation } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { zoomIn } from 'ng-animate';
+import { zoomIn, fadeOut } from 'ng-animate';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 
@@ -12,9 +13,7 @@ import { PeopleService } from './../../../../../services/people.service';
   templateUrl: './profile-bio.component.html',
   styleUrls: ['./profile-bio.component.scss'],
   animations: [
-    trigger('zoomIn', [transition('* => *', useAnimation(zoomIn, {
-      params: { timing: 0.5, delay: 0 }
-    }))])
+    trigger('zoomIn', [transition('* => *', useAnimation(zoomIn, {params: { timing: 0.5, delay: 0 }}))])
   ],
 })
 export class ProfileBioComponent implements OnInit, OnDestroy {
@@ -23,25 +22,22 @@ export class ProfileBioComponent implements OnInit, OnDestroy {
 
   person = {};
 
+  showSpinner = true;
   subscription: Subscription;
-  personSubscription: Subscription;
 
   constructor(private peopleService: PeopleService, 
-    private route: ActivatedRoute,
-    private spinner: NgxSpinnerService) { }
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.spinner.show();
 
-    let personId;
-    this.subscription = this.route.parent.paramMap.subscribe(prams => {
-      this.spinner.hide();
+    this.subscription = this.route.parent.paramMap.pipe(switchMap(params => {
+      const personId = params.get('id');
 
-      personId = prams.get('id');
-      
-      this.peopleService.getPerson(personId).subscribe(resp => {
-        this.person = resp;
-      });
+      return this.peopleService.getPerson(personId);
+    })).subscribe(resp => {
+      this.showSpinner = false;
+
+      this.person = resp;
     });
 
   }
@@ -49,10 +45,6 @@ export class ProfileBioComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
-    }
-
-    if (this.personSubscription) {
-      this.personSubscription.unsubscribe();
     }
   }
 

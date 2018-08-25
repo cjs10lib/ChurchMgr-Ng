@@ -5,7 +5,7 @@
   <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
 
     <div fxFlex="24" fxFlexOrder.xs="1">
-      <div class="flex-details">
+      <div [@fadeIn]="fadeIn" class="flex-details">
         <h3>Filter by Name</h3>
         <mat-form-field fxFlex.sm="style='font-size:10px;'">
           <span matPrefix>
@@ -23,7 +23,7 @@
       <div class="flex-details margin-20">
 
         <section>
-          <div class="actions">
+          <div [@fadeInRight]="fadeInRight" class="actions">
             <!-- <a mat-raised-button color="primary" (click)="openDialog()"> -->
             <a mat-raised-button color="primary" routerLink="/visitors-registration">
               <mat-icon>group_add</mat-icon> &nbsp;
@@ -33,7 +33,7 @@
         </section>
 
         <mat-nav-list>
-          <mat-list-item *ngIf="filteredVisitors$?.length > 0">
+          <mat-list-item [@fadeInDown]="fadeInDown" *ngIf="filteredVisitors$?.length > 0">
             <mat-divider></mat-divider>
             <h3 matLine>  
               <strong>                  
@@ -50,7 +50,7 @@
 
           <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
 
-          <mat-list-item *ngFor="let visitor of filteredVisitors$" routerLink="/visitor-profile/{{ visitor.Id }}" >
+          <mat-list-item [@fadeIn]="fadeIn" *ngFor="let visitor of filteredVisitors$" routerLink="/visitor-profile/{{ visitor.Id }}" >
             <mat-divider></mat-divider>
             <img matListAvatar src="../../../../../assets/avatars/avatar4.png" alt="...">
             <h3 matLine> 

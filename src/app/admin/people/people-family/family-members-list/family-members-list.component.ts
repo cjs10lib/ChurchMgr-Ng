@@ -18,9 +18,7 @@ import { PeopleService } from './../../../../services/people.service';
   styleUrls: ['./family-members-list.component.scss'],
   animations: [
     trigger('fadeIn', [transition('* => *', useAnimation(fadeIn))]),
-    trigger('fadeInDown', [transition('* => *', useAnimation(fadeInDown, {
-      params: { timing: 0.25, delay: 0 }
-    }))]),
+    trigger('fadeInDown', [transition('* => *', useAnimation(fadeInDown, {params: { timing: 0.50, delay: 0 }}))]),
   ],
 })
 export class FamilyMembersListComponent implements OnInit, OnDestroy {
@@ -40,7 +38,7 @@ export class FamilyMembersListComponent implements OnInit, OnDestroy {
 
   personFamily: PersonFamily = {};
 
-  // showSpinner = true;
+  showSpinner = true;
   subscription: Subscription;
   gallerySubscription: Subscription;
   membersSubscription: Subscription;
@@ -48,13 +46,12 @@ export class FamilyMembersListComponent implements OnInit, OnDestroy {
   constructor(private personFamilyService: PersonFamilyService,
     private route: ActivatedRoute, 
     private uploadService: UploadService,
-    private peopleService: PeopleService,
-    private spinner: NgxSpinnerService) { }
+    private peopleService: PeopleService) { }
 
   ngOnInit() {
-    this.spinner.show(); 
-
     this.gallerySubscription = this.uploadService.getAllGallery().subscribe(resp => {
+      this.showSpinner = false;
+
       this.personGallery = resp;
     });    
 
@@ -78,12 +75,10 @@ export class FamilyMembersListComponent implements OnInit, OnDestroy {
   loadFamilyMembers() {
     
     if (this.parentComponent === 'people-profile') {
-      this.spinner.hide();
       return this.getPersonFamilyMembersFromProfile();
     }
 
     // else    
-    this.spinner.hide();
     return this.getFamilyMembersFromFamily();    
   }
   

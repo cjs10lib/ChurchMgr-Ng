@@ -1,19 +1,24 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-
-import { switchMap } from 'rxjs/operators';
-import { PersonFamilyService } from '../../../../services/person-family.service';
-import { PersonFamily } from '../../../../models/person-family.model';
-import { Person } from '../../../../models/person.model';
-import { PeopleService } from '../../../../services/people.service';
+import { trigger, transition, useAnimation } from '@angular/animations';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+
+import { PersonFamilyService } from '../../../../services/person-family.service';
+import { fadeIn, fadeInDown } from 'ng-animate';
 
 @Component({
   selector: 'app-family-registry',
   templateUrl: './family-registry.component.html',
-  styleUrls: ['./family-registry.component.scss']
+  styleUrls: ['./family-registry.component.scss'],
+  animations: [
+    trigger('fadeIn', [transition('* => *', useAnimation(fadeIn))]),
+    trigger('fadeInDown', [transition('* => *', useAnimation(fadeInDown, {params: { timing: 0.25, delay: 0 }}))]),
+  ],
 })
 export class FamilyRegistryComponent implements OnInit, OnDestroy {
+
+  fadeIn: any;
+  fadeInDown: any;
+
   pageTitle = 'Family';
   pageIcon = '';
 

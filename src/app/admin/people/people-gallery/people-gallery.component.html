@@ -1,18 +1,14 @@
 <mat-card>
-  <div>
+  <div [@fadeInRight]="fadeInRight">
       
     <form #f="ngForm">
       <div class="image_upload">
-        <!-- <img class="profile-image" [src]="imageUrl" style="width:250px;height:250px;" alt="">
-        <br> -->
         
         <div class="dropzone" 
           appDropZone
           (hovered)="toggleHover($event)"
           (dropped)="upload($event)"
           [class.hovering]="isHovering">
-
-          <!-- <app-loading-spinner *ngIf="uploadService.snapshot | async"></app-loading-spinner> -->
       
           <!-- <h3>Drop Zone</h3> -->
           <mat-icon>cloud_upload</mat-icon>
@@ -44,10 +40,11 @@
   </div>
 
   
-  <div class="grid-container">
-    <!-- <h1 class="mat-h1">Dashboard</h1> -->
+  <div [@zoomInDown]="zoomInDown" class="grid-container">
     <mat-grid-list *ngIf="(isHandset$ | async); else largeDisplay"  cols="4" rowHeight="350px">
-      <!-- <mat-grid-tile *ngFor="let gry of gallery" [colspan]="cards.colspan" [rowspan]="cards.rowspan"> -->
+
+      <app-loading-spinner *ngIf="uploadService.snapshot | async"></app-loading-spinner>
+
       <mat-grid-tile *ngFor="let gry of gallery" colspan="4" rowspan="1">
         <mat-card class="dashboard-card parent">
           <mat-card-header>

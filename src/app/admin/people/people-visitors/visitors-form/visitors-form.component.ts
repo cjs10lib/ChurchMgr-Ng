@@ -1,22 +1,31 @@
-import { PeopleService } from './../../../../services/people.service';
-import { Person } from './../../../../models/person.model';
-import { Subscription, Observable } from 'rxjs';
-import { ConvertTimestampService } from '../../../../services/convert-timestamp.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { transition, trigger, useAnimation } from '@angular/animations';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { fadeInRight, zoomIn } from 'ng-animate';
+import { Observable, Subscription } from 'rxjs';
 
+import { FormControl } from '../../../../../../node_modules/@angular/forms';
+import { map, startWith } from '../../../../../../node_modules/rxjs/operators';
+import { ConvertTimestampService } from '../../../../services/convert-timestamp.service';
 import { SweetAlertService } from '../../../../services/sweet-alert.service';
 import { Visitor } from './../../../../models/person-visitor.model';
+import { Person } from './../../../../models/person.model';
 import { PeopleVisitorService } from './../../../../services/people-visitor.service';
-import { FormControl } from '../../../../../../node_modules/@angular/forms';
-import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
+import { PeopleService } from './../../../../services/people.service';
 
 @Component({
   selector: 'app-visitors-form',
   templateUrl: './visitors-form.component.html',
-  styleUrls: ['./visitors-form.component.scss']
+  styleUrls: ['./visitors-form.component.scss'],
+  animations: [
+    trigger('fadeInRight', [transition('* => *', useAnimation(fadeInRight, {params: { timing: 0.75, delay: 0 }}))]),
+    trigger('zoomIn', [transition('* => *', useAnimation(zoomIn, {params: { timing: 0.50, delay: 0 }}))]),
+  ],
 })
 export class VisitorsFormComponent implements OnInit, OnDestroy {
+
+  fadeInRight: any; 
+  zoomIn: any; 
 
   pageTitle = 'Visitors';
   pageIcon = '';

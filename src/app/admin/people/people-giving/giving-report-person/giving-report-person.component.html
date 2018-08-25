@@ -1,7 +1,7 @@
 
 <mat-card>
 
-  <mat-card-actions>
+  <mat-card-actions [@fadeInRight]="fadeInRight">
 
     <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
       <mat-icon>settings</mat-icon> &nbsp;
@@ -33,8 +33,10 @@
         No record(s) found :(
       </p>
     </ng-template>
+
+    <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>          
   
-    <div class="form-field-container" *ngIf="personGiving?.length > 0; else noRecordFound">
+    <div [@zoomInDown]="zoomInDown" class="form-field-container" *ngIf="personGiving?.length > 0; else noRecordFound">
       <!-- Data Table -->
       <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Record Search...">

@@ -1,3 +1,6 @@
+
+<app-breadcrum *ngIf="showControls" [pageTitle]="pageTitle" [pageIcon]="pageIcon"></app-breadcrum>
+
 <mat-card class="card-wrapper">
   <app-group-registry [parentComponent]="parentComponent" [showControls]="showControls"></app-group-registry>
 </mat-card>

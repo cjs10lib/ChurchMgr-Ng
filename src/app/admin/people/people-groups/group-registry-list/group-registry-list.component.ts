@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GroupRegistryListComponent implements OnInit {
 
+  pageTitle = 'Groups';
+  pageIcon = '';
+
   parentComponent = 'group-registry';
   showControls = true;
 

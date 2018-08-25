@@ -1,21 +1,30 @@
+import { transition, trigger, useAnimation } from '@angular/animations';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { fadeIn, fadeInDown, fadeInRight } from 'ng-animate';
+
+import { Subscription } from '../../../../../../node_modules/rxjs';
+import { PeopleGroupService } from '../../../../services/people-group.service';
+import { PersonGroup } from './../../../../models/person-group.model';
 import { Person } from './../../../../models/person.model';
 import { PeopleService } from './../../../../services/people.service';
 import { SweetAlertService } from './../../../../services/sweet-alert.service';
-import { PersonGroup } from './../../../../models/person-group.model';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { PeopleGroupService } from '../../../../services/people-group.service';
-import { Subscription } from '../../../../../../node_modules/rxjs';
 
 @Component({
   selector: 'app-group-registry',
   templateUrl: './group-registry.component.html',
-  styleUrls: ['./group-registry.component.scss']
+  styleUrls: ['./group-registry.component.scss'],
+  animations: [
+    trigger('fadeIn', [transition('* => *', useAnimation(fadeIn))]),
+    trigger('fadeInDown', [transition('* => *', useAnimation(fadeInDown, {params: { timing: 0.25, delay: 0 }}))]),
+    trigger('fadeInRight', [transition('* => *', useAnimation(fadeInRight, {params: { timing: 0.75, delay: 0 }}))]),
+  ],
 })
-export class GroupRegistryComponent implements OnInit, OnDestroy {
+export class GroupRegistryComponent implements OnInit, OnDestroy { 
 
-  pageTitle = 'Groups';
-  pageIcon = '';
+  fadeIn: any;
+  fadeInDown: any;
+  fadeInRight: any;
 
   @Input() parentComponent: string;
   @Input() showControls: boolean;

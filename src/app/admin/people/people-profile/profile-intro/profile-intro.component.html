@@ -1,8 +1,8 @@
 <div style="text-align: center;">
   <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
     
-    <div fxFlexOrder.xs="1">
-      <img [@fadeIn]="fadeIn" *ngIf="person?.profileImage; else noImageAvatar" class="avatar" [src]="getPersonAvatar(person?.profileImage)" alt="person.firstname">       
+    <div [@fadeIn]="fadeIn" fxFlexOrder.xs="1">
+      <img *ngIf="person?.profileImage; else noImageAvatar" class="avatar" [src]="getPersonAvatar(person?.profileImage)" [alt]="person.firstname">       
     </div>
 
     <ng-template #noImageAvatar>
@@ -17,9 +17,9 @@
     </ngx-spinner>
 
     <div fxFlex="50" fxFlexOrder.xs="2" style="padding: 20px 20px 0 5px ;">
-      <mat-list [@fadeIn]="fadeIn">      
+      <mat-list>      
 
-        <mat-list-item >
+        <mat-list-item [@fadeIn]="fadeIn">
           <h2>
             {{ person?.surname }}
             {{ person?.firstname }}
@@ -27,7 +27,7 @@
           <small>({{ person?.othernames }}) </small> 
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item [@fadeIn]="fadeIn">
           <mat-icon>phone_iphone</mat-icon> &nbsp;
           <span>
             {{ person?.contact?.mobilePhone1 }}, &nbsp;
@@ -35,14 +35,14 @@
           </span>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item [@fadeIn]="fadeIn">
           <mat-icon>email</mat-icon> &nbsp;
           <span>
             {{ person?.contact?.email }}
           </span>  
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item [@fadeIn]="fadeIn">
           <mat-icon>location_on</mat-icon> &nbsp;          
           <span>
             {{ person?.contact?.residentialAddress }}
@@ -52,12 +52,12 @@
 
         
         <div>
-          <button [@fadeInDown]="fadeInDown" mat-raised-button color="primary" (click)="editProfile()">
+          <button [@fadeInRight]="fadeInRight" mat-raised-button color="primary" (click)="editProfile()">
             <mat-icon>border_color</mat-icon>
             <span>Edit Profile</span>
           </button> &nbsp;
 
-          <button [@fadeInDown]="fadeInDown" mat-raised-button color="warn" (click)="deleteProfile()">
+          <button [@fadeInRight1]="fadeInRight1" mat-raised-button color="warn" (click)="deleteProfile()">
             <mat-icon>delete</mat-icon>
             <span>Delete Record</span>  
           </button>

@@ -1,3 +1,4 @@
+import { trigger, transition, useAnimation } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -7,13 +8,21 @@ import { ConvertTimestampService } from '../../../../services/convert-timestamp.
 import { PeopleService } from '../../../../services/people.service';
 import { SweetAlertService } from '../../../../services/sweet-alert.service';
 import { UploadService } from './../../../../services/upload.service';
+import { fadeInRight, zoomIn } from 'ng-animate';
 
 @Component({
   selector: 'app-people-basic-form',
   templateUrl: './people-basic-form.component.html',
-  styleUrls: ['./people-basic-form.component.scss']
+  styleUrls: ['./people-basic-form.component.scss'],
+  animations: [
+    trigger('fadeInRight', [transition('* => *', useAnimation(fadeInRight, {params: { timing: 0.75, delay: 0 }}))]),
+    trigger('zoomIn', [transition('* => *', useAnimation(zoomIn, {params: { timing: 0.50, delay: 0 }}))]),
+  ],
 })
 export class PeopleBasicFormComponent implements OnInit, OnDestroy {
+
+  fadeInRight: any; 
+  zoomIn: any; 
 
   // person model
   person: Person = {

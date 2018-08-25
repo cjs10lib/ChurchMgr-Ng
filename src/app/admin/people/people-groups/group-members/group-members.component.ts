@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
+import { trigger, transition, useAnimation } from '@angular/animations';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription, Observable, observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { GroupMember } from '../../../../models/person-group.model';
 import { PeopleGroupService } from '../../../../services/people-group.service';
@@ -9,15 +10,23 @@ import { PeopleService } from '../../../../services/people.service';
 import { SweetAlertService } from '../../../../services/sweet-alert.service';
 import { UploadService } from '../../../../services/upload.service';
 import { GroupMembersAddComponent } from './../group-members-add/group-members-add.component';
-import { from, of } from 'rxjs';
-import { map, merge } from 'rxjs/operators';
+import { fadeIn, fadeInDown, fadeInRight } from 'ng-animate';
 
 @Component({
   selector: 'app-group-members',
   templateUrl: './group-members.component.html',
-  styleUrls: ['./group-members.component.scss']
+  styleUrls: ['./group-members.component.scss'],
+  animations: [
+    trigger('fadeIn', [transition('* => *', useAnimation(fadeIn))]),
+    trigger('fadeInDown', [transition('* => *', useAnimation(fadeInDown, {params: { timing: 0.25, delay: 0 }}))]),
+    trigger('fadeInRight', [transition('* => *', useAnimation(fadeInRight, {params: { timing: 0.75, delay: 0 }}))]),
+  ],
 })
 export class GroupMembersComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  fadeIn: any;
+  fadeInDown: any;
+  fadeInRight: any;
 
   pageTitle = 'Group Members ';
   pageIcon = '';

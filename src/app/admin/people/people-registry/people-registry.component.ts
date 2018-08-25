@@ -1,13 +1,12 @@
+import { transition, trigger, useAnimation } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { fadeIn, fadeInDown, fadeInRight } from 'ng-animate';
 import { combineLatest, Subscription } from 'rxjs';
 
 import { Person } from '../../../models/person.model';
 import { Upload } from '../../../models/upload.model';
 import { PeopleService } from '../../../services/people.service';
 import { UploadService } from '../../../services/upload.service';
-import { transition, trigger, useAnimation } from '@angular/animations';
-import { fadeIn, fadeInDown } from 'ng-animate';
 
 @Component({
   selector: 'app-people-registry',
@@ -15,13 +14,15 @@ import { fadeIn, fadeInDown } from 'ng-animate';
   styleUrls: ['./people-registry.component.scss'],
   animations: [
     trigger('fadeIn', [transition('* => *', useAnimation(fadeIn))]),
-    trigger('fadeInDown', [transition('* => *', useAnimation(fadeInDown))])
+    trigger('fadeInDown', [transition('* => *', useAnimation(fadeInDown, {params: { timing: 0.25, delay: 0 }}))]),
+    trigger('fadeInRight', [transition('* => *', useAnimation(fadeInRight, {params: { timing: 0.75, delay: 0 }}))]),
   ],
 })
 export class PeopleRegistryComponent implements OnInit, OnDestroy {
 
   fadeIn: any;
   fadeInDown: any;
+  fadeInRight: any;
 
   // breadcrum
   pageTitle = 'People';
@@ -36,18 +37,17 @@ export class PeopleRegistryComponent implements OnInit, OnDestroy {
 
   peopleGallery: Upload[] = []
 
+  showSpinner = true;
   subscription: Subscription;
 
   constructor(private peopleService: PeopleService,
-    private uploadService: UploadService,
-    private spinner: NgxSpinnerService) { }
+    private uploadService: UploadService) { }
 
   ngOnInit() {
-    this.spinner.show();
 
     this.subscription = combineLatest(this.peopleService.getPeople(), this.uploadService.getAllGallery())
       .subscribe(resp => {
-        this.spinner.hide();
+        this.showSpinner = false;
 
         this.people = this.filteredPeople = resp[0];
         this.peopleGallery = resp[1];

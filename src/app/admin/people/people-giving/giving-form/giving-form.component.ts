@@ -1,14 +1,21 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { transition, trigger, useAnimation } from '@angular/animations';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { fadeIn, fadeInLeft, fadeInRight } from 'ng-animate';
 
 import { GivingBatchComponent } from './../giving-batch/giving-batch.component';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-giving-form',
   templateUrl: './giving-form.component.html',
-  styleUrls: ['./giving-form.component.scss']
+  styleUrls: ['./giving-form.component.scss'],
+  animations: [
+    trigger('fadeInLeft', [transition('* => *', useAnimation(fadeInLeft, {params: { timing: 0.25, delay: 0 }}))]),
+  ],
 })
 export class GivingFormComponent implements OnInit {
+
+  fadeInLeft: any;
 
   pageTitle = 'Giving';
   pageIcon = '';

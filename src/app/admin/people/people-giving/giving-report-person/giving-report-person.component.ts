@@ -1,4 +1,4 @@
-import { GivingFormFieldsComponent } from './../giving-form/giving-form-fields/giving-form-fields.component';
+import { trigger, transition, useAnimation } from '@angular/animations';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
@@ -11,13 +11,21 @@ import { PeopleService } from './../../../../services/people.service';
 import { PersonGivingCategoryService } from './../../../../services/person-giving-category.service';
 import { PersonGivingService } from './../../../../services/person-giving.service';
 import { GivingFormComponent } from './../giving-form/giving-form.component';
+import { fadeInRight, zoomInDown } from 'ng-animate';
 
 @Component({
   selector: 'app-giving-report-person',
   templateUrl: './giving-report-person.component.html',
-  styleUrls: ['./giving-report-person.component.scss']
+  styleUrls: ['./giving-report-person.component.scss'],
+  animations: [
+    trigger('fadeInRight', [transition('* => *', useAnimation(fadeInRight))]),
+    trigger('zoomInDown', [transition('* => *', useAnimation(zoomInDown, {params: { timing: 0.50, delay: 0 }}))]),
+  ],
 })
 export class GivingReportPersonComponent implements OnInit, OnDestroy {
+
+  fadeInRight: any;
+  zoomInDown: any;
 
   people = [];
 
@@ -37,6 +45,7 @@ export class GivingReportPersonComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  showSpinner = true;
   givingSubscription: Subscription;
   combinedSubscription: Subscription;
 
@@ -60,6 +69,7 @@ export class GivingReportPersonComponent implements OnInit, OnDestroy {
     this.personId = this.route.parent.snapshot.paramMap.get('id');
 
     this.givingSubscription = this.givingService.getGivingByPerson(this.personId).subscribe(resp => {
+      this.showSpinner = false;
       this.personGiving = resp;
 
       // mapping to a new array to change data structure

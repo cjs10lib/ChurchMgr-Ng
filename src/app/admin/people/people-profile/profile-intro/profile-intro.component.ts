@@ -10,21 +10,23 @@ import { SweetAlertService } from '../../../../services/sweet-alert.service';
 import { UploadService } from '../../../../services/upload.service';
 import { Upload } from './../../../../models/upload.model';
 import { trigger, transition, useAnimation } from '@angular/animations';
-import { fadeIn, fadeInDown } from 'ng-animate';
+import { fadeIn, fadeInRight  } from 'ng-animate';
 
 @Component({
   selector: 'app-profile-intro',
   templateUrl: './profile-intro.component.html',
   styleUrls: ['./profile-intro.component.scss'],
   animations: [
-    trigger('fadeIn', [transition('* => *', useAnimation(fadeIn))]),
-    trigger('fadeInDown', [transition('* => *', useAnimation(fadeInDown))])
+    trigger('fadeIn', [transition('* => *', useAnimation(fadeIn, {params: { timing: 0.50, delay: 0 }}))]),
+    trigger('fadeInRight', [transition('* => *', useAnimation(fadeInRight, {params: { timing: 0.50, delay: 0 }}))]),
+    trigger('fadeInRight1', [transition('* => *', useAnimation(fadeInRight, {params: { timing: 1, delay: 0.5 }}))]),
   ],
 })
 export class ProfileIntroComponent implements OnInit, OnDestroy {
 
   fadeIn: any;
-  fadeInDown: any;
+  fadeInRight: any;
+  fadeInRight1: any;
 
   personId: string;
   person: Person = {};
@@ -44,10 +46,10 @@ export class ProfileIntroComponent implements OnInit, OnDestroy {
     this.spinner.show();
 
     this.paramSubscription = this.route.paramMap.pipe(switchMap(params => {
-      const personId = params.get('id');
+      this.personId = params.get('id');
 
-      return combineLatest(this.peopleService.getPerson(personId), 
-        this.uploadService.getPersonGallery(personId));
+      return combineLatest(this.peopleService.getPerson(this.personId), 
+        this.uploadService.getPersonGallery(this.personId));
     })).subscribe(resp => {
       this.spinner.hide();
 

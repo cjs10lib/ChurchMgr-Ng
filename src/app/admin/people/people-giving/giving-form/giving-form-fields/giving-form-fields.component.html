@@ -3,7 +3,7 @@
 
 <form #f="ngForm">
 
-  <div class="form-field-container">
+  <div [@fadeIn]="fadeIn" class="form-field-container">
 
     <mat-form-field>
       <span matPrefix> <mat-icon>date_range</mat-icon> &nbsp; </span>
@@ -33,20 +33,20 @@
         <!-- <h3 mat-subheader>Giving Record</h3> -->
 
         <mat-card-actions>
-          <button type="button" mat-icon-button color="warn" matTooltip="Clear edit-record" (click)="resetInput()" [disabled]="!givingAmountB4Update">
+          <button [@fadeIn]="fadeIn" type="button" mat-icon-button color="warn" matTooltip="Clear edit-record" (click)="resetInput()" [disabled]="!givingAmountB4Update">
             <mat-icon>cancel</mat-icon>
           </button> &nbsp;
-          <button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!f.valid">Add Record</button>
+          <button [@fadeInRight]="fadeInRight" type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!f.valid">Add Record</button>
         </mat-card-actions> 
 
-        <div>
+        <div [@zoomIn]="zoomIn">
 
           <mat-form-field>
             <input type="text" placeholder="Search..." aria-label="Number" matInput [formControl]="myPersonControl" name="person" [matAutocomplete]="auto" [hidden]="myPersonControl.value=='true'" required>
            
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
-              <mat-option value="general">General</mat-option>
-              <mat-option value="anonymous">Anonymous</mat-option>
+              <mat-option value="Anonymous">Anonymous</mat-option>
+              <mat-option value="General">General</mat-option>
               <mat-divider></mat-divider>
               <mat-option *ngFor="let p of filteredOptions | async" [value]="p.id">
                 {{p.fullname}}
@@ -91,7 +91,7 @@
           <mat-divider></mat-divider> 
           
           <mat-list>
-            <mat-list-item *ngFor="let giving of peopleGivings">
+            <mat-list-item [@fadeIn]="fadeIn" *ngFor="let giving of peopleGivings">
               <!-- <h3 matLine> {{ giving.data.person }} </h3> -->
               <h3 matLine *ngIf="!personId"> 
                 <strong>{{ getPersonDetails(giving.data.person) }}</strong>  

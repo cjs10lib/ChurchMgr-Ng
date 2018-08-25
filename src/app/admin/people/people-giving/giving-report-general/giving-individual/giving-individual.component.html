@@ -21,7 +21,7 @@
     <div fxFlex fxFlexOrder.xs="2">
       <div class="flex-details margin-20">
         <mat-nav-list>
-          <mat-list-item *ngIf="filteredPeople?.length > 0">
+          <mat-list-item [@fadeInDown]="fadeInDown" *ngIf="filteredPeople?.length > 0">
             <mat-divider></mat-divider>
             <h3 matLine>  
               <strong>                  
@@ -36,13 +36,7 @@
             </p>
           </div>
 
-          <!-- <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner> -->
-          <ngx-spinner 
-            bdColor="#fff"
-            size="medium"
-            color="#555"
-            type="line-scale-pulse-out">
-          </ngx-spinner>
+          <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
 
           <mat-list-item [@fadeIn]="fadeIn" *ngFor="let people of filteredPeople" routerLink="/people-profile/{{ people.id }}/profile-giving" >
             <mat-divider></mat-divider>

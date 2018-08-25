@@ -1,6 +1,6 @@
 import { transition, trigger, useAnimation } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { fadeIn } from 'ng-animate';
+import { fadeIn, fadeInDown } from 'ng-animate';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { combineLatest, Subscription } from 'rxjs';
 
@@ -15,12 +15,14 @@ import { UploadService } from './../../../../../services/upload.service';
   templateUrl: './giving-individual.component.html',
   styleUrls: ['./giving-individual.component.scss'],
   animations: [
-    trigger('fadeIn', [transition('* => *', useAnimation(fadeIn))])
+    trigger('fadeIn', [transition('* => *', useAnimation(fadeIn))]),
+    trigger('fadeInDown', [transition('* => *', useAnimation(fadeInDown, {params: { timing: 0.25, delay: 0 }}))]),
   ],
 })
 export class GivingIndividualComponent implements OnInit, OnDestroy {
 
   fadeIn: any;
+  fadeInDown: any;
 
   // search Qry
   searchQry: string;
@@ -36,7 +38,7 @@ export class GivingIndividualComponent implements OnInit, OnDestroy {
   // giving
   peopleGallery: Upload[] = [];
 
-  // showSpinner = true;
+  showSpinner = true;
   subscription: Subscription;
   givingSubscription: Subscription;
 
@@ -53,7 +55,7 @@ export class GivingIndividualComponent implements OnInit, OnDestroy {
       this.givingService.getGivings(),
       this.uploadService.getAllGallery()
     ).subscribe(resp => {
-      this.spinner.hide();
+      this.showSpinner = false;
       
       this.people = resp[0];
       this.peopleGiving = resp[1];

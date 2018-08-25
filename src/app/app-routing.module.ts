@@ -1,3 +1,4 @@
+import { PeopleBasicFormComponent } from './admin/people/people-registration/people-basic-form/people-basic-form.component';
 import { GivingDemographicsComponent } from './admin/people/people-giving/giving-report-general/giving-demographics/giving-demographics.component';
 import { GivingBatchesComponent } from './admin/people/people-giving/giving-report-general/giving-batches/giving-batches.component';
 import { GivingIndividualComponent } from './admin/people/people-giving/giving-report-general/giving-individual/giving-individual.component';

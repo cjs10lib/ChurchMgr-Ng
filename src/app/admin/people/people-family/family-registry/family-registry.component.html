@@ -6,7 +6,7 @@
   <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
 
     <div fxFlex="24" fxFlexOrder.xs="1">
-      <div class="flex-details">
+      <div [@fadeIn]="fadeIn" class="flex-details">
         <h3>Filter by Name</h3>
         <mat-form-field fxFlex.sm="style='font-size:10px;'">
           <span matPrefix>
@@ -23,10 +23,9 @@
     <div fxFlex fxFlexOrder.xs="2">
       <div class="flex-details margin-20">
 
-        <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
-
+        
         <mat-nav-list>
-          <mat-list-item *ngIf="filteredFamily$">
+          <mat-list-item [@fadeInDown]="fadeInDown" *ngIf="filteredFamily$">
             <mat-divider></mat-divider>
             <h3 matLine>  
               <strong>                  
@@ -34,7 +33,10 @@
               </strong>
             </h3>
           </mat-list-item>
-          <mat-list-item *ngFor="let family of filteredFamily$" routerLink="/family-profile/{{ family.id }}" >
+
+          <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
+
+          <mat-list-item [@fadeIn]="fadeIn" *ngFor="let family of filteredFamily$" routerLink="/family-profile/{{ family.id }}" >
             <mat-divider></mat-divider>
             <img matListAvatar src="../../../../assets/avatars/avatar4.png" alt="...">
             <h3 matLine> 

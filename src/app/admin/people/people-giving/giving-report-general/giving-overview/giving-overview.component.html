@@ -4,7 +4,7 @@
 
     <mat-card-actions>
 
-      <button [@fadeInDown]="fadeInDown" mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+      <button [@fadeInLeft]="fadeInLeft" mat-raised-button color="primary" [matMenuTriggerFor]="menu">
         <mat-icon>more_vert</mat-icon> &nbsp;
         <span>Actions</span>
       </button>
@@ -27,17 +27,11 @@
   
     </mat-card-actions>
 
+    <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
+
     <mat-card-content>
 
-      <ngx-spinner 
-        bdColor="#fff"
-        size="medium"
-        color="#555"
-        type="line-scale-pulse-out">
-        <!-- <p style="font-size: 20px; color: white">Loading...</p> -->
-      </ngx-spinner>
-
-      <div [@fadeIn]="fadeIn" style="width:100%; display:block">
+      <div style="width:100%; display:block">
         <canvas *ngIf="loaded" baseChart 
           width="500" height="100"
           [datasets]="barChartData" 
@@ -65,13 +59,7 @@
             </p>
           </ng-template>
 
-          <ngx-spinner 
-            bdColor="#fff"
-            size="medium"
-            color="#555"
-            type="line-scale-pulse-out">
-            <!-- <p style="font-size: 20px; color: white">Loading...</p> -->
-          </ngx-spinner>
+          <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
   
           <div *ngIf="peopleGivings?.length > 0; else noRecordFound">
             

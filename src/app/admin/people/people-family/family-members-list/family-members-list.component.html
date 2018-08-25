@@ -39,13 +39,7 @@
             </p>
           </div>
           
-          <!-- <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner> -->
-          <ngx-spinner 
-            bdColor="#fff"
-            size="medium"
-            color="#555"
-            type="line-scale-pulse-out">
-          </ngx-spinner>
+          <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>          
         
           <a mat-list-item [@fadeIn]="fadeIn" *ngFor="let people of filteredPeople$" routerLink="/people-profile/{{ people.id }}/profile-bio">
             <mat-divider></mat-divider>

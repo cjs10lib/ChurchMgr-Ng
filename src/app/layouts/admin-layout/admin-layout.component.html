@@ -86,41 +86,48 @@
                     </mat-expansion-panel-header>
 
                     <a mat-list-item routerLink="/people" [class.activated]="currentUrl == '/people'">
-                        <mat-icon>person</mat-icon> &nbsp;
-                        <strong>People</strong>
+                        <mat-icon>folder_shared</mat-icon> &nbsp;
+                        <strong>Registry</strong>
                     </a>
 
-                    <a mat-list-item routerLink="/families" [class.activated]="currentUrl == '/families'">
-                        <mat-icon>supervised_user_circle</mat-icon> &nbsp;
-                        <strong>Family</strong>
-                    </a>       
-
-                    <mat-divider></mat-divider>
+                    <!-- <a mat-list-item>
+                        <mat-icon>file</mat-icon> &nbsp;
+                        <strong>Directory</strong>
+                    </a> -->
 
                     <a mat-list-item routerLink="/visitors" [class.activated]="currentUrl == '/visitors'">
-                        <mat-icon>people</mat-icon> &nbsp;
+                        <mat-icon>transfer_within_a_station</mat-icon> &nbsp;
                         <strong>Visitors</strong>
-                    </a>      
-
-                    <mat-divider></mat-divider>
-
-                    <a mat-list-item routerLink="/groups" [class.activated]="currentUrl == '/groups'">
-                        <mat-icon>group</mat-icon> &nbsp;
-                        <strong>Groups</strong>
-                    </a>       
+                    </a> 
+                          
                 </mat-expansion-panel> 
-                
+
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            <strong> Transactions </strong>
+                            <strong> Groups </strong>
                         </mat-panel-title>                           
                     </mat-expansion-panel-header>
 
-                    <a mat-list-item routerLink="/giving" [class.activated]="currentUrl == '/giving'">
-                        <mat-icon>account_balance_wallet</mat-icon> &nbsp;
-                        <strong>Giving</strong>
-                    </a>
+                    <a mat-list-item routerLink="/families" [class.activated]="currentUrl == '/families'">
+                        <mat-icon>wc</mat-icon> &nbsp;
+                        <strong>Family</strong>
+                    </a>   
+
+                    <a mat-list-item routerLink="/groups" [class.activated]="currentUrl == '/groups'">
+                        <mat-icon>people</mat-icon> &nbsp;
+                        <strong>Groups</strong>
+                    </a> 
+
+                </mat-expansion-panel>
+
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <strong> Intereactions </strong>
+                        </mat-panel-title>                           
+                    </mat-expansion-panel-header>
+                    
                 </mat-expansion-panel>
                 
                 <mat-expansion-panel>
@@ -131,7 +138,7 @@
                     </mat-expansion-panel-header>
 
                     <a mat-list-item>
-                        <mat-icon>account_balance_wallet</mat-icon> &nbsp;
+                        <mat-icon>camera</mat-icon> &nbsp;
                         <strong>Overview</strong>
                     </a>
 
@@ -141,12 +148,25 @@
                     </a>
 
                     <a mat-list-item>
-                        <mat-icon>person</mat-icon> &nbsp;
+                        <mat-icon>account_box</mat-icon> &nbsp;
                         <strong>Membership</strong>
                     </a>
 
                     <a mat-list-item routerLink="/giving-report/overview" [class.activated]="currentUrl == '/giving-report/overview'">
                         <mat-icon>monetization_on</mat-icon> &nbsp;
+                        <strong>Giving</strong>
+                    </a>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <strong> Utilities </strong>
+                        </mat-panel-title>                           
+                    </mat-expansion-panel-header>
+
+                    <a mat-list-item routerLink="/giving" [class.activated]="currentUrl == '/giving'">
+                        <mat-icon>account_balance</mat-icon> &nbsp;
                         <strong>Giving</strong>
                     </a>
                 </mat-expansion-panel>

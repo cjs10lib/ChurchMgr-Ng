@@ -5,7 +5,7 @@
   <div fxLayout="row" fxLayout.xs="column" fxFlexAlign="center center">
 
     <div fxFlex="24" fxFlexOrder.xs="1">
-      <div class="flex-details">
+      <div [@fadeIn]="fadeIn" class="flex-details">
         <h3>Filter by Name</h3>
         <mat-form-field fxFlex.sm="style='font-size:10px;'">
           <span matPrefix>
@@ -23,7 +23,7 @@
       <div class="flex-details margin-20">
 
         <section>
-          <div class="add-new">
+          <div [@fadeInRight]="fadeInRight" class="add-new">
             <a mat-raised-button color="primary" (click)="addGroupMembers()">
               <mat-icon color="primary">group_add</mat-icon> &nbsp;
               Add Group Members
@@ -32,7 +32,7 @@
         </section>
 
         <mat-nav-list>
-          <mat-list-item *ngIf="filteredPeople?.length > 0">
+          <mat-list-item [@fadeInDown]="fadeInDown" *ngIf="filteredPeople?.length > 0">
             <mat-divider></mat-divider>
             <h3 matLine>  
               <strong>                  
@@ -49,7 +49,7 @@
 
           <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
 
-          <mat-list-item *ngFor="let person of filteredPeople">
+          <mat-list-item [@fadeIn]="fadeIn" *ngFor="let person of filteredPeople">
             <!-- <mat-divider></mat-divider> -->
             <img *ngIf="person.avatar; else noImageAvatar" matListAvatar [src]="person.avatar?.url" [alt]="person.data.firstname">
             <!-- <img matListAvatar src="../../../../assets/avatars/avatar4.png" alt="..."> -->

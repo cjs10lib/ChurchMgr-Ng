@@ -1,20 +1,30 @@
-import { PeopleService } from './../../../../services/people.service';
-import { Subscription, Observable } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
-import { PeopleGroupService } from './../../../../services/people-group.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PersonGroup } from '../../../../models/person-group.model';
-import { SweetAlertService } from '../../../../services/sweet-alert.service';
+import { transition, trigger, useAnimation } from '@angular/animations';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { fadeInRight, zoomIn } from 'ng-animate';
+import { Observable, Subscription } from 'rxjs';
+
 import { FormControl } from '../../../../../../node_modules/@angular/forms';
+import { map, startWith } from '../../../../../../node_modules/rxjs/operators';
+import { PersonGroup } from '../../../../models/person-group.model';
 import { Person } from '../../../../models/person.model';
-import { startWith, map } from '../../../../../../node_modules/rxjs/operators';
+import { SweetAlertService } from '../../../../services/sweet-alert.service';
+import { PeopleGroupService } from './../../../../services/people-group.service';
+import { PeopleService } from './../../../../services/people.service';
 
 @Component({
   selector: 'app-group-form',
   templateUrl: './group-form.component.html',
-  styleUrls: ['./group-form.component.scss']
+  styleUrls: ['./group-form.component.scss'],
+  animations: [
+    trigger('fadeInRight', [transition('* => *', useAnimation(fadeInRight, {params: { timing: 0.75, delay: 0 }}))]),
+    trigger('zoomIn', [transition('* => *', useAnimation(zoomIn, {params: { timing: 0.50, delay: 0 }}))]),
+  ],
 })
 export class GroupFormComponent implements OnInit, OnDestroy {
+
+  fadeInRight: any; 
+  zoomIn: any; 
 
   pageTitle = 'Add Group';
   pageIcon = '';
