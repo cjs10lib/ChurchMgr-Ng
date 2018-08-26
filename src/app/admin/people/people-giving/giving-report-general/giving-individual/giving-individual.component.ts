@@ -1,7 +1,6 @@
 import { transition, trigger, useAnimation } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { fadeIn, fadeInDown } from 'ng-animate';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { combineLatest, Subscription } from 'rxjs';
 
 import { Upload } from '../../../../../models/upload.model';
@@ -44,12 +43,9 @@ export class GivingIndividualComponent implements OnInit, OnDestroy {
 
   constructor(private givingService: PersonGivingService, 
     private peopleService: PeopleService, 
-    private uploadService: UploadService,
-    private spinner: NgxSpinnerService) { }
+    private uploadService: UploadService) { }
 
   ngOnInit() {
-    this.spinner.show();
-
     this.subscription = combineLatest(
       this.peopleService.getPeople(), 
       this.givingService.getGivings(),

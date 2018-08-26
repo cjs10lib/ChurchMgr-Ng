@@ -40,7 +40,7 @@ export class GivingFormFieldsComponent implements OnInit, OnDestroy {
 
   myPersonControl = new FormControl();
 
-  categories$: GivingCategory[];
+  categories$: GivingCategory[] = [];
 
   // new giving record
   giving: Giving = {
@@ -154,7 +154,7 @@ export class GivingFormFieldsComponent implements OnInit, OnDestroy {
         }
 
       // check if giving batch exists
-      if (this.giving.batch) {
+      if (this.givingBatch) {
         this.giving.batch = this.givingBatch.batchId;
       } else {
         this.giving.batch = null;
@@ -239,7 +239,7 @@ export class GivingFormFieldsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (personId.toLowerCase() === 'General' || personId.toLowerCase() === 'Anonymous') {
+    if (personId.toLowerCase() === 'general' || personId.toLowerCase() === 'anonymous') {
       return personId;
     }
 
@@ -263,11 +263,12 @@ export class GivingFormFieldsComponent implements OnInit, OnDestroy {
       return '';
     }
 
+    this.giving.data.person = personId; // assign selected person id to model
+    
     if (personId.toLowerCase() === 'general' || personId.toLowerCase() === 'anonymous') {
       return personId;
     }
 
-    this.giving.data.person = personId; // assign selected person id to model
 
     const index = this.people.findIndex(p => p.id === personId);
 

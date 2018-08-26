@@ -1,6 +1,7 @@
-import { NgxSpinnerService } from 'ngx-spinner';
+import { transition, trigger, useAnimation } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { Subscription, combineLatest } from 'rxjs';
+import { fadeIn, fadeInLeft } from 'ng-animate';
+import { combineLatest, Subscription } from 'rxjs';
 
 import { GivingFunctionsService } from '../../../../../custom-functions/giving.functions.service';
 import { GivingCategory } from '../../../../../models/giving-category.model';
@@ -8,9 +9,6 @@ import { MonthlySummary } from '../../../../../models/monthly-summary.model';
 import { MonthlySummaryService } from '../../../../../services/monthly-summary.service';
 import { PersonGivingCategoryService } from '../../../../../services/person-giving-category.service';
 import { PersonGivingService } from '../../../../../services/person-giving.service';
-
-import { trigger, transition, useAnimation } from '@angular/animations';
-import { fadeIn, zoomIn, fadeInLeft } from 'ng-animate';
 
 @Component({
   selector: 'app-giving-overview',

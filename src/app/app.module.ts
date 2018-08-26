@@ -138,6 +138,8 @@ import { GivingBatchesComponent } from './admin/people/people-giving/giving-repo
 import { GivingIndividualComponent } from './admin/people/people-giving/giving-report-general/giving-individual/giving-individual.component';
 import { GivingDemographicsComponent } from './admin/people/people-giving/giving-report-general/giving-demographics/giving-demographics.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { GivingGeneralComponent } from './admin/people/people-giving/giving-report-general/giving-general/giving-general.component';
+import { GivingBatchGivingComponent } from './admin/people/people-giving/giving-report-general/giving-batch-giving/giving-batch-giving.component';
 
 keyboardEventKeyPolyfill();
 
@@ -207,6 +209,8 @@ keyboardEventKeyPolyfill();
     GivingBatchesComponent,
     GivingIndividualComponent,
     GivingDemographicsComponent,
+    GivingGeneralComponent,
+    GivingBatchGivingComponent,
   ],
   imports: [
     AngularFireStorageModule,
@@ -262,8 +266,9 @@ keyboardEventKeyPolyfill();
   ],
   entryComponents: [
     FamilyFormAddComponent,
-    GivingCategoryFormComponent,
     GivingBatchComponent,
+    GivingBatchGivingComponent,
+    GivingCategoryFormComponent,
     GivingFormComponent,
     GivingFormFieldsComponent,
     GroupMembersAddComponent,

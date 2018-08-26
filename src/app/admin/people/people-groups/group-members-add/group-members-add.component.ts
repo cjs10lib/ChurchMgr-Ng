@@ -86,7 +86,6 @@ export class GroupMembersAddComponent implements OnInit, OnDestroy {
     this.nonGroupMembers = this.filteredPeople = this.comparer(this.people, this.groupMembersId);
   }
 
-
   addToGroup() {
     if (this.selectedPeopleChecked.length > 0) {
 

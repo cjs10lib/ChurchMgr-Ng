@@ -1,5 +1,5 @@
 
-<!-- <pre>{{giving | json}}</pre> -->
+<pre>{{giving | json}}</pre>
 
 <form #f="ngForm">
 
@@ -91,7 +91,7 @@
           <mat-divider></mat-divider> 
           
           <mat-list>
-            <mat-list-item [@fadeIn]="fadeIn" *ngFor="let giving of peopleGivings">
+            <mat-list-item *ngFor="let giving of peopleGivings">
               <!-- <h3 matLine> {{ giving.data.person }} </h3> -->
               <h3 matLine *ngIf="!personId"> 
                 <strong>{{ getPersonDetails(giving.data.person) }}</strong>  
@@ -148,7 +148,6 @@
               <strong>{{ sum.totalAmount | currency }}</strong> 
             </li>
           </ul>
-          
 
         </div>    
       </mat-card>   

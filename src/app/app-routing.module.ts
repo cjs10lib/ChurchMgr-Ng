@@ -1,3 +1,4 @@
+import { GivingGeneralComponent } from './admin/people/people-giving/giving-report-general/giving-general/giving-general.component';
 import { PeopleBasicFormComponent } from './admin/people/people-registration/people-basic-form/people-basic-form.component';
 import { GivingDemographicsComponent } from './admin/people/people-giving/giving-report-general/giving-demographics/giving-demographics.component';
 import { GivingBatchesComponent } from './admin/people/people-giving/giving-report-general/giving-batches/giving-batches.component';
@@ -142,6 +143,9 @@ const routes: Routes = [
           }, {
             path: 'anonymous',
             component: GivingAnonymousComponent
+          }, {
+            path: 'general',
+            component: GivingGeneralComponent
           }, {
             path: 'batches',
             component: GivingBatchesComponent

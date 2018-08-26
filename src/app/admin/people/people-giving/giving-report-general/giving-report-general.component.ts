@@ -16,8 +16,8 @@ export class GivingReportGeneralComponent implements OnInit {
     { path: 'overview', label: 'Overview', icon: 'list' },
     { path: 'individual', label: 'By Individual', icon: 'person' },
     { path: 'anonymous', label: 'By Anonymous', icon: 'device_unknown' },
-    { path: 'general', label: 'General', icon: 'how_to_vote' },
-    { path: 'batches', label: 'Batches', icon: 'category' },
+    { path: 'general', label: 'General', icon: 'style' },
+    { path: 'batches', label: 'Batches', icon: 'view_compact' },
     { path: 'demographics', label: 'Demographics', icon: 'notes' }
   ];
 

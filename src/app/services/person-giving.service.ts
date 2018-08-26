@@ -31,7 +31,7 @@ export class PersonGivingService {
   }
 
   getGivingByDate(givingDate) {
-    return this.db.collection('giving', ref => ref.where('qryGivingDate', '==', givingDate))
+    return this.db.collection('giving', ref => ref.where('qryGivingDate', '==', givingDate).orderBy('givingDate', 'asc'))
       .snapshotChanges().pipe(
       map(change => {
         return change.map(a => {
@@ -45,7 +45,10 @@ export class PersonGivingService {
   }
 
   getGivingByDateAndPerson(givingDate, personId: string) {
-    return this.db.collection('giving', ref => ref.where('qryGivingDate', '==', givingDate).where('data.person', '==', personId))
+    return this.db.collection('giving', ref => ref
+      .where('qryGivingDate', '==', givingDate)
+      .where('data.person', '==', personId)
+      .orderBy('givingDate', 'asc'))
       .snapshotChanges().pipe(
       map(change => {
         return change.map(a => {
@@ -59,7 +62,25 @@ export class PersonGivingService {
   }
 
   getGivingByPerson(personId: string) {
-    return this.db.collection('giving', ref => ref.where('data.person', '==', personId))
+    return this.db.collection('giving', ref => ref
+      .where('data.person', '==', personId)
+      .orderBy('givingDate', 'asc'))
+      .snapshotChanges().pipe(
+      map(change => {
+        return change.map(a => {
+          const data = a.payload.doc.data() as Giving;
+          data.Id = a.payload.doc.id;
+
+          return data;
+        });
+      })
+    );
+  }
+
+  getGivingByBatch(batchId: string) {
+    return this.db.collection('giving', ref => ref
+      .where('batch', '==', batchId)
+      .orderBy('givingDate', 'asc'))
       .snapshotChanges().pipe(
       map(change => {
         return change.map(a => {
@@ -85,9 +106,9 @@ export class PersonGivingService {
     giving.qryGivingDate = this.timestampService.dateToTimestamp(giving.givingDate); // converted giving date to timestamp for easy querying
 
     if (giving.data.person !== 'general' || 'anonymous') {
-      giving.data.tag = 'person';
-    } else {
       giving.data.tag = giving.data.person.toLowerCase();
+    } else {
+      giving.data.tag = 'person';
     }
 
     return this.givingCollection.add(giving);
